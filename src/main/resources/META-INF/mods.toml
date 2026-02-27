@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All rights reserved"
+[[mods]]
+modId="golemmagicka"
+version="${file.jarVersion}" #mandatory
+displayName="Golem Magicka" #mandatory
+logoFile="golemmagicka.png" #optional
+credits="LightLand team" #optional
+authors="lcy0x1" #optional
+description='''
+This mod adds golems that can be crafted with different materials in a Tinker-like playstyle.
+'''
+[[dependencies.golemmagicka]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47.1.0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.golemmagicka]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20,1.21)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.golemmagicka]]
+    modId="l2library"
+    mandatory=true
+    versionRange="[2.5.3,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.golemmagicka]]
+    modId="modulargolems"
+    mandatory=true
+    versionRange="[2.6.21,)"
+    side="BOTH"

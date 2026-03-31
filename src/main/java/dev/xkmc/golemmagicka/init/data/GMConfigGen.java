@@ -1,6 +1,12 @@
 package dev.xkmc.golemmagicka.init.data;
 
+import dev.xkmc.golemmagicka.content.config.MagicStatBuilder;
+import dev.xkmc.golemmagicka.init.GolemMagicka;
+import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.l2library.serial.config.ConfigDataProvider;
+import dev.xkmc.modulargolems.content.config.GolemPartConfig;
+import dev.xkmc.modulargolems.init.ModularGolems;
+import dev.xkmc.modulargolems.init.registrate.GolemTypes;
 import net.minecraft.data.DataGenerator;
 
 public class GMConfigGen extends ConfigDataProvider {
@@ -10,6 +16,22 @@ public class GMConfigGen extends ConfigDataProvider {
 	}
 
 	public void add(ConfigDataProvider.Collector map) {
+
+		map.add(ModularGolems.PARTS, GolemMagicka.loc("magic"), new GolemPartConfig()
+				.addEntity(GolemTypes.TYPE_GOLEM.get())
+				.addFilter(GMTypes.STAT_MAX_MANA.get(), 2)
+				.end()
+
+		);
+
+		map.add(ModularGolems.MATERIALS, GolemMagicka.loc("vanilla"), new MagicStatBuilder()
+				.add(ModularGolems.loc("copper"), 50, 1)
+				.add(ModularGolems.loc("iron"), 100, 1)
+				.add(ModularGolems.loc("gold"), 200, 1)
+				.add(ModularGolems.loc("netherite"), 150, 1)
+				.add(ModularGolems.loc("sculk"), 100, 1)
+				.build()
+		);
 
 	}
 

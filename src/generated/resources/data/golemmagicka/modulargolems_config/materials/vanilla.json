@@ -1,0 +1,27 @@
+{
+  "ingredients": {},
+  "modifiers": {},
+  "repairIngredients": {},
+  "stats": {
+    "modulargolems:copper": {
+      "golemmagicka:mana_regen": 1.0,
+      "golemmagicka:max_mana": 50.0
+    },
+    "modulargolems:gold": {
+      "golemmagicka:mana_regen": 1.0,
+      "golemmagicka:max_mana": 200.0
+    },
+    "modulargolems:iron": {
+      "golemmagicka:mana_regen": 1.0,
+      "golemmagicka:max_mana": 100.0
+    },
+    "modulargolems:netherite": {
+      "golemmagicka:mana_regen": 1.0,
+      "golemmagicka:max_mana": 150.0
+    },
+    "modulargolems:sculk": {
+      "golemmagicka:mana_regen": 1.0,
+      "golemmagicka:max_mana": 100.0
+    }
+  }
+}

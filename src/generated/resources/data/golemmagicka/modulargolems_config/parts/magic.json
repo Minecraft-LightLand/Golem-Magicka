@@ -1,0 +1,8 @@
+{
+  "filters": {},
+  "magnifiers": {
+    "modulargolems:metal_golem": {
+      "golemmagicka:max_mana": 2.0
+    }
+  }
+}

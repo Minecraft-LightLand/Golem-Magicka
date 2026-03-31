@@ -5,6 +5,7 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "golemmagicka.refmap.json",
 	"mixins": [
+		"AbstractGolemMixin"
 	],
 	"client": [
 	],

@@ -1,8 +1,10 @@
 package dev.xkmc.golemmagicka.init;
 
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.golemmagicka.content.entity.GolemSpellManager;
 import dev.xkmc.golemmagicka.init.data.*;
 import dev.xkmc.golemmagicka.init.reg.GMItems;
+import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.golemmagicka.init.reg.GMModifiers;
 import dev.xkmc.l2library.base.L2Registrate;
 import dev.xkmc.l2library.serial.config.PacketHandlerWithConfig;
@@ -33,6 +35,7 @@ public class GolemMagicka {
 	);
 
 	public GolemMagicka() {
+		GMTypes.register();
 		GMItems.register();
 		GMModifiers.register();
 		GMConfig.init();
@@ -45,6 +48,7 @@ public class GolemMagicka {
 	@SubscribeEvent
 	public static void setup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
+			GolemSpellManager.init();
 		});
 	}
 

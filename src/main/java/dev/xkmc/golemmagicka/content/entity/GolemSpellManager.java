@@ -40,7 +40,7 @@ public class GolemSpellManager {
 		boolean valid =
 				stack.getItem() instanceof SpellBook ||
 						stack.getItem() instanceof CastingItem;
-		return WeaponStatus.OFFENSIVE.of(valid);
+		return WeaponStatus.OFFENSIVE.withPriority(1000).of(valid);
 	}
 
 	public static List<SpellEntry> getSpells(LivingEntity e) {
@@ -58,7 +58,7 @@ public class GolemSpellManager {
 		for (var stack : list) {
 			if (stack.getItem() instanceof SpellBook) {
 				ISpellContainer cont = ISpellContainer.get(stack);
-				for (var spell : cont.getAllSpells()) {
+				for (var spell : cont.getActiveSpells()) {
 					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel()));
 				}
 			}

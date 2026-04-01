@@ -21,6 +21,11 @@ public class MagicStatBuilder {
 		return this;
 	}
 
+	public MagicStatBuilder add(ResourceLocation mat, GolemStatType type, double val) {
+		ans.stats.computeIfAbsent(mat, k -> new LinkedHashMap<>()).put(type, val);
+		return this;
+	}
+
 	public GolemMaterialConfig build() {
 		return ans;
 	}

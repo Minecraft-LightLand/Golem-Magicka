@@ -22,10 +22,26 @@ public class GMTypes {
 	public static final RegistryEntry<GolemStatType> STAT_MANA_REGEN;
 	public static final RegistryEntry<GolemStatType> STAT_SPELL_POWER;
 
+
+	public static final RegistryEntry<GolemStatType>
+			FIRE_SPELL_POWER, ICE_SPELL_POWER, LIGHTNING_SPELL_POWER, HOLY_SPELL_POWER,
+			ENDER_SPELL_POWER, BLOOD_SPELL_POWER, EVOCATION_SPELL_POWER,
+			NATURE_SPELL_POWER, ELDRITCH_SPELL_POWER;
+
 	static {
 		STAT_MAX_MANA = regStat("max_mana", () -> AttributeRegistry.MAX_MANA.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
 		STAT_MANA_REGEN = regStat("mana_regen", () -> AttributeRegistry.MANA_REGEN.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
 		STAT_SPELL_POWER = regStat("spell_power", () -> AttributeRegistry.SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+
+		FIRE_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.FIRE_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		ICE_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ICE_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		LIGHTNING_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.LIGHTNING_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		HOLY_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.HOLY_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		ENDER_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ENDER_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		BLOOD_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.BLOOD_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		EVOCATION_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.EVOCATION_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		NATURE_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.NATURE_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		ELDRITCH_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ELDRITCH_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
 
 
 	}

@@ -10,6 +10,11 @@
     "modulargolems:netherite": {
       "golemmagicka:mana_regen": 0.4,
       "golemmagicka:max_mana": 200.0
+    },
+    "modulargolems:sculk": {
+      "golemmagicka:eldritch_spell_power": 0.4,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 100.0
     }
   }
 }

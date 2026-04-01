@@ -26,6 +26,20 @@ public class GMConfigGen extends ConfigDataProvider {
 				.addFilter(GMTypes.STAT_MAX_MANA.get(), 2)
 				.end()
 
+				.addEntity(GolemTypes.TYPE_DOG.get())
+				.addFilter(GMTypes.STAT_CD.get(), 0)
+				.addFilter(GMTypes.STAT_SPELL_POWER.get(), 0)
+				.addFilter(GMTypes.FIRE_SPELL_POWER.get(), 0)
+				.addFilter(GMTypes.ICE_SPELL_POWER.get(), 0)
+				.addFilter(GMTypes.LIGHTNING_SPELL_POWER.get(), 0)
+				.addFilter(GMTypes.HOLY_SPELL_POWER.get(), 0)
+				.addFilter(GMTypes.ENDER_SPELL_POWER.get(), 0)
+				.addFilter(GMTypes.BLOOD_SPELL_POWER.get(), 0)
+				.addFilter(GMTypes.EVOCATION_SPELL_POWER.get(), 0)
+				.addFilter(GMTypes.NATURE_SPELL_POWER.get(), 0)
+				.addFilter(GMTypes.ELDRITCH_SPELL_POWER.get(), 0)
+				.end()
+
 		);
 
 		map.add(ModularGolems.MATERIALS, GolemMagicka.loc("vanilla"), new MagicStatBuilder()
@@ -44,7 +58,8 @@ public class GMConfigGen extends ConfigDataProvider {
 				.addStat(GMTypes.STAT_MAX_MANA.get(), 800)
 				.addStat(GMTypes.STAT_MANA_REGEN.get(), 1)
 				.addStat(GMTypes.STAT_SPELL_POWER.get(), 0.5)
-				.addModifier(GolemModifiers.FIRE_IMMUNE.get(),1)
+				.addStat(GMTypes.STAT_CD.get(), 0.2)
+				.addModifier(GolemModifiers.FIRE_IMMUNE.get(), 1)
 				.end()
 		);
 

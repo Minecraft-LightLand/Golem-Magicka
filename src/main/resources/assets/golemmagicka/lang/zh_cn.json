@@ -1,0 +1,8 @@
+{
+	"golem_material.golemmagicka.pyrium": "炽金",
+	"golemmagicka.info.cd": "- %s: %s秒",
+	"golemmagicka.info.cds": "法术冷却:",
+	"golemmagicka.info.invalid": "- %s",
+	"golemmagicka.info.invalids": "无效法术:",
+	"golemmagicka.info.mana": "法力值: %s/%s"
+}

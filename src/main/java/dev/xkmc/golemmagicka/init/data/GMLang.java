@@ -15,7 +15,9 @@ import java.util.Locale;
 public enum GMLang {
 	MANA("info.mana", "Mana: %s/%s", 2, ChatFormatting.AQUA),
 	CDS("info.cds", "Spell Cooldowns:", 0, ChatFormatting.GRAY),
-	CD("info.cd", "- %s: %ss", 2, ChatFormatting.GRAY);
+	CD("info.cd", "- %s: %ss", 2, ChatFormatting.GRAY),
+	INVALID_SPELLS("info.invalids", "Invalid Spells:", 0, ChatFormatting.RED),
+	INVALID_SPELL("info.invalid", "- %s", 1, ChatFormatting.RED);
 
 	private final String key, def;
 	private final int arg;

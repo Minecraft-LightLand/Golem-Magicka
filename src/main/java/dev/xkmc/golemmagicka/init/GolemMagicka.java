@@ -59,7 +59,7 @@ public class GolemMagicka {
 	public static void gatherData(GatherDataEvent event) {
 		REGISTRATE.addDataGenerator(ProviderType.LANG, GMLang::genLang);
 		REGISTRATE.addDataGenerator(ProviderType.RECIPE, GMRecipeGen::genRecipe);
-		REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, GMTagGen::genItemTag);
+		REGISTRATE.addDataGenerator(GMTagGen.SPELL_TAGS, GMTagGen::genSpellTag);
 
 		var gen = event.getGenerator();
 		var output = gen.getPackOutput();

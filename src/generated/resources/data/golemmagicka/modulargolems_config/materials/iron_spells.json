@@ -18,6 +18,7 @@
     "golemmagicka:pyrium": {
       "golemmagicka:mana_regen": 1.0,
       "golemmagicka:max_mana": 800.0,
+      "golemmagicka:spell_cooldown": 0.2,
       "golemmagicka:spell_power": 0.5,
       "modulargolems:attack": 30.0,
       "modulargolems:max_health": 400.0,

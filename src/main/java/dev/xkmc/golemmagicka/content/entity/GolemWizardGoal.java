@@ -58,14 +58,15 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			this.spellAttackDelay = 2;
 			return;
 		}
-		int cost = spell.getManaCost(entry.level());
+		float cost = spell.getManaCost(entry.level());
 		if (data.getMagicData().getMana() < cost) {
 			this.spellAttackDelay = 10;
 			return;
 		}
 		if (!spell.shouldAIStopCasting(entry.level(), this.mob, this.target)) {
-			int cd = GolemSpellManager.getEffectiveSpellCooldown(spell, data.golem, entry.source());
-			data.getMagicData().addMana(-cost);
+			int recast = Math.max(1, spell.getRecastCount(entry.level(), mob));
+			int cd = GolemSpellManager.getEffectiveSpellCooldown(spell, data.golem, entry.source()) / recast;
+			data.getMagicData().addMana(-cost / recast);
 			data.getMagicData().getPlayerCooldowns().addCooldown(spell.getSpellId(), cd);
 			this.spellCastingMob.initiateCastSpell(spell, entry.level());
 			this.fleeCooldown = 7 + spell.getCastTime(entry.level());
@@ -83,7 +84,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 
 	public void updateAvailableSpells() {
 		if (spellCache == null || spellCache.isEmpty()) {
-			var spells = GolemSpellManager.getSpells(data.golem);
+			var spells = SpellCategoryUtil.getSpells(data.golem);
 			spellCache = new LinkedHashMap<>();
 			for (var e : spells)
 				spellCache.put(e.spell(), e);

@@ -2,6 +2,7 @@ package dev.xkmc.golemmagicka.content.entity;
 
 import dev.xkmc.golemmagicka.compat.CuriosCompat;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
+import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.registry.WeaponStatus;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
@@ -18,6 +19,7 @@ import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.item.CastingItem;
 import io.redspace.ironsspellbooks.item.SpellBook;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -48,36 +50,6 @@ public class GolemSpellManager {
 		return WeaponStatus.OFFENSIVE.withPriority(1000).of(valid);
 	}
 
-	public static List<SpellEntry> getSpells(LivingEntity e) {
-		List<ItemStack> list = new ArrayList<>();
-		list.add(e.getMainHandItem());
-		list.add(e.getOffhandItem());
-		if (e instanceof SweepGolemEntity<?, ?> s) {
-			list.add(s.getBackupHand().getItem());
-			list.add(s.getArrowSlot().getItem());
-		}
-		if (ModList.get().isLoaded(CuriosApi.MODID)) {
-			CuriosCompat.getSpells(e, list);
-		}
-		List<SpellEntry> ans = new ArrayList<>();
-		for (var stack : list) {
-			if (stack.getItem() instanceof SpellBook) {
-				ISpellContainer cont = ISpellContainer.get(stack);
-				for (var spell : cont.getActiveSpells()) {
-					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SPELLBOOK));
-				}
-			}
-		}
-		ItemStack mainhand = e.getMainHandItem();
-		if (mainhand.getItem() instanceof MagicSwordItem sword) {
-			for (var spell : sword.getSpells()) {
-				if (spell == null) continue;
-				ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD));
-			}
-		}
-		return ans;
-	}
-
 	public static void tickGolemSpellData(AbstractGolemEntity<?, ?> e, MagicData data) {
 		data.getPlayerCooldowns().tick(1);
 		if (e.level().isClientSide()) return;
@@ -85,10 +57,28 @@ public class GolemSpellManager {
 		if (e.getAttribute(AttributeRegistry.MAX_MANA.get()) == null) return;
 		if (e.getAttribute(AttributeRegistry.MANA_REGEN.get()) == null) return;
 		int playerMaxMana = (int) e.getAttributeValue(AttributeRegistry.MAX_MANA.get());
+		float rate = (float) e.getAttributeValue(AttributeRegistry.MANA_REGEN.get());
+		float increment = playerMaxMana * 0.01F * rate;
+		for (var p : e.getPassengers()) {
+			if (!(p instanceof LivingEntity passenger)) continue;
+			if (passenger.getAttribute(AttributeRegistry.MAX_MANA.get()) == null) continue;
+			MagicData riderData = null;
+			if (passenger instanceof AbstractGolemEntity<?, ?> rider) {
+				riderData = ((IMagicEntity) rider).getMagicData();
+			} else if (passenger instanceof ServerPlayer sp) {
+				riderData = MagicData.getPlayerMagicData(sp);
+			}
+			if (riderData == null) continue;
+			float diff = (float) passenger.getAttributeValue(AttributeRegistry.MAX_MANA.get()) - riderData.getMana();
+			if (diff <= 0) continue;
+			int max = (int) Math.min(diff, Math.min(increment * 2, (data.getMana() - 100) / 2));
+			if (max > 0) {
+				data.addMana(-max);
+				riderData.addMana(max);
+			}
+		}
 		float mana = data.getMana();
 		if (mana != (float) playerMaxMana) {
-			float rate = (float) e.getAttributeValue(AttributeRegistry.MANA_REGEN.get());
-			float increment = playerMaxMana * 0.01F * rate;
 			data.setMana(Mth.clamp(data.getMana() + increment, 0, playerMaxMana));
 			var packet = new GolemSpellInfoToClient();
 			packet.id = e.getId();

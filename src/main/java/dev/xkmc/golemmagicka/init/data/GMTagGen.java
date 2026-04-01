@@ -1,10 +1,53 @@
 package dev.xkmc.golemmagicka.init.data;
 
-import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import dev.xkmc.golemmagicka.init.GolemMagicka;
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
+import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
+
+import java.util.Objects;
 
 public class GMTagGen {
 
-	public static void genItemTag(RegistrateItemTagsProvider pvd) {
+	public static final ProviderType<RegistrateTagsProvider.IntrinsicImpl<AbstractSpell>> SPELL_TAGS =
+			ProviderType.register("tags/spell", (type) -> (p, e) ->
+					new RegistrateTagsProvider.IntrinsicImpl<>(p, type, "spells", e.getGenerator().getPackOutput(),
+							SpellRegistry.SPELL_REGISTRY_KEY, e.getLookupProvider(), (spell) ->
+							ResourceKey.create(SpellRegistry.SPELL_REGISTRY_KEY,
+									Objects.requireNonNull(SpellRegistry.REGISTRY.get().getKey(spell))),
+							e.getExistingFileHelper()));
+
+	public static final TagKey<AbstractSpell> WHITELIST = loc("whitelist");
+	public static final TagKey<AbstractSpell> BLACKLIST = loc("blacklist");
+	public static final TagKey<AbstractSpell> DEFENSE = loc("defense");
+	public static final TagKey<AbstractSpell> MOVEMENT = loc("movement");
+	public static final TagKey<AbstractSpell> SUPPORT = loc("support");
+	public static final TagKey<AbstractSpell> SUMMON = loc("summon");
+
+	public static void genSpellTag(RegistrateTagsProvider.IntrinsicImpl<AbstractSpell> pvd) {
+		pvd.addTag(WHITELIST).add(SpellRegistry.ELDRITCH_BLAST_SPELL.get());
+		pvd.addTag(BLACKLIST).add(
+				SpellRegistry.POISON_SPLASH_SPELL.get(),
+				SpellRegistry.TELEKINESIS_SPELL.get(),
+				SpellRegistry.POCKET_DIMENSION_SPELL.get(),
+				SpellRegistry.SPECTRAL_HAMMER_SPELL.get(),
+				SpellRegistry.ANGEL_WINGS_SPELL.get(),
+				SpellRegistry.PORTAL_SPELL.get(),
+				SpellRegistry.SUMMON_ENDER_CHEST_SPELL.get(),
+				SpellRegistry.RECALL_SPELL.get(),
+				SpellRegistry.WALL_OF_FIRE_SPELL.get()
+		);
+		pvd.addTag(DEFENSE);
+		pvd.addTag(MOVEMENT);
+		pvd.addTag(SUPPORT);
+		pvd.addTag(SUMMON);
+	}
+
+	public static TagKey<AbstractSpell> loc(String id) {
+		return TagKey.create(SpellRegistry.SPELL_REGISTRY_KEY, GolemMagicka.loc(id));
 	}
 
 }

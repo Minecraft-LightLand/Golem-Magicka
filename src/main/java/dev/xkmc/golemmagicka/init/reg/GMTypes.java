@@ -21,6 +21,7 @@ public class GMTypes {
 	public static final RegistryEntry<GolemStatType> STAT_MAX_MANA;
 	public static final RegistryEntry<GolemStatType> STAT_MANA_REGEN;
 	public static final RegistryEntry<GolemStatType> STAT_SPELL_POWER;
+	public static final RegistryEntry<GolemStatType> STAT_CD;
 
 
 	public static final RegistryEntry<GolemStatType>
@@ -29,9 +30,10 @@ public class GMTypes {
 			NATURE_SPELL_POWER, ELDRITCH_SPELL_POWER;
 
 	static {
-		STAT_MAX_MANA = regStat("max_mana", () -> AttributeRegistry.MAX_MANA.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_MAX_MANA = regStatPlain("max_mana", () -> AttributeRegistry.MAX_MANA.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
 		STAT_MANA_REGEN = regStat("mana_regen", () -> AttributeRegistry.MANA_REGEN.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
 		STAT_SPELL_POWER = regStat("spell_power", () -> AttributeRegistry.SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_CD = regStat("spell_cooldown", () -> AttributeRegistry.COOLDOWN_REDUCTION.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
 
 		FIRE_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.FIRE_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
 		ICE_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ICE_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
@@ -46,8 +48,12 @@ public class GMTypes {
 
 	}
 
-	private static RegistryEntry<GolemStatType> regStat(String id, Supplier<Attribute> sup, GolemStatType.Kind kind, StatFilterType type) {
+	private static RegistryEntry<GolemStatType> regStatPlain(String id, Supplier<Attribute> sup, GolemStatType.Kind kind, StatFilterType type) {
 		return GolemMagicka.REGISTRATE.generic(id, STAT_TYPES, () -> new GolemStatType(sup, kind, type)).register();
+	}
+
+	private static RegistryEntry<GolemStatType> regStat(String id, Supplier<Attribute> sup, GolemStatType.Kind kind, StatFilterType type) {
+		return GolemMagicka.REGISTRATE.generic(id, STAT_TYPES, () -> new GolemStatType(sup, kind, type, true)).register();
 	}
 
 

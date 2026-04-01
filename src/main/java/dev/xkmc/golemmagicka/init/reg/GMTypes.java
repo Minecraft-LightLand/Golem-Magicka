@@ -23,9 +23,9 @@ public class GMTypes {
 	public static final RegistryEntry<GolemStatType> STAT_SPELL_POWER;
 
 	static {
-		STAT_MAX_MANA = regStat("max_mana", () -> AttributeRegistry.MAX_MANA.get(), GolemStatType.Kind.BASE, StatFilterType.MASS);
-		STAT_MANA_REGEN = regStat("mana_regen", () -> AttributeRegistry.MANA_REGEN.get(), GolemStatType.Kind.BASE, StatFilterType.MASS);
-		STAT_SPELL_POWER = regStat("spell_power", () -> AttributeRegistry.SPELL_POWER.get(), GolemStatType.Kind.BASE, StatFilterType.MASS);
+		STAT_MAX_MANA = regStat("max_mana", () -> AttributeRegistry.MAX_MANA.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_MANA_REGEN = regStat("mana_regen", () -> AttributeRegistry.MANA_REGEN.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_SPELL_POWER = regStat("spell_power", () -> AttributeRegistry.SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
 
 
 	}

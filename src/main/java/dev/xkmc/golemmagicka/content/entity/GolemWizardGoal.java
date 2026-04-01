@@ -19,6 +19,8 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 
 	private final GolemMagicData data;
 
+	private List<SpellEntry> spellCache = null;
+
 	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, double pSpeedModifier, int pAttackInterval) {
 		super(entity, pSpeedModifier, pAttackInterval);
 		this.data = data;
@@ -28,6 +30,12 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	protected AbstractSpell getNextSpellType() {
 		updateAvailableSpells();
 		return super.getNextSpellType();
+	}
+
+	@Override
+	protected void resetAttackTimer(double distanceSquared) {
+		super.resetAttackTimer(distanceSquared);
+		spellCache = null;
 	}
 
 	@Override
@@ -48,12 +56,12 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	public void updateAvailableSpells() {
-		var allSpells = GolemSpellManager.getSpells(data.golem);
+		if (spellCache == null) spellCache = GolemSpellManager.getSpells(data.golem);
 		List<AbstractSpell> atkSpells = new ArrayList<>();
 		List<AbstractSpell> defSpells = new ArrayList<>();
 		List<AbstractSpell> movSpells = new ArrayList<>();
 		List<AbstractSpell> sptSpells = new ArrayList<>();
-		for (var ent : allSpells) {
+		for (var ent : spellCache) {
 			var e = ent.spell();
 			int mana = e.getManaCost(ent.level());
 			if (mana > data.getMagicData().getMana())

@@ -13,8 +13,10 @@ public class MagicStatBuilder {
 
 	public MagicStatBuilder add(ResourceLocation mat, double max, double regen) {
 		LinkedHashMap<GolemStatType, Double> map = new LinkedHashMap<>();
-		map.put(GMTypes.STAT_MAX_MANA.get(), max);
-		map.put(GMTypes.STAT_MANA_REGEN.get(), regen);
+		if (max != 0)
+			map.put(GMTypes.STAT_MAX_MANA.get(), max);
+		if (regen != 0)
+			map.put(GMTypes.STAT_MANA_REGEN.get(), regen);
 		ans.stats.put(mat, map);
 		return this;
 	}

@@ -25,11 +25,8 @@ public class GMConfigGen extends ConfigDataProvider {
 		);
 
 		map.add(ModularGolems.MATERIALS, GolemMagicka.loc("vanilla"), new MagicStatBuilder()
-				.add(ModularGolems.loc("copper"), 50, 1)
-				.add(ModularGolems.loc("iron"), 100, 1)
-				.add(ModularGolems.loc("gold"), 200, 1)
-				.add(ModularGolems.loc("netherite"), 150, 1)
-				.add(ModularGolems.loc("sculk"), 100, 1)
+				.add(ModularGolems.loc("gold"), 100, 0.4)
+				.add(ModularGolems.loc("netherite"), 50, 0.2)
 				.build()
 		);
 

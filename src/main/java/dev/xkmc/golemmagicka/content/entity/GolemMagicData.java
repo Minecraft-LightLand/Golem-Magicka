@@ -3,6 +3,7 @@ package dev.xkmc.golemmagicka.content.entity;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
@@ -29,7 +30,7 @@ public class GolemMagicData {
 
 	public final AbstractGolemEntity<?, ?> golem;
 
-	private final MagicData playerMagicData = new MagicData(true);
+	private final MagicData data = new MagicData(true);
 
 	@Nullable
 	private SpellData castingSpell;
@@ -51,48 +52,54 @@ public class GolemMagicData {
 		if (!golem.level().isClientSide()) {
 			if (recreateSpell) {
 				recreateSpell = false;
-				SyncedSpellData syncedSpellData = playerMagicData.getSyncedData();
+				SyncedSpellData syncedSpellData = data.getSyncedData();
 				AbstractSpell spell = SpellRegistry.getSpell(syncedSpellData.getCastingSpellId());
 				initiateCastSpell(spell, syncedSpellData.getCastingSpellLevel());
 			}
 			if (castingSpell != null) {
-				playerMagicData.handleCastDuration();
-				if (playerMagicData.isCasting()) {
-					castingSpell.getSpell().onServerCastTick(golem.level(), castingSpell.getLevel(), golem, playerMagicData);
+				data.handleCastDuration();
+				if (data.isCasting()) {
+					castingSpell.getSpell().onServerCastTick(golem.level(), castingSpell.getLevel(), golem, data);
 				}
 
 				forceLookAtTarget(golem.getTarget());
-				if (playerMagicData.getCastDurationRemaining() <= 0) {
+				if (data.getCastDurationRemaining() <= 0) {
 					if (castingSpell.getSpell().getCastType() == CastType.LONG || castingSpell.getSpell().getCastType() == CastType.INSTANT) {
-						castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, playerMagicData);
+						castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, data);
 					}
 
 					castComplete();
-				} else if (castingSpell.getSpell().getCastType() == CastType.CONTINUOUS && (playerMagicData.getCastDurationRemaining() + 1) % 10 == 0) {
-					castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, playerMagicData);
+				} else if (castingSpell.getSpell().getCastType() == CastType.CONTINUOUS && (data.getCastDurationRemaining() + 1) % 10 == 0) {
+					castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, data);
 				}
 
 			}
 		}
 
-		GolemSpellManager.tickGolemSpellData(golem, playerMagicData);
+		GolemSpellManager.tickGolemSpellData(golem, data);
 	}
 
-	public void addAdditionalSaveData(CompoundTag pCompound) {
-		playerMagicData.getSyncedData().saveNBTData(pCompound, golem.level().registryAccess());
+	public void addAdditionalSaveData(CompoundTag tag) {
+		data.getSyncedData().saveNBTData(tag, golem.level().registryAccess());
+		tag.putFloat("Mana", data.getMana());
 	}
 
-	public void readAdditionalSaveData(CompoundTag pCompound) {
+	public void readAdditionalSaveData(CompoundTag tag) {
 		SyncedSpellData syncedSpellData = new SyncedSpellData(golem);
-		syncedSpellData.loadNBTData(pCompound, golem.level().registryAccess());
+		syncedSpellData.loadNBTData(tag, golem.level().registryAccess());
 		if (syncedSpellData.isCasting()) {
 			recreateSpell = true;
 		}
-		playerMagicData.setSyncedData(syncedSpellData);
+		data.setSyncedData(syncedSpellData);
+		if (!tag.contains("Mana")) {
+			data.setMana((float) golem.getAttributeValue(AttributeRegistry.MAX_MANA.get()));
+		} else {
+			data.setMana(tag.getFloat("Mana"));
+		}
 	}
 
 	public MagicData getMagicData() {
-		return playerMagicData;
+		return data;
 	}
 
 	public void cancelCast() {
@@ -110,28 +117,28 @@ public class GolemMagicData {
 	public void castComplete() {
 		if (!golem.level().isClientSide) {
 			if (castingSpell != null) {
-				castingSpell.getSpell().onServerCastComplete(golem.level(), castingSpell.getLevel(), golem, playerMagicData, false);
+				castingSpell.getSpell().onServerCastComplete(golem.level(), castingSpell.getLevel(), golem, data, false);
 			}
 		} else {
-			playerMagicData.resetCastingState();
+			data.resetCastingState();
 		}
 		castingSpell = null;
 	}
 
 	public void setSyncedSpellData(SyncedSpellData syncedSpellData) {
 		if (!golem.level().isClientSide()) return;
-		boolean isCasting = playerMagicData.isCasting();
-		playerMagicData.setSyncedData(syncedSpellData);
-		castingSpell = playerMagicData.getCastingSpell();
+		boolean isCasting = data.isCasting();
+		data.setSyncedData(syncedSpellData);
+		castingSpell = data.getCastingSpell();
 		if (castingSpell != null) {
-			if (!playerMagicData.isCasting() && isCasting) {
+			if (!data.isCasting() && isCasting) {
 				castComplete();
-			} else if (playerMagicData.isCasting() && !isCasting) {
-				AbstractSpell spell = playerMagicData.getCastingSpell().getSpell();
-				initiateCastSpell(spell, playerMagicData.getCastingSpellLevel());
+			} else if (data.isCasting() && !isCasting) {
+				AbstractSpell spell = data.getCastingSpell().getSpell();
+				initiateCastSpell(spell, data.getCastingSpellLevel());
 				if (castingSpell.getSpell().getCastType() == CastType.INSTANT) {
 					instantCastSpellType = castingSpell.getSpell();
-					castingSpell.getSpell().onClientPreCast(golem.level(), castingSpell.getLevel(), golem, InteractionHand.MAIN_HAND, playerMagicData);
+					castingSpell.getSpell().onClientPreCast(golem.level(), castingSpell.getLevel(), golem, InteractionHand.MAIN_HAND, data);
 					castComplete();
 				}
 			}
@@ -153,7 +160,7 @@ public class GolemMagicData {
 				forceLookAtTarget(golem.getTarget());
 			}
 
-			if (!golem.level().isClientSide && !castingSpell.getSpell().checkPreCastConditions(golem.level(), spellLevel, golem, playerMagicData)) {
+			if (!golem.level().isClientSide && !castingSpell.getSpell().checkPreCastConditions(golem.level(), spellLevel, golem, data)) {
 				castingSpell = null;
 			} else {
 				if (spell != SpellRegistry.TELEPORT_SPELL.get() && spell != SpellRegistry.FROST_STEP_SPELL.get()) {
@@ -166,9 +173,9 @@ public class GolemMagicData {
 					setTeleportLocationBehindTarget(10);
 				}
 
-				playerMagicData.initiateCast(castingSpell.getSpell(), castingSpell.getLevel(), castingSpell.getSpell().getEffectiveCastTime(castingSpell.getLevel(), golem), CastSource.MOB, SpellSelectionManager.MAINHAND);
+				data.initiateCast(castingSpell.getSpell(), castingSpell.getLevel(), castingSpell.getSpell().getEffectiveCastTime(castingSpell.getLevel(), golem), CastSource.MOB, SpellSelectionManager.MAINHAND);
 				if (!golem.level().isClientSide) {
-					castingSpell.getSpell().onServerPreCast(golem.level(), castingSpell.getLevel(), golem, playerMagicData);
+					castingSpell.getSpell().onServerPreCast(golem.level(), castingSpell.getLevel(), golem, data);
 				}
 
 			}
@@ -179,7 +186,7 @@ public class GolemMagicData {
 	}
 
 	public boolean isCasting() {
-		return playerMagicData.isCasting();
+		return data.isCasting();
 	}
 
 	public boolean setTeleportLocationBehindTarget(int distance) {
@@ -201,19 +208,19 @@ public class GolemMagicData {
 				}
 			}
 			if (valid) {
-				playerMagicData.setAdditionalCastData(new TeleportSpell.TeleportData(teleportPos));
+				data.setAdditionalCastData(new TeleportSpell.TeleportData(teleportPos));
 			} else {
-				playerMagicData.setAdditionalCastData(new TeleportSpell.TeleportData(golem.position()));
+				data.setAdditionalCastData(new TeleportSpell.TeleportData(golem.position()));
 			}
 		} else {
-			playerMagicData.setAdditionalCastData(new TeleportSpell.TeleportData(golem.position()));
+			data.setAdditionalCastData(new TeleportSpell.TeleportData(golem.position()));
 		}
 
 		return valid;
 	}
 
 	public void setBurningDashDirectionData() {
-		playerMagicData.setAdditionalCastData(new BurningDashSpell.BurningDashDirectionOverrideCastData());
+		data.setAdditionalCastData(new BurningDashSpell.BurningDashDirectionOverrideCastData());
 	}
 
 	public boolean isDrinkingPotion() {

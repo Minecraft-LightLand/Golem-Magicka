@@ -2,11 +2,11 @@ package dev.xkmc.golemmagicka.events;
 
 import dev.xkmc.golemmagicka.content.entity.GolemSpellManager;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
+import dev.xkmc.golemmagicka.init.data.GMLang;
 import dev.xkmc.modulargolems.events.event.GolemInfoEvent;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,14 +21,14 @@ public class GolemEventHandlers {
 		int mana = (int) data.getMana();
 		boolean hasSpell = GolemSpellManager.predicate(event.getGolem(), event.getGolem().getMainHandItem(), null).isPresent();
 		if (mana == maxMana && !hasSpell) return;
-		event.addLine(Component.literal("Mana: " + mana + "/" + maxMana));
+		event.addLine(GMLang.MANA.get(mana, maxMana));
 		var cds = data.getPlayerCooldowns();
+		if (cds.getSpellCooldowns().isEmpty()) return;
+		event.addLine(GMLang.CDS.get());
 		for (var e : cds.getSpellCooldowns().entrySet()) {
 			var spell = SpellRegistry.getSpell(e.getKey());
-			event.addLine(Component.literal("- ")
-					.append(Component.translatable(spell.getComponentId()))
-					.append(": " + e.getValue().getCooldownRemaining() / 20 + "s")
-					.withStyle(ChatFormatting.GRAY));
+			event.addLine(GMLang.CD.get(Component.translatable(spell.getComponentId()),
+					e.getValue().getCooldownRemaining() / 20));
 		}
 	}
 

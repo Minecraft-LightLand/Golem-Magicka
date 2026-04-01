@@ -8,6 +8,7 @@ import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import dev.xkmc.modulargolems.content.entity.common.SweepGolemEntity;
 import dev.xkmc.modulargolems.content.entity.humanoid.weapon.GolemWeaponRegistry;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
+import io.redspace.ironsspellbooks.api.item.weapons.MagicSwordItem;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
@@ -41,9 +42,9 @@ public class GolemSpellManager {
 	}
 
 	public static Optional<WeaponStatus> predicate(LivingEntity e, ItemStack stack, @Nullable InteractionHand hand) {
-		boolean valid =
-				stack.getItem() instanceof SpellBook ||
-						stack.getItem() instanceof CastingItem;
+		boolean valid = stack.getItem() instanceof SpellBook ||
+				stack.getItem() instanceof CastingItem ||
+				stack.getItem() instanceof MagicSwordItem;
 		return WeaponStatus.OFFENSIVE.withPriority(1000).of(valid);
 	}
 
@@ -65,6 +66,13 @@ public class GolemSpellManager {
 				for (var spell : cont.getActiveSpells()) {
 					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SPELLBOOK));
 				}
+			}
+		}
+		ItemStack mainhand = e.getMainHandItem();
+		if (mainhand.getItem() instanceof MagicSwordItem sword) {
+			for (var spell : sword.getSpells()) {
+				if (spell == null) continue;
+				ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD));
 			}
 		}
 		return ans;

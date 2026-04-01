@@ -47,10 +47,6 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 
 	@Override
 	protected void doSpellAction() {
-		if (spellCache == null) {
-			this.spellAttackDelay = 2;
-			return;
-		}
 		AbstractSpell spell = this.getNextSpellType();
 		if (spell == SpellRegistry.none()) {
 			this.spellAttackDelay = 5;

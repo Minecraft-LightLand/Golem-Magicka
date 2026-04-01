@@ -1,6 +1,7 @@
 package dev.xkmc.golemmagicka.init.data;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.modulargolems.init.ModularGolems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -12,14 +13,15 @@ import javax.annotation.Nullable;
 import java.util.Locale;
 
 public enum GMLang {
-	;
+	MANA("info.mana", "Mana: %s/%s", 2, ChatFormatting.AQUA),
+	CD("info.cd", "- %s: %ss", 2, ChatFormatting.GRAY);
 
 	private final String key, def;
 	private final int arg;
 	private final ChatFormatting format;
 
 	GMLang(String key, String def, int arg, @Nullable ChatFormatting format) {
-		this.key = ModularGolems.MODID + "." + key;
+		this.key = GolemMagicka.MODID + "." + key;
 		this.def = def;
 		this.arg = arg;
 		this.format = format;

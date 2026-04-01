@@ -1,11 +1,12 @@
 package dev.xkmc.golemmagicka.init;
 
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.golemmagicka.content.entity.GolemSpellInfoToClient;
 import dev.xkmc.golemmagicka.content.entity.GolemSpellManager;
 import dev.xkmc.golemmagicka.init.data.*;
 import dev.xkmc.golemmagicka.init.reg.GMItems;
-import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.golemmagicka.init.reg.GMModifiers;
+import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.l2library.base.L2Registrate;
 import dev.xkmc.l2library.serial.config.PacketHandlerWithConfig;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.network.NetworkDirection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +33,8 @@ public class GolemMagicka {
 	public static final IEventBus MOD_BUS = FMLJavaModLoadingContext.get().getModEventBus();
 
 	public static final PacketHandlerWithConfig HANDLER = new PacketHandlerWithConfig(
-			new ResourceLocation(GolemMagicka.MODID, "main"), 1
+			new ResourceLocation(GolemMagicka.MODID, "main"), 1,
+			e -> e.create(GolemSpellInfoToClient.class, NetworkDirection.PLAY_TO_CLIENT)
 	);
 
 	public GolemMagicka() {

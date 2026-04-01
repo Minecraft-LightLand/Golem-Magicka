@@ -47,43 +47,44 @@ public class GolemMagicData {
 			cancelCast();
 	}
 
-	public void customServerAiStep() {
-		if (recreateSpell) {
-			recreateSpell = false;
-			SyncedSpellData syncedSpellData = playerMagicData.getSyncedData();
-			AbstractSpell spell = SpellRegistry.getSpell(syncedSpellData.getCastingSpellId());
-			initiateCastSpell(spell, syncedSpellData.getCastingSpellLevel());
-		}
-
-		if (castingSpell != null) {
-			playerMagicData.handleCastDuration();
-			if (playerMagicData.isCasting()) {
-				castingSpell.getSpell().onServerCastTick(golem.level(), castingSpell.getLevel(), golem, playerMagicData);
+	public void aiStep() {
+		if (!golem.level().isClientSide()) {
+			if (recreateSpell) {
+				recreateSpell = false;
+				SyncedSpellData syncedSpellData = playerMagicData.getSyncedData();
+				AbstractSpell spell = SpellRegistry.getSpell(syncedSpellData.getCastingSpellId());
+				initiateCastSpell(spell, syncedSpellData.getCastingSpellLevel());
 			}
+			if (castingSpell != null) {
+				playerMagicData.handleCastDuration();
+				if (playerMagicData.isCasting()) {
+					castingSpell.getSpell().onServerCastTick(golem.level(), castingSpell.getLevel(), golem, playerMagicData);
+				}
 
-			forceLookAtTarget(golem.getTarget());
-			if (playerMagicData.getCastDurationRemaining() <= 0) {
-				if (castingSpell.getSpell().getCastType() == CastType.LONG || castingSpell.getSpell().getCastType() == CastType.INSTANT) {
+				forceLookAtTarget(golem.getTarget());
+				if (playerMagicData.getCastDurationRemaining() <= 0) {
+					if (castingSpell.getSpell().getCastType() == CastType.LONG || castingSpell.getSpell().getCastType() == CastType.INSTANT) {
+						castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, playerMagicData);
+					}
+
+					castComplete();
+				} else if (castingSpell.getSpell().getCastType() == CastType.CONTINUOUS && (playerMagicData.getCastDurationRemaining() + 1) % 10 == 0) {
 					castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, playerMagicData);
 				}
 
-				castComplete();
-			} else if (castingSpell.getSpell().getCastType() == CastType.CONTINUOUS && (playerMagicData.getCastDurationRemaining() + 1) % 10 == 0) {
-				castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, playerMagicData);
 			}
-
 		}
 
 		GolemSpellManager.tickGolemSpellData(golem, playerMagicData);
 	}
 
 	public void addAdditionalSaveData(CompoundTag pCompound) {
-		playerMagicData.getSyncedData().saveNBTData(pCompound);
+		playerMagicData.getSyncedData().saveNBTData(pCompound, golem.level().registryAccess());
 	}
 
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		SyncedSpellData syncedSpellData = new SyncedSpellData(golem);
-		syncedSpellData.loadNBTData(pCompound);
+		syncedSpellData.loadNBTData(pCompound, golem.level().registryAccess());
 		if (syncedSpellData.isCasting()) {
 			recreateSpell = true;
 		}

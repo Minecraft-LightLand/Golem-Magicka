@@ -56,8 +56,8 @@ public abstract class AbstractGolemMixin extends GuardedEntity implements IMagic
 	@Inject(method = "aiStep", at = @At("TAIL"))
 	public void magicka$aiStep(CallbackInfo ci) {
 		if (magicka$magicData == null) return;
-		if (!this.level().isClientSide && this.isAlive())
-			magicka$magicData.customServerAiStep();
+		if (this.isAlive())
+			magicka$magicData.aiStep();
 	}
 
 	@Override

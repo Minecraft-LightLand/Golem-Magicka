@@ -8,8 +8,8 @@
       "golemmagicka:max_mana": 100.0
     },
     "modulargolems:netherite": {
-      "golemmagicka:mana_regen": 0.2,
-      "golemmagicka:max_mana": 50.0
+      "golemmagicka:mana_regen": 0.4,
+      "golemmagicka:max_mana": 200.0
     }
   }
 }

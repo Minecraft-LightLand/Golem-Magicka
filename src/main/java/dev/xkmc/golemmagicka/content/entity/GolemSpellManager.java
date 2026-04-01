@@ -10,7 +10,11 @@ import dev.xkmc.modulargolems.content.entity.humanoid.weapon.GolemWeaponRegistry
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
+import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
+import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.item.CastingItem;
 import io.redspace.ironsspellbooks.item.SpellBook;
 import net.minecraft.util.Mth;
@@ -36,7 +40,7 @@ public class GolemSpellManager {
 		return new GolemWizardGoal<>(((IGolemMagicka) e).magicka$getGolemMagicData(), ((IMagicEntity) e), 1, 20);
 	}
 
-	private static Optional<WeaponStatus> predicate(LivingEntity e, ItemStack stack, @Nullable InteractionHand hand) {
+	public static Optional<WeaponStatus> predicate(LivingEntity e, ItemStack stack, @Nullable InteractionHand hand) {
 		boolean valid =
 				stack.getItem() instanceof SpellBook ||
 						stack.getItem() instanceof CastingItem;
@@ -59,7 +63,7 @@ public class GolemSpellManager {
 			if (stack.getItem() instanceof SpellBook) {
 				ISpellContainer cont = ISpellContainer.get(stack);
 				for (var spell : cont.getActiveSpells()) {
-					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel()));
+					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SPELLBOOK));
 				}
 			}
 		}
@@ -68,6 +72,7 @@ public class GolemSpellManager {
 
 	public static void tickGolemSpellData(AbstractGolemEntity<?, ?> e, MagicData data) {
 		data.getPlayerCooldowns().tick(1);
+		if (e.level().isClientSide()) return;
 		if (e.tickCount % 10 != 0) return;
 		if (e.getAttribute(AttributeRegistry.MAX_MANA.get()) == null) return;
 		if (e.getAttribute(AttributeRegistry.MANA_REGEN.get()) == null) return;
@@ -75,9 +80,22 @@ public class GolemSpellManager {
 		float mana = data.getMana();
 		if (mana != (float) playerMaxMana) {
 			float rate = (float) e.getAttributeValue(AttributeRegistry.MANA_REGEN.get());
-			float increment = (float) playerMaxMana * 0.01F * rate;
-			data.setMana(Mth.clamp(data.getMana() + increment, 0.0F, (float) playerMaxMana));
+			float increment = playerMaxMana * 0.01F * rate;
+			data.setMana(Mth.clamp(data.getMana() + increment, 0, playerMaxMana));
+			var packet = new GolemSpellInfoToClient();
+			packet.id = e.getId();
+			packet.mana = (int) data.getMana();
+			GolemMagicka.HANDLER.toTrackingPlayers(packet, e);
 		}
+	}
+
+	public static int getEffectiveSpellCooldown(AbstractSpell spell, LivingEntity e, CastSource source) {
+		double rate = e.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
+		float factor = 1.0F;
+		if (source == CastSource.SWORD) {
+			factor = ServerConfigs.SWORDS_CD_MULTIPLIER.get().floatValue();
+		}
+		return (int) (spell.getSpellCooldown() * (2 - Utils.softCapFormula(rate)) * factor);
 	}
 
 }

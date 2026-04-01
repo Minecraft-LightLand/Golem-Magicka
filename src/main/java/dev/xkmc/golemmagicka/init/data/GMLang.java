@@ -54,5 +54,8 @@ public enum GMLang {
 		for (GMLang lang : GMLang.values()) {
 			pvd.add(lang.key, lang.def);
 		}
+
+		pvd.add("golem_material." + GolemMagicka.MODID + ".pyrium", "Pyrium");
+
 	}
 }

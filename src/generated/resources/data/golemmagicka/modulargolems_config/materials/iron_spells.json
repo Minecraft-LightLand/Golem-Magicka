@@ -1,0 +1,27 @@
+{
+  "ingredients": {
+    "golemmagicka:pyrium": {
+      "item": "irons_spellbooks:pyrium_ingot"
+    }
+  },
+  "modifiers": {
+    "golemmagicka:pyrium": {
+      "modulargolems:fire_immune": 1
+    }
+  },
+  "repairIngredients": {
+    "golemmagicka:pyrium": {
+      "item": "irons_spellbooks:pyrium_ingot"
+    }
+  },
+  "stats": {
+    "golemmagicka:pyrium": {
+      "golemmagicka:mana_regen": 1.0,
+      "golemmagicka:max_mana": 800.0,
+      "golemmagicka:spell_power": 0.5,
+      "modulargolems:attack": 30.0,
+      "modulargolems:max_health": 400.0,
+      "modulargolems:sweep": 1.0
+    }
+  }
+}

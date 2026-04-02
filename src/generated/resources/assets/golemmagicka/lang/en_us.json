@@ -1,8 +1,14 @@
 {
   "golem_material.golemmagicka.pyrium": "Pyrium",
+  "golemmagicka.configuration.section.l2configs.golemmagicka.client.toml": "Golem Magicka Client Configuration",
+  "golemmagicka.configuration.section.l2configs.golemmagicka.client.toml.title": "Golem Magicka Client Configuration",
+  "golemmagicka.configuration.section.l2configs.golemmagicka.server.toml": "Golem Magicka Server Configuration",
+  "golemmagicka.configuration.section.l2configs.golemmagicka.server.toml.title": "Golem Magicka Server Configuration",
+  "golemmagicka.configuration.title": "Golem Magicka Configuration",
   "golemmagicka.info.cd": "- %s: %ss",
   "golemmagicka.info.cds": "Spell Cooldowns:",
   "golemmagicka.info.invalid": "- %s",
   "golemmagicka.info.invalids": "Invalid Spells:",
-  "golemmagicka.info.mana": "Mana: %s/%s"
+  "golemmagicka.info.mana": "Mana: %s/%s",
+  "golemmagicka.title": "Golem Magicka"
 }

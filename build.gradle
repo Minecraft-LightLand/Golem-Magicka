@@ -159,7 +159,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.tterrag.registrate:Registrate:${registrate_version}"
+    implementation "com.tterrag.registrate:Registrate:${registrate_version}"
 
     implementation "dev.xkmc:l2serial:${l2serial_ver}"
     implementation "dev.xkmc:l2core:${l2core_ver}"

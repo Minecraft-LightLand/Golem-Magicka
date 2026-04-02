@@ -8,6 +8,7 @@ public class GMConfig {
 	public static class Client extends ConfigInit {
 
 		Client(Builder builder) {
+			markL2();
 		}
 
 	}
@@ -16,6 +17,7 @@ public class GMConfig {
 
 
 		Common(Builder builder) {
+			markL2();
 		}
 
 	}

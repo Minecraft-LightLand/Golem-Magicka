@@ -1,8 +1,14 @@
 {
   "golem_material.golemmagicka.pyrium": "ɯnıɹʎԀ",
+  "golemmagicka.configuration.section.l2configs.golemmagicka.client.toml": "uoıʇɐɹnbıɟuoƆ ʇuǝıןƆ ɐʞɔıbɐW ɯǝןo⅁",
+  "golemmagicka.configuration.section.l2configs.golemmagicka.client.toml.title": "uoıʇɐɹnbıɟuoƆ ʇuǝıןƆ ɐʞɔıbɐW ɯǝןo⅁",
+  "golemmagicka.configuration.section.l2configs.golemmagicka.server.toml": "uoıʇɐɹnbıɟuoƆ ɹǝʌɹǝS ɐʞɔıbɐW ɯǝןo⅁",
+  "golemmagicka.configuration.section.l2configs.golemmagicka.server.toml.title": "uoıʇɐɹnbıɟuoƆ ɹǝʌɹǝS ɐʞɔıbɐW ɯǝןo⅁",
+  "golemmagicka.configuration.title": "uoıʇɐɹnbıɟuoƆ ɐʞɔıbɐW ɯǝןo⅁",
   "golemmagicka.info.cd": "%ss :%s -",
   "golemmagicka.info.cds": ":suʍopןooƆ ןןǝdS",
   "golemmagicka.info.invalid": "%s -",
   "golemmagicka.info.invalids": ":sןןǝdS pıןɐʌuI",
-  "golemmagicka.info.mana": "%s/%s :ɐuɐW"
+  "golemmagicka.info.mana": "%s/%s :ɐuɐW",
+  "golemmagicka.title": "ɐʞɔıbɐW ɯǝןo⅁"
 }

@@ -5,10 +5,10 @@ import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.modulargolems.content.entity.metalgolem.MetalGolemEntity;
 import dev.xkmc.modulargolems.events.event.GolemEquipItemEvent;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
-@Mod.EventBusSubscriber(modid = GolemMagicka.MODID)
+@EventBusSubscriber(modid = GolemMagicka.MODID)
 public class GolemEventHandlers {
 
 	@SubscribeEvent

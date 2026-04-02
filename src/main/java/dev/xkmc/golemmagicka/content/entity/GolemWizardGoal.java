@@ -70,12 +70,10 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			data.getMagicData().getPlayerCooldowns().addCooldown(spell.getSpellId(), cd);
 			this.spellCastingMob.initiateCastSpell(spell, entry.level());
 			this.fleeCooldown = 7 + spell.getCastTime(entry.level());
-			var packet = new GolemSpellInfoToClient();
-			packet.id = data.golem.getId();
-			packet.mana = (int) data.getMagicData().getMana();
-			packet.spell = spell.getSpellId();
-			packet.cooldown = cd;
-			GolemMagicka.HANDLER.toTrackingPlayers(packet, data.golem);
+			GolemMagicka.HANDLER.toTrackingPlayers(new GolemSpellInfoToClient(
+					data.golem.getId(),
+					(int) data.getMagicData().getMana(),
+					spell.getSpellId(), cd), data.golem);
 		} else {
 			this.spellAttackDelay = 5;
 		}

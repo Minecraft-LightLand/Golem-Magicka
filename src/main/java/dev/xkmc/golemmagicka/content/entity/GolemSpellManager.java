@@ -48,14 +48,14 @@ public class GolemSpellManager {
 		data.getPlayerCooldowns().tick(1);
 		if (e.level().isClientSide()) return;
 		if (e.tickCount % 10 != 0) return;
-		if (e.getAttribute(AttributeRegistry.MAX_MANA.get()) == null) return;
-		if (e.getAttribute(AttributeRegistry.MANA_REGEN.get()) == null) return;
-		int playerMaxMana = (int) e.getAttributeValue(AttributeRegistry.MAX_MANA.get());
-		float rate = (float) e.getAttributeValue(AttributeRegistry.MANA_REGEN.get());
+		if (e.getAttribute(AttributeRegistry.MAX_MANA) == null) return;
+		if (e.getAttribute(AttributeRegistry.MANA_REGEN) == null) return;
+		int playerMaxMana = (int) e.getAttributeValue(AttributeRegistry.MAX_MANA);
+		float rate = (float) e.getAttributeValue(AttributeRegistry.MANA_REGEN);
 		float increment = playerMaxMana * 0.01F * rate;
 		for (var p : e.getPassengers()) {
 			if (!(p instanceof LivingEntity passenger)) continue;
-			if (passenger.getAttribute(AttributeRegistry.MAX_MANA.get()) == null) continue;
+			if (passenger.getAttribute(AttributeRegistry.MAX_MANA) == null) continue;
 			MagicData riderData = null;
 			if (passenger instanceof AbstractGolemEntity<?, ?> rider) {
 				riderData = ((IMagicEntity) rider).getMagicData();
@@ -63,7 +63,7 @@ public class GolemSpellManager {
 				riderData = MagicData.getPlayerMagicData(sp);
 			}
 			if (riderData == null) continue;
-			float diff = (float) passenger.getAttributeValue(AttributeRegistry.MAX_MANA.get()) - riderData.getMana();
+			float diff = (float) passenger.getAttributeValue(AttributeRegistry.MAX_MANA) - riderData.getMana();
 			if (diff <= 0) continue;
 			int max = (int) Math.min(diff, Math.min(increment * 2, (data.getMana() - 100) / 2));
 			if (max > 0) {
@@ -74,15 +74,13 @@ public class GolemSpellManager {
 		float mana = data.getMana();
 		if (mana != (float) playerMaxMana) {
 			data.setMana(Mth.clamp(data.getMana() + increment, 0, playerMaxMana));
-			var packet = new GolemSpellInfoToClient();
-			packet.id = e.getId();
-			packet.mana = (int) data.getMana();
+			var packet = new GolemSpellInfoToClient(e.getId(), (int) data.getMana());
 			GolemMagicka.HANDLER.toTrackingPlayers(packet, e);
 		}
 	}
 
 	public static int getEffectiveSpellCooldown(AbstractSpell spell, LivingEntity e, CastSource source) {
-		double rate = e.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
+		double rate = e.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION);
 		float factor = 1.0F;
 		if (source == CastSource.SWORD) {
 			factor = ServerConfigs.SWORDS_CD_MULTIPLIER.get().floatValue();

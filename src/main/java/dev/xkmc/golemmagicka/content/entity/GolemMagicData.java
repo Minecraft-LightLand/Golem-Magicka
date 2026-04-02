@@ -92,7 +92,7 @@ public class GolemMagicData {
 		}
 		data.setSyncedData(syncedSpellData);
 		if (!tag.contains("Mana")) {
-			data.setMana((float) golem.getAttributeValue(AttributeRegistry.MAX_MANA.get()));
+			data.setMana((float) golem.getAttributeValue(AttributeRegistry.MAX_MANA));
 		} else {
 			data.setMana(tag.getFloat("Mana"));
 		}

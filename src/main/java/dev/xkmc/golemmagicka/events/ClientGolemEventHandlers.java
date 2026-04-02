@@ -9,17 +9,17 @@ import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = GolemMagicka.MODID)
+@EventBusSubscriber(value = Dist.CLIENT, modid = GolemMagicka.MODID)
 public class ClientGolemEventHandlers {
 
 	@SubscribeEvent
 	public static void onGolemInfo(GolemInfoEvent event) {
 		var data = ((IMagicEntity) event.getGolem()).getMagicData();
-		int maxMana = (int) event.getGolem().getAttributeValue(AttributeRegistry.MAX_MANA.get());
+		int maxMana = (int) event.getGolem().getAttributeValue(AttributeRegistry.MAX_MANA);
 		int mana = (int) data.getMana();
 		boolean hasSpell = GolemSpellManager.predicate(event.getGolem(), event.getGolem().getMainHandItem(), null).isPresent();
 		if (mana == maxMana && !hasSpell) return;

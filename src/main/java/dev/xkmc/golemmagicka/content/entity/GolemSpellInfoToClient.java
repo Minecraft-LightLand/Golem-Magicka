@@ -1,30 +1,19 @@
 package dev.xkmc.golemmagicka.content.entity;
 
 import dev.xkmc.l2serial.network.SerialPacketBase;
-import dev.xkmc.l2serial.serialization.SerialClass;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.Nullable;
 
-@SerialClass
-public class GolemSpellInfoToClient extends SerialPacketBase {
+public record GolemSpellInfoToClient(
+		int id, int mana, @Nullable String spell, int cooldown
+) implements SerialPacketBase<GolemSpellInfoToClient> {
 
-	@SerialClass.SerialField
-	public int id;
-
-	@SerialClass.SerialField
-	public int mana;
-
-	@SerialClass.SerialField
-	public String spell;
-
-	@SerialClass.SerialField
-	public int cooldown;
-
-	public GolemSpellInfoToClient() {
-
+	public GolemSpellInfoToClient(int id, int mana) {
+		this(id, mana, null, 0);
 	}
 
 	@Override
-	public void handle(NetworkEvent.Context context) {
+	public void handle(Player player) {
 		SpellInfoUpdateHandler.handle(this);
 	}
 

@@ -13,12 +13,10 @@ import java.util.Objects;
 public class GMTagGen {
 
 	public static final ProviderType<RegistrateTagsProvider.IntrinsicImpl<AbstractSpell>> SPELL_TAGS =
-			ProviderType.register("tags/spell", (type) -> (p, e) ->
-					new RegistrateTagsProvider.IntrinsicImpl<>(p, type, "spells", e.getGenerator().getPackOutput(),
-							SpellRegistry.SPELL_REGISTRY_KEY, e.getLookupProvider(), (spell) ->
+			ProviderType.registerIntrinsicTag("tags/spell", "spell",
+					SpellRegistry.SPELL_REGISTRY_KEY, (spell) ->
 							ResourceKey.create(SpellRegistry.SPELL_REGISTRY_KEY,
-									Objects.requireNonNull(SpellRegistry.REGISTRY.get().getKey(spell))),
-							e.getExistingFileHelper()));
+									Objects.requireNonNull(SpellRegistry.REGISTRY.getKey(spell))));
 
 	public static final TagKey<AbstractSpell> WHITELIST = loc("whitelist");
 	public static final TagKey<AbstractSpell> BLACKLIST = loc("blacklist");

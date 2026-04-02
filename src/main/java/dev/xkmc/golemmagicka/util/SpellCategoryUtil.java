@@ -12,7 +12,7 @@ import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.item.SpellBook;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.ArrayList;
@@ -21,30 +21,25 @@ import java.util.List;
 public class SpellCategoryUtil {
 
 	public static boolean isSupport(AbstractSpell e) {
-		var holder = SpellRegistry.REGISTRY.get().getHolder(e);
-		return holder.isPresent() && holder.get().is(GMTagGen.SUPPORT);
+		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.SUPPORT);
 	}
 
 	public static boolean isMovement(AbstractSpell e) {
-		var holder = SpellRegistry.REGISTRY.get().getHolder(e);
-		return holder.isPresent() && holder.get().is(GMTagGen.MOVEMENT);
+		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.MOVEMENT);
 	}
 
 	public static boolean isDefense(AbstractSpell e) {
-		var holder = SpellRegistry.REGISTRY.get().getHolder(e);
-		return holder.isPresent() && holder.get().is(GMTagGen.DEFENSE);
+		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.DEFENSE);
 	}
 
 	public static boolean isSummon(AbstractSpell e) {
-		var holder = SpellRegistry.REGISTRY.get().getHolder(e);
-		return holder.isPresent() && holder.get().is(GMTagGen.SUMMON);
+		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.SUMMON);
 	}
 
 	public static boolean isBanned(AbstractSpell e) {
-		var holder = SpellRegistry.REGISTRY.get().getHolder(e);
-		if (holder.isPresent() && holder.get().is(GMTagGen.WHITELIST)) return false;
+		if (SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.WHITELIST)) return false;
 		if (e.getRecastCount(1, null) > 0) return true;
-		return holder.isEmpty() || holder.get().is(GMTagGen.BLACKLIST);
+		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.BLACKLIST);
 	}
 
 	public static List<ItemStack> getGolemSpellItems(LivingEntity e) {

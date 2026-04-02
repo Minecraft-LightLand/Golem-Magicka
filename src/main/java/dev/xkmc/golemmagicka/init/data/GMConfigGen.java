@@ -3,20 +3,23 @@ package dev.xkmc.golemmagicka.init.data;
 import dev.xkmc.golemmagicka.content.config.MagicStatBuilder;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.reg.GMTypes;
-import dev.xkmc.l2library.serial.config.ConfigDataProvider;
+import dev.xkmc.l2core.serial.config.ConfigDataProvider;
 import dev.xkmc.modulargolems.content.config.GolemMaterialConfig;
 import dev.xkmc.modulargolems.content.config.GolemPartConfig;
 import dev.xkmc.modulargolems.init.ModularGolems;
 import dev.xkmc.modulargolems.init.registrate.GolemModifiers;
 import dev.xkmc.modulargolems.init.registrate.GolemTypes;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import java.util.concurrent.CompletableFuture;
+
 public class GMConfigGen extends ConfigDataProvider {
 
-	public GMConfigGen(DataGenerator generator) {
-		super(generator, "Golem Spawn Config");
+	public GMConfigGen(DataGenerator generator, CompletableFuture<HolderLookup.Provider> pvd) {
+		super(generator, pvd, "Golem Spawn Config");
 	}
 
 	public void add(ConfigDataProvider.Collector map) {

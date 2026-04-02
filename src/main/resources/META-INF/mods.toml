@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[47,)"
-license="All rights reserved"
+license="LGPL-2.1"
 [[mods]]
 modId="golemmagicka"
 version="${file.jarVersion}" #mandatory
@@ -9,7 +9,7 @@ logoFile="golemmagicka.png" #optional
 credits="LightLand team" #optional
 authors="lcy0x1" #optional
 description='''
-This mod adds golems that can be crafted with different materials in a Tinker-like playstyle.
+This mod allows modular golems to cast iron's spells
 '''
 [[dependencies.golemmagicka]]
     modId="forge"

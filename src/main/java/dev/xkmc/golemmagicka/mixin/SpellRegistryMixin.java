@@ -7,7 +7,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(SpellRegistry.class)
+@Mixin(value = SpellRegistry.class)
 public class SpellRegistryMixin {
 
 	@WrapOperation(method = "lambda$static$0", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/registries/RegistryBuilder;disableOverrides()Lnet/minecraftforge/registries/RegistryBuilder;"))

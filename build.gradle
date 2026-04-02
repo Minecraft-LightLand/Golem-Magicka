@@ -241,17 +241,17 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mainFile.addEnvironment("Client", "Server")
     mainFile.addGameVersion("1.20.1")
     mainFile.addModLoader("Forge", "NeoForge")
-    mainFile.addRequirement("l2library", "modulargolems")
-    mainFile.releaseType = "release"
+    mainFile.addRequirement("l2library", "modulargolems", "irons-spells-n-spellbooks")
+    mainFile.releaseType = "beta"
     disableVersionDetection()
 }
 
 modrinth {
     token = secrets.get("modrinth_token")
     projectId = project.modrinth_project
-    versionName = "Golem Dungoens ${project.ll_version}"
+    versionName = "Golem Magicka ${project.ll_version}"
     versionNumber = project.ll_version
-    versionType = "release"
+    versionType = "beta"
     uploadFile = new File("./build/libs/${modid}-${ll_version}.jar")
     gameVersions = ["1.20.1"]
     loaders = ["forge", "neoforge"]
@@ -259,5 +259,6 @@ modrinth {
     dependencies {
         required.project "l2library"
         required.project "modular-golems"
+        required.project "irons-spells-n-spellbooks"
     }
 }

@@ -1,12 +1,9 @@
 package dev.xkmc.golemmagicka.content.entity;
 
-import dev.xkmc.golemmagicka.compat.CuriosCompat;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
-import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.registry.WeaponStatus;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
-import dev.xkmc.modulargolems.content.entity.common.SweepGolemEntity;
 import dev.xkmc.modulargolems.content.entity.humanoid.weapon.GolemWeaponRegistry;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.api.item.weapons.MagicSwordItem;
@@ -14,7 +11,6 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
-import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.item.CastingItem;
@@ -24,18 +20,16 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.Nullable;
-import top.theillusivec4.curios.api.CuriosApi;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class GolemSpellManager {
 
 	public static void init() {
 		GolemWeaponRegistry.HUMANOID.register(GolemMagicka.loc("iron_spells"),
+				GolemSpellManager::predicate, GolemSpellManager::create);
+		GolemWeaponRegistry.LARGE.register(GolemMagicka.loc("iron_spells"),
 				GolemSpellManager::predicate, GolemSpellManager::create);
 	}
 

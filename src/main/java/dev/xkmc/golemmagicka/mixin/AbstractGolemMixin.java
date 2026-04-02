@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(AbstractGolemEntity.class)
+@Mixin(value = AbstractGolemEntity.class)
 public abstract class AbstractGolemMixin extends GuardedEntity implements IMagicEntity, IGolemMagicka {
 
 	@Unique

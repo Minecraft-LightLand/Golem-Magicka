@@ -3,6 +3,7 @@
   "magnifiers": {
     "modulargolems:dog_golem": {
       "golemmagicka:eldritch_spell_power": 0.0,
+      "golemmagicka:max_mana": 0.5,
       "golemmagicka:spell_cooldown": 0.0,
       "golemmagicka:spell_power": 0.0
     },

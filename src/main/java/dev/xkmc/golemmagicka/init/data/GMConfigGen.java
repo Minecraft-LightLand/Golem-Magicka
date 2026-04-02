@@ -27,6 +27,7 @@ public class GMConfigGen extends ConfigDataProvider {
 				.end()
 
 				.addEntity(GolemTypes.TYPE_DOG.get())
+				.addFilter(GMTypes.STAT_MAX_MANA.get(), 0.5)
 				.addFilter(GMTypes.STAT_CD.get(), 0)
 				.addFilter(GMTypes.STAT_SPELL_POWER.get(), 0)
 				.addFilter(GMTypes.FIRE_SPELL_POWER.get(), 0)

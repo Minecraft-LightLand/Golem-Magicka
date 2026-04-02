@@ -1,182 +1,142 @@
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
 
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        mavenCentral()
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public' }
-    }
-    dependencies {
-        classpath "org.spongepowered:mixingradle:${mixingradle_version}"
-        classpath 'org.parchmentmc:librarian:1.+'
-    }
-}
-
 plugins {
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.80'
     id 'net.darkhax.curseforgegradle' version '[1.1.24,1.2)'
     id "at.stnwtr.gradle-secrets-plugin" version "1.0.1"
     id "com.modrinth.minotaur" version "2.+"
 }
 
-apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
+version = mod_version
+group = 'dev.xkmc'
 
-version = "${ll_version}"
-group = "dev.kxmc.${modid}"
-archivesBaseName = "${modid}"
 
-if (lljij.toBoolean()) jarJar.enable()
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-minecraft {
-    //mappings channel: 'parchment', version: '1.19.3-2023.03.12-1.19.4'
-    mappings channel: 'official', version: "${minecraft_version}"
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'info'
-            mods {
-                "${modid}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'info'
-            mods {
-                "${modid}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'info'
-
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', "${modid}", '--existing-mod', 'modulargolems', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                "${modid}" {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
+repositories {
+    mavenLocal()
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-mixin {
-    add sourceSets.main, "${modid}.refmap.json"
-    config "${modid}.mixins.json"
-}
-
-jar {
-    manifest {
-        attributes([
-                "Specification-Title"     : "${modid}",
-                "Specification-Vendor"    : "xkmc",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "xkmc",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'MixinConfigs'            : "${modid}.mixins.json"
-        ])
-    }
+base {
+    archivesName = mod_id
 }
 
 java {
     withSourcesJar()
 }
 
-jar.finalizedBy('reobfJar')
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
+sourceSets {
+    client {}
+    server {}
+    data {}
+    common {}
+}
+
+neoForge {
+    // We currently only support NeoForge versions later than 21.0.x
+    // See https://projects.neoforged.net/neoforged/neoforge for the latest updates
+    version = "${neo_version}"
+
+    // Validate AT files and raise errors when they have invalid targets
+    // This option is false by default, but turning it on is recommended
+    //validateAccessTransformers = true
+    accessTransformers.from "./src/main/resources/META-INF/accesstransformer.cfg"
+
+    runs {
+        client {
+            client()
+        }
+        data {
+            data()
+
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+
+        }
+        server {
+            server()
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:${neo_version}"
+}
+
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+            minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
+            neo_version         : neo_version, neo_version_range: neo_version_range,
+            loader_version_range: loader_version_range,
+            mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+            mod_authors         : mod_authors, mod_description: mod_description,
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+// Example configuration to allow publishing using the maven-publish plugin
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            artifact jar
+        register('mavenJava', MavenPublication) {
+            from components.java
         }
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+            url "file://${project.projectDir}/repo"
         }
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
-if (lljij.toBoolean()) {
-
-    reobf {
-        jarJar {}
-    }
-
-    tasks.jarJar.finalizedBy('reobfJarJar')
-
-    tasks.jarJar.configure {
-        archiveClassifier.set('')
-    }
-
-    jar {
-        archiveClassifier.set('slim')
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "${mod_id}",
+                "Specification-Vendor"    : "xkmc",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.jar.archiveVersion,
+                "Implementation-Vendor"   : "xkmc",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'MixinConfigs'            : "${mod_id}.mixins.json"
+        ])
     }
 }
-
-dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compileOnly(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}"))
-    if (rootMod.toBoolean()) {
-        implementation(jarJar("com.github.llamalad7.mixinextras:mixinextras-forge:${mixin_extras_version}")) {
-            transitive = false
-            jarJar.ranged(it, "[${mixin_extras_version},)")
-        }
-    } else {
-        implementation("com.github.llamalad7.mixinextras:mixinextras-forge:${mixin_extras_version}")
-    }
-    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
-    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
-    if (rootMod.toBoolean()) {
-        jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[MC1.20,MC1.21)")
-    }
-}
-
 
 repositories {
     flatDir {
         dirs 'libs'
     }
-    maven { url 'https://jitpack.io' }
+    maven { // Registrate
+        url "https://maven.ithundxr.dev/snapshots"
+    }
+    maven {
+        url = "https://maven.theillusivec4.top/"
+        content {
+            includeGroup "top.theillusivec4.curios"
+        }
+    }
     maven {
         // Location of the maven for vazkii's mods
         name 'blamejared'
         url 'https://maven.blamejared.com'
-    }
-    maven {
-        // Location of the maven for mixed mappings, Registrate, and Flywheel
-        name 'tterrag maven'
-        url 'https://maven.tterrag.com/'
-    }
-    maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-        content {
-            includeGroup "maven.modrinth"
-        }
     }
     maven {
         url 'https://www.cursemaven.com'
@@ -185,62 +145,57 @@ repositories {
         }
     }
     maven {
-        url = "https://maven.theillusivec4.top/"
+        // Location of the maven that hosts JEI files (and TiC)
+        name 'Progwml6 maven'
+        url 'https://dvs1.progwml6.com/files/maven'
     }
 
     maven {
-        url 'https://maven.iafenvoy.com/releases/'
-        content {
-            includeGroup "com.iafenvoy"
-        }
+        name = "OctoStudios"
+        url = uri("https://maven.octo-studios.com/releases")
     }
+    maven { url = "https://maven.createmod.net" }
+    mavenLocal();
 }
 
 dependencies {
+    compileOnly "com.tterrag.registrate:Registrate:${registrate_version}"
 
-    implementation fg.deobf("dev.xkmc.l2library:l2library:${l2library_version}-slim")
-    implementation fg.deobf("dev.xkmc.l2serial:l2serial:1.2.2")
-    implementation fg.deobf("dev.xkmc.l2screentracker:l2screentracker:0.1.4")
-    implementation fg.deobf("dev.xkmc.l2tabs:l2tabs:0.3.3")
-    implementation fg.deobf("dev.xkmc.l2itemselector:l2itemselector:0.1.9")
-    implementation fg.deobf("dev.xkmc.l2damagetracker:l2damagetracker:0.3.7")
-    implementation fg.deobf("dev.xkmc.mob_weapon_api:mob_weapon_api:0.2.14")
-    implementation fg.deobf("dev.xkmc.modulargolems:modulargolems:${modulargolems_version}-slim")
-    implementation fg.deobf("dev.xkmc.l2modularblock:l2modularblock:1.1.0")
+    implementation "dev.xkmc:l2serial:${l2serial_ver}"
+    implementation "dev.xkmc:l2core:${l2core_ver}"
+    implementation "dev.xkmc:l2tabs:${l2tabs_ver}"
+    implementation "dev.xkmc:l2menustacker:${l2menustacker_ver}"
+    implementation "dev.xkmc:l2itemselector:${l2itemselector_ver}"
+    implementation "dev.xkmc:l2damagetracker:${l2damagetracker_ver}"
+    implementation "dev.xkmc:mob_weapon_api:${mob_weapon_api_ver}"
+    implementation "dev.xkmc:l2modularblocks:${l2modularblocks_ver}"
+    implementation "dev.xkmc:l2library:${l2library_ver}-slim"
+    implementation "dev.xkmc:modulargolems:${modulargolems_ver}"
 
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-    implementation fg.deobf("mezz.jei:jei-${jei_minecraft_version}:${jei_version}")
+    implementation "vazkii.patchouli:Patchouli:${patchouli_ver}"
 
-    runtimeOnly fg.deobf("curse.maven:attributefix-280510:4588114")
-    runtimeOnly fg.deobf("curse.maven:bookshelf-228525:4581675")
-    runtimeOnly fg.deobf("curse.maven:enchantment-descriptions-250419:4587429")
+    implementation "dev.xkmc:better_creative_tabs:0.1.0"
+    implementation "dev.xkmc:more_wolf_armors:0.1.3"
 
-    //runtimeOnly fg.deobf('curse.maven:appleskin-248787:4440123')
+    implementation "mezz.jei:jei-${jei_minecraft_version}:${jei_version}"
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
-    runtimeOnly fg.deobf("curse.maven:caelus-308989:4581481")
-    runtimeOnly fg.deobf("curse.maven:elytra-slot-317716:4598379")
+    implementation "curse.maven:playeranimator-658587:7389814"
+    implementation "curse.maven:geckolib-388172:7707149"
+    implementation "curse.maven:irons-patreon-library-1492763:7830106"
+    implementation "curse.maven:irons-spells-n-spellbooks-855414:7822864"
 
-    implementation fg.deobf("curse.maven:jade-324717:4654448")
-    implementation fg.deobf("curse.maven:patchouli-306770:4966125")
-    runtimeOnly fg.deobf("curse.maven:geckolib-388172:6333474")
-    implementation fg.deobf("curse.maven:retro-damage-indicators-1003431:5268035")
-    compileOnly fg.deobf("curse.maven:architectury-api-419699:5137938")
 
-    runtimeOnly fg.deobf("curse.maven:geckolib-388172:6333474")
-    runtimeOnly fg.deobf("curse.maven:playeranimator-658587:4587214")
-    runtimeOnly fg.deobf("curse.maven:irons-patreon-library-1492763:7830104")
-    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:7822862")
-    compileOnly fg.deobf("curse.maven:ars-nouveau-401955:4751471")
 
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
     apiToken = secrets.get("curseforge_token")
-    def mainFile = upload(project.curseforge_project, new File("./build/libs/${modid}-${ll_version}.jar"))
+    def mainFile = upload(project.curseforge_project, new File("./build/libs/${mod_id}-${mod_version}.jar"))
     mainFile.changelog = new File('./changelog.txt').text.split("\n\n\n")[0]
     mainFile.addEnvironment("Client", "Server")
-    mainFile.addGameVersion("1.20.1")
-    mainFile.addModLoader("Forge", "NeoForge")
+    mainFile.addGameVersion("1.21.1")
+    mainFile.addModLoader("NeoForge")
     mainFile.addRequirement("l2library", "modulargolems", "irons-spells-n-spellbooks")
     mainFile.releaseType = "beta"
     disableVersionDetection()
@@ -249,12 +204,12 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 modrinth {
     token = secrets.get("modrinth_token")
     projectId = project.modrinth_project
-    versionName = "Golem Magicka ${project.ll_version}"
-    versionNumber = project.ll_version
+    versionName = "Golem Magicka ${project.mod_version}"
+    versionNumber = project.mod_version
     versionType = "beta"
-    uploadFile = new File("./build/libs/${modid}-${ll_version}.jar")
-    gameVersions = ["1.20.1"]
-    loaders = ["forge", "neoforge"]
+    uploadFile = new File("./build/libs/${mod_id}-${mod_version}.jar")
+    gameVersions = ["1.21.1"]
+    loaders = ["neoforge"]
     changelog = new File('./changelog.txt').text.split("\n\n")[0]
     dependencies {
         required.project "l2library"

@@ -1,2 +1,6 @@
+1.0.1
+- Add material spell stats and pyrium golem
+- Fix mana sync bug
+
 1.0.0
 - Initial Release

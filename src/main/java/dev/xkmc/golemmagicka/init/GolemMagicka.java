@@ -54,6 +54,7 @@ public class GolemMagicka {
 		REGISTRATE.addDataGenerator(ProviderType.LANG, GMLang::genLang);
 		REGISTRATE.addDataGenerator(ProviderType.RECIPE, GMRecipeGen::genRecipe);
 		REGISTRATE.addDataGenerator(GMTagGen.SPELL_TAGS, GMTagGen::genSpellTag);
+		REGISTRATE.addDataGenerator(ProviderType.DATA_MAP, GMConfigGen::genDataMap);
 
 		var gen = event.getGenerator();
 		var output = gen.getPackOutput();

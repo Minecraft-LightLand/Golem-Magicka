@@ -1,0 +1,24 @@
+{
+  "values": {
+    "irons_spellbooks:cooldown_reduction": {
+      "intrinsic": 0.0,
+      "order": 50200,
+      "usePercent": true
+    },
+    "irons_spellbooks:mana_regen": {
+      "intrinsic": 0.0,
+      "order": 50100,
+      "usePercent": true
+    },
+    "irons_spellbooks:max_mana": {
+      "intrinsic": 0.0,
+      "order": 50000,
+      "usePercent": false
+    },
+    "irons_spellbooks:spell_power": {
+      "intrinsic": 0.0,
+      "order": 50300,
+      "usePercent": true
+    }
+  }
+}

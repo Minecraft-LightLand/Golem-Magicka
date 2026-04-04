@@ -1,10 +1,12 @@
 package dev.xkmc.golemmagicka.init.data;
 
+import com.tterrag.registrate.providers.RegistrateDataMapProvider;
 import dev.xkmc.golemmagicka.content.config.MagicStatBuilder;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.l2core.serial.config.ConfigDataProvider;
 import dev.xkmc.l2tabs.init.L2Tabs;
+import dev.xkmc.l2tabs.init.data.AttrDispEntry;
 import dev.xkmc.modulargolems.content.config.GolemMaterialConfig;
 import dev.xkmc.modulargolems.content.config.GolemPartConfig;
 import dev.xkmc.modulargolems.init.ModularGolems;
@@ -72,4 +74,11 @@ public class GMConfigGen extends ConfigDataProvider {
 
 	}
 
+	public static void genDataMap(RegistrateDataMapProvider pvd) {
+		pvd.builder(L2Tabs.ATTRIBUTE_ENTRY.reg())
+				.add(AttributeRegistry.MAX_MANA, new AttrDispEntry(false, 50000, 0), false)
+				.add(AttributeRegistry.MANA_REGEN, new AttrDispEntry(true, 50100, 0), false)
+				.add(AttributeRegistry.COOLDOWN_REDUCTION, new AttrDispEntry(true, 50200, 0), false)
+				.add(AttributeRegistry.SPELL_POWER, new AttrDispEntry(true, 50300, 0), false);
+	}
 }

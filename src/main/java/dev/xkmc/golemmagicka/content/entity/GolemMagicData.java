@@ -92,6 +92,16 @@ public class GolemMagicData {
 	public void addAdditionalSaveData(CompoundTag tag) {
 		data.getSyncedData().saveNBTData(tag, golem.level().registryAccess());
 		tag.putFloat("Mana", data.getMana());
+		tag.put("Cooldowns", data.getPlayerCooldowns().saveNBTData());
+		if (castingData != null) {
+			var extra = new CompoundTag();
+			extra.putString("id", castingData.spell().getSpellId());
+			extra.putInt("level", castingData.level());
+			extra.putFloat("manaCost", castingData.manaCost());
+			extra.putInt("cd", castingData.cooldown());
+			extra.putInt("source", castingData.source().ordinal());
+			tag.put("ExtraData", extra);
+		}
 	}
 
 	public void readAdditionalSaveData(CompoundTag tag) {
@@ -105,6 +115,22 @@ public class GolemMagicData {
 			data.setMana((float) golem.getAttributeValue(AttributeRegistry.MAX_MANA));
 		} else {
 			data.setMana(tag.getFloat("Mana"));
+		}
+		if (tag.contains("Cooldowns")) {
+			var cds = tag.getList("Cooldowns", CompoundTag.TAG_COMPOUND);
+			data.getPlayerCooldowns().loadNBTData(cds);
+		}
+		if (tag.contains("ExtraData")) {
+			var extra = tag.getCompound("ExtraData");
+			var spell = SpellRegistry.getSpell(extra.getString("id"));
+			if (spell != null && spell != SpellRegistry.none())
+				castingData = new CastingSpellData(
+						spell,
+						extra.getInt("level"),
+						CastSource.values()[extra.getInt("source")],
+						extra.getFloat("manaCost"),
+						extra.getInt("cd")
+				);
 		}
 	}
 

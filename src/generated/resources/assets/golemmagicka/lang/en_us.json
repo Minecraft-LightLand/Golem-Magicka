@@ -4,5 +4,7 @@
   "golemmagicka.info.cds": "Spell Cooldowns:",
   "golemmagicka.info.invalid": "- %s",
   "golemmagicka.info.invalids": "Invalid Spells:",
-  "golemmagicka.info.mana": "Mana: %s/%s"
+  "golemmagicka.info.mana": "Mana: %s/%s",
+  "modifier.golemmagicka.cooldown_reduction": "Cooldown Reduction",
+  "modifier.golemmagicka.mana_regen": "Mana Regen"
 }

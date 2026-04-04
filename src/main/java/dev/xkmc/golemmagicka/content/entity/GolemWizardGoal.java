@@ -66,16 +66,9 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		if (!spell.shouldAIStopCasting(entry.level(), this.mob, this.target)) {
 			int recast = Math.max(1, spell.getRecastCount(entry.level(), mob));
 			int cd = GolemSpellManager.getEffectiveSpellCooldown(spell, data.golem, entry.source()) / recast;
-			data.getMagicData().addMana(-cost / recast);
-			data.getMagicData().getPlayerCooldowns().addCooldown(spell.getSpellId(), cd);
+			data.setCastingData(new CastingSpellData(spell, entry.level(), entry.source(), cost / recast, cd));
 			this.spellCastingMob.initiateCastSpell(spell, entry.level());
 			this.fleeCooldown = 7 + spell.getCastTime(entry.level());
-			var packet = new GolemSpellInfoToClient();
-			packet.id = data.golem.getId();
-			packet.mana = (int) data.getMagicData().getMana();
-			packet.spell = spell.getSpellId();
-			packet.cooldown = cd;
-			GolemMagicka.HANDLER.toTrackingPlayers(packet, data.golem);
 		} else {
 			this.spellAttackDelay = 5;
 		}

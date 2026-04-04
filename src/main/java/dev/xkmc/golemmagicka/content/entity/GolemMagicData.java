@@ -34,6 +34,7 @@ public class GolemMagicData {
 
 	@Nullable
 	private SpellData castingSpell;
+	@Nullable
 	private CastingSpellData castingData;
 	private boolean recreateSpell;
 	private boolean cancelCastAnimation = false;
@@ -265,6 +266,7 @@ public class GolemMagicData {
 	}
 
 	public void setCastingData(CastingSpellData data) {
+		castingData = data;
 	}
 
 }

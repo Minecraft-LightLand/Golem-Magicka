@@ -75,10 +75,7 @@ public class GolemSpellManager {
 		if (mana != (float) playerMaxMana) {
 			data.setMana(Mth.clamp(data.getMana() + increment, 0, playerMaxMana));
 		}
-		var packet = new GolemSpellInfoToClient();
-		packet.id = e.getId();
-		packet.mana = (int) data.getMana();
-		GolemMagicka.HANDLER.toTrackingPlayers(packet, e);
+		GolemSpellInfoToClient.send(e, data.getMana());
 	}
 
 	public static int getEffectiveSpellCooldown(AbstractSpell spell, LivingEntity e, CastSource source) {

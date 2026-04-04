@@ -1,12 +1,12 @@
 package dev.xkmc.golemmagicka.content.entity;
 
-import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
 import net.minecraft.world.item.ItemStack;
 
@@ -59,6 +59,10 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			return;
 		}
 		float cost = spell.getManaCost(entry.level());
+		if (spell.getCastType() == CastType.CONTINUOUS) {
+			int factor = spell.getCastTime(entry.level()) / 10;
+			cost *= factor;
+		}
 		if (data.getMagicData().getMana() < cost) {
 			this.spellAttackDelay = 10;
 			return;
@@ -89,6 +93,10 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		for (var ent : spellCache.values()) {
 			var e = ent.spell();
 			int mana = e.getManaCost(ent.level());
+			if (e.getCastType() == CastType.CONTINUOUS) {
+				int factor = e.getCastTime(ent.level()) / 10;
+				mana *= factor;
+			}
 			if (mana > data.getMagicData().getMana())
 				continue;
 			if (data.getMagicData().getPlayerCooldowns().isOnCooldown(e))

@@ -34,6 +34,8 @@ public class GolemMagicData {
 
 	@Nullable
 	private SpellData castingSpell;
+	@Nullable
+	private CastingSpellData castingData;
 	private boolean recreateSpell;
 	private boolean cancelCastAnimation = false;
 	private AbstractSpell lastCastSpellType = SpellRegistry.none();
@@ -66,11 +68,19 @@ public class GolemMagicData {
 				if (data.getCastDurationRemaining() <= 0) {
 					if (castingSpell.getSpell().getCastType() == CastType.LONG || castingSpell.getSpell().getCastType() == CastType.INSTANT) {
 						castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, data);
+						if (castingData != null) {
+							data.addMana(-castingData.manaCost());
+							GolemSpellInfoToClient.send(golem, data.getMana());
+						}
 					}
 
 					castComplete();
 				} else if (castingSpell.getSpell().getCastType() == CastType.CONTINUOUS && (data.getCastDurationRemaining() + 1) % 10 == 0) {
 					castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, data);
+					if (castingData != null) {
+						data.addMana(-castingData.manaCost());
+						GolemSpellInfoToClient.send(golem, data.getMana());
+					}
 				}
 
 			}
@@ -118,11 +128,16 @@ public class GolemMagicData {
 		if (!golem.level().isClientSide) {
 			if (castingSpell != null) {
 				castingSpell.getSpell().onServerCastComplete(golem.level(), castingSpell.getLevel(), golem, data, false);
+				if (castingData != null) {
+					data.getPlayerCooldowns().addCooldown(castingData.spell().getSpellId(), castingData.cooldown());
+					GolemSpellInfoToClient.send(golem, data.getMana(), castingData.spell(), castingData.cooldown());
+				}
+
 			}
-		} else {
-			data.resetCastingState();
 		}
+		data.resetCastingState();
 		castingSpell = null;
+		castingData = null;
 	}
 
 	public void setSyncedSpellData(SyncedSpellData syncedSpellData) {
@@ -248,6 +263,10 @@ public class GolemMagicData {
 			golem.setXRot(f1 % 360.0F);
 			golem.setYRot(f % 360.0F);
 		}
+	}
+
+	public void setCastingData(CastingSpellData data) {
+		castingData = data;
 	}
 
 }

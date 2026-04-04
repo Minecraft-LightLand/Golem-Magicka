@@ -1,3 +1,9 @@
+1.0.2
+- Fix spell cast mana cost for continuous spells
+- Fix cooldown applied at the beginning of a cast
+- Fix spells casted for too long
+- Add generic spell attributes to golem attribute screen TODO
+
 1.0.1
 - Add material spell stats and pyrium golem
 - Fix mana sync bug

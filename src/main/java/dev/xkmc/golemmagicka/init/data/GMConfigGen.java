@@ -4,11 +4,13 @@ import dev.xkmc.golemmagicka.content.config.MagicStatBuilder;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.l2core.serial.config.ConfigDataProvider;
+import dev.xkmc.l2tabs.init.L2Tabs;
 import dev.xkmc.modulargolems.content.config.GolemMaterialConfig;
 import dev.xkmc.modulargolems.content.config.GolemPartConfig;
 import dev.xkmc.modulargolems.init.ModularGolems;
 import dev.xkmc.modulargolems.init.registrate.GolemModifiers;
 import dev.xkmc.modulargolems.init.registrate.GolemTypes;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -62,7 +64,8 @@ public class GMConfigGen extends ConfigDataProvider {
 				.addStat(GMTypes.STAT_MAX_MANA.get(), 800)
 				.addStat(GMTypes.STAT_MANA_REGEN.get(), 1)
 				.addStat(GMTypes.STAT_SPELL_POWER.get(), 0.5)
-				.addStat(GMTypes.STAT_CD.get(), 0.2)
+				.addStat(GMTypes.STAT_CD.get(), 0.4)
+				.addModifier(GolemModifiers.DAMAGE_CAP.get(), 1)
 				.addModifier(GolemModifiers.FIRE_IMMUNE.get(), 1)
 				.end()
 		);

@@ -36,7 +36,7 @@ public class GolemMagicData {
 	private SpellData castingSpell;
 	@Nullable
 	private CastingSpellData castingData;
-	private boolean recreateSpell;
+	private boolean recreateSpell, syncCooldowns;
 	private boolean cancelCastAnimation = false;
 	private AbstractSpell lastCastSpellType = SpellRegistry.none();
 	private AbstractSpell instantCastSpellType = SpellRegistry.none();
@@ -58,6 +58,10 @@ public class GolemMagicData {
 				AbstractSpell spell = SpellRegistry.getSpell(syncedSpellData.getCastingSpellId());
 				initiateCastSpell(spell, syncedSpellData.getCastingSpellLevel());
 			}
+			if (syncCooldowns) {
+				syncCooldowns = false;
+				GolemCDToClient.send(golem, data);
+			}
 			if (castingSpell != null) {
 				data.handleCastDuration();
 				if (data.isCasting()) {
@@ -67,22 +71,29 @@ public class GolemMagicData {
 				forceLookAtTarget(golem.getTarget());
 				if (data.getCastDurationRemaining() <= 0) {
 					if (castingSpell.getSpell().getCastType() == CastType.LONG || castingSpell.getSpell().getCastType() == CastType.INSTANT) {
-						castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, data);
 						if (castingData != null) {
 							data.addMana(-castingData.manaCost());
 							GolemSpellInfoToClient.send(golem, data.getMana());
+							castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, castingData.source(), data);
+						} else {
+							castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, data);
 						}
 					}
 
 					castComplete();
 				} else if (castingSpell.getSpell().getCastType() == CastType.CONTINUOUS && (data.getCastDurationRemaining() + 1) % 10 == 0) {
-					castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, data);
 					if (castingData != null) {
-						data.addMana(-castingData.manaCost());
-						GolemSpellInfoToClient.send(golem, data.getMana());
+						if (data.getMana() < castingData.manaCost()) {
+							castComplete();
+						} else {
+							data.addMana(-castingData.manaCost());
+							GolemSpellInfoToClient.send(golem, data.getMana());
+							castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, castingData.source(), data);
+						}
+					} else {
+						castingSpell.getSpell().onCast(golem.level(), castingSpell.getLevel(), golem, CastSource.MOB, data);
 					}
 				}
-
 			}
 			if (isCasting() && castingSpell == null) {
 				castComplete();
@@ -104,7 +115,8 @@ public class GolemMagicData {
 			extra.putInt("cd", castingData.cooldown());
 			extra.putInt("source", castingData.source().ordinal());
 			tag.put("ExtraData", extra);
-		}}
+		}
+	}
 
 	public void readAdditionalSaveData(CompoundTag tag) {
 		SyncedSpellData syncedSpellData = new SyncedSpellData(golem);
@@ -134,6 +146,7 @@ public class GolemMagicData {
 						extra.getInt("cd")
 				);
 		}
+		syncCooldowns = true;
 	}
 
 	public MagicData getMagicData() {

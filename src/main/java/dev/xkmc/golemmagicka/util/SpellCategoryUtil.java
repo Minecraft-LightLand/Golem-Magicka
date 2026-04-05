@@ -10,6 +10,7 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.item.SpellBook;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
@@ -49,8 +50,9 @@ public class SpellCategoryUtil {
 
 	public static List<ItemStack> getGolemSpellItems(LivingEntity e) {
 		List<ItemStack> list = new ArrayList<>();
-		list.add(e.getMainHandItem());
-		list.add(e.getOffhandItem());
+		for (var s : EquipmentSlot.values()) {
+			list.add(e.getItemBySlot(s));
+		}
 		if (e instanceof SweepGolemEntity<?, ?> s) {
 			list.add(s.getBackupHand().getItem());
 			list.add(s.getArrowSlot().getItem());
@@ -65,8 +67,9 @@ public class SpellCategoryUtil {
 		var list = getGolemSpellItems(e);
 		List<SpellEntry> ans = new ArrayList<>();
 		for (var stack : list) {
-			if (stack.getItem() instanceof SpellBook) {
+			if (!(stack.getItem() instanceof MagicSwordItem)) {
 				ISpellContainer cont = ISpellContainer.get(stack);
+				if (cont == null) continue;
 				for (var spell : cont.getActiveSpells()) {
 					if (SpellCategoryUtil.isBanned(spell.getSpell())) continue;
 					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SPELLBOOK));
@@ -75,10 +78,18 @@ public class SpellCategoryUtil {
 		}
 		ItemStack mainhand = e.getMainHandItem();
 		if (mainhand.getItem() instanceof MagicSwordItem sword) {
-			for (var spell : sword.getSpells()) {
-				if (spell == null) continue;
-				if (SpellCategoryUtil.isBanned(spell.getSpell())) continue;
-				ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD));
+			ISpellContainer cont = ISpellContainer.get(mainhand);
+			if (cont == null) {
+				for (var spell : sword.getSpells()) {
+					if (spell == null) continue;
+					if (SpellCategoryUtil.isBanned(spell.getSpell())) continue;
+					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD));
+				}
+			} else {
+				for (var spell : cont.getActiveSpells()) {
+					if (SpellCategoryUtil.isBanned(spell.getSpell())) continue;
+					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD));
+				}
 			}
 		}
 		return ans;

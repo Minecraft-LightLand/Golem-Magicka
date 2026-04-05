@@ -72,6 +72,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			data.setCastingData(new CastingSpellData(spell, entry.level(), entry.source(), cost, cd));
 			this.spellCastingMob.initiateCastSpell(spell, entry.level());
 			this.fleeCooldown = 7 + spell.getCastTime(entry.level());
+			spellcastingRangeSqr = GolemMagicka.SPELL.getMerged().get(spell).getPreferredDistSqr();
 		} else {
 			this.spellAttackDelay = 5;
 		}

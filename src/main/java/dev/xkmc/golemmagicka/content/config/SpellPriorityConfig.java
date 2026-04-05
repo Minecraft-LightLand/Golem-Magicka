@@ -83,6 +83,12 @@ public class SpellPriorityConfig extends BaseConfig {
 			return (int) ans;
 		}
 
+		public float getPreferredDistSqr() {
+			if (minWeightDist == maxWeightDist || maxWeightDist > 20)
+				return 20 * 20;
+			return (float) (maxWeightDist * maxWeightDist);
+		}
+
 		public Data dist(double min, double max) {
 			minWeightDist = min;
 			maxWeightDist = max;
@@ -117,7 +123,6 @@ public class SpellPriorityConfig extends BaseConfig {
 			effect = effectLock;
 			return this;
 		}
-
 	}
 
 }

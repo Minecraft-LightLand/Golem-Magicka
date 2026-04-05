@@ -2,6 +2,7 @@ package dev.xkmc.golemmagicka.init.data;
 
 import com.tterrag.registrate.providers.RegistrateDataMapProvider;
 import dev.xkmc.golemmagicka.content.config.MagicStatBuilder;
+import dev.xkmc.golemmagicka.content.config.SpellPriorityConfig;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.l2core.serial.config.ConfigDataProvider;
@@ -13,6 +14,7 @@ import dev.xkmc.modulargolems.init.ModularGolems;
 import dev.xkmc.modulargolems.init.registrate.GolemModifiers;
 import dev.xkmc.modulargolems.init.registrate.GolemTypes;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -72,6 +74,8 @@ public class GMConfigGen extends ConfigDataProvider {
 				.end()
 		);
 
+		genSpell(map);
+
 	}
 
 	public static void genDataMap(RegistrateDataMapProvider pvd) {
@@ -81,4 +85,11 @@ public class GMConfigGen extends ConfigDataProvider {
 				.add(AttributeRegistry.COOLDOWN_REDUCTION, new AttrDispEntry(true, 50200, 0), false)
 				.add(AttributeRegistry.SPELL_POWER, new AttrDispEntry(true, 50300, 0), false);
 	}
+
+	private void genSpell(Collector map) {
+		var config = new SpellPriorityConfig();
+		config.start(SpellRegistry.ELECTROCUTE_SPELL.get()).dist(5, 10);
+		map.add(GolemMagicka.SPELL, GolemMagicka.loc("iron_spell"), config);
+	}
+
 }

@@ -1,6 +1,7 @@
 package dev.xkmc.golemmagicka.init;
 
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.golemmagicka.content.config.SpellPriorityConfig;
 import dev.xkmc.golemmagicka.content.entity.GolemCDToClient;
 import dev.xkmc.golemmagicka.content.entity.GolemSpellInfoToClient;
 import dev.xkmc.golemmagicka.content.entity.GolemSpellManager;
@@ -9,6 +10,7 @@ import dev.xkmc.golemmagicka.init.reg.GMItems;
 import dev.xkmc.golemmagicka.init.reg.GMModifiers;
 import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
+import dev.xkmc.l2core.serial.config.ConfigTypeEntry;
 import dev.xkmc.l2core.serial.config.PacketHandlerWithConfig;
 import dev.xkmc.l2serial.network.PacketHandler;
 import net.minecraft.resources.ResourceLocation;
@@ -35,6 +37,8 @@ public class GolemMagicka {
 			e -> e.create(GolemSpellInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(GolemCDToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
+
+	public static final ConfigTypeEntry<SpellPriorityConfig> SPELL = new ConfigTypeEntry<>(HANDLER, "spell_priority", SpellPriorityConfig.class);
 
 	public GolemMagicka() {
 		GMTypes.register();

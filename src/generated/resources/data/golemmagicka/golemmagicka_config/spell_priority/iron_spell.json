@@ -1,0 +1,17 @@
+{
+  "spellData": {
+    "irons_spellbooks:electrocute": {
+      "aoeCountBonus": 0.0,
+      "aoeRange": 0.0,
+      "maxWeightCastCount": 0,
+      "maxWeightDist": 10.0,
+      "maxWeightManaFactor": 2.0,
+      "maxWeightPHP": 0.0,
+      "minWeightCastCount": 0,
+      "minWeightDist": 5.0,
+      "minWeightManaFactor": 0.5,
+      "minWeightPHP": 0.0,
+      "weight": 100
+    }
+  }
+}

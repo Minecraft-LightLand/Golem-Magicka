@@ -1,6 +1,7 @@
 package dev.xkmc.golemmagicka.init;
 
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.golemmagicka.content.entity.GolemCDToClient;
 import dev.xkmc.golemmagicka.content.entity.GolemSpellInfoToClient;
 import dev.xkmc.golemmagicka.content.entity.GolemSpellManager;
 import dev.xkmc.golemmagicka.init.data.*;
@@ -31,7 +32,8 @@ public class GolemMagicka {
 
 	public static final PacketHandlerWithConfig HANDLER = new PacketHandlerWithConfig(
 			MODID, 1,
-			e -> e.create(GolemSpellInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
+			e -> e.create(GolemSpellInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+			e -> e.create(GolemCDToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
 
 	public GolemMagicka() {

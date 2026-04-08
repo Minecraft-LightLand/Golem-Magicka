@@ -49,13 +49,13 @@ public class SpellPriorityConfig extends BaseConfig {
 		public double minWeightDist, maxWeightDist,
 				minWeightManaFactor = 0.5, maxWeightManaFactor = 2,
 				minWeightPHP, maxWeightPHP,
-				aoeRange, aoeCountBonus;
+				aoeRange, aoeRangePerLevel, aoeCountBonus;
 
 		@SerialField
 		@Nullable
 		public Holder<MobEffect> effectLock;
 
-		public int weight(AbstractGolemEntity<?, ?> user, @Nullable LivingEntity target, MagicData magic, float totalCost, int castCount) {
+		public int weight(AbstractGolemEntity<?, ?> user, @Nullable LivingEntity target, MagicData magic, float totalCost, int castCount, int level) {
 			double ans = weight;
 			if (effectLock != null && user.hasEffect(effectLock)) {
 				return 0;
@@ -75,8 +75,9 @@ public class SpellPriorityConfig extends BaseConfig {
 			if (minWeightCastCount != maxWeightCastCount) {
 				ans *= Mth.clamp(1d * (castCount - minWeightCastCount) / (maxWeightCastCount - minWeightCastCount), 0, 1);
 			}
-			if (aoeRange > 0) {
-				var aabb = AABB.ofSize(target.getBoundingBox().getCenter(), aoeRange * 2, aoeRange * 2, aoeRange * 2);
+			if (target != null && aoeRange > 0) {
+				var range = aoeRange + aoeRangePerLevel * (level - 1);
+				var aabb = AABB.ofSize(target.getBoundingBox().getCenter(), range * 2, range * 2, range * 2);
 				int size = target.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), aabb, user::predicateTarget).size();
 				ans *= 1 + aoeCountBonus * size;
 			}
@@ -113,8 +114,9 @@ public class SpellPriorityConfig extends BaseConfig {
 			return this;
 		}
 
-		public Data aoe(double range, double bonus) {
+		public Data aoe(double range, double perLevel, double bonus) {
 			aoeRange = range;
+			aoeRangePerLevel = perLevel;
 			aoeCountBonus = bonus;
 			return this;
 		}

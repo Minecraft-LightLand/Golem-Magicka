@@ -46,7 +46,7 @@ public class SpellPriorityConfig extends BaseConfig {
 		public int weight = 100, minWeightCastCount, maxWeightCastCount;
 
 		@SerialField
-		public double minWeightDist, maxWeightDist,
+		public double minWeightDist, maxWeightDist, distPerLevel,
 				minWeightManaFactor = 0.5, maxWeightManaFactor = 2,
 				minWeightPHP, maxWeightPHP,
 				aoeRange, aoeRangePerLevel, aoeCountBonus;
@@ -61,7 +61,7 @@ public class SpellPriorityConfig extends BaseConfig {
 				return 0;
 			}
 			if (minWeightDist != maxWeightDist && target != null) {
-				var dist = user.distanceTo(target);
+				var dist = user.distanceTo(target) - distPerLevel * level;
 				ans *= Mth.clamp((dist - minWeightDist) / (maxWeightDist - minWeightDist), 0, 1);
 			}
 			if (minWeightManaFactor != maxWeightManaFactor) {
@@ -93,6 +93,13 @@ public class SpellPriorityConfig extends BaseConfig {
 		public Data dist(double min, double max) {
 			minWeightDist = min;
 			maxWeightDist = max;
+			return this;
+		}
+
+		public Data dist(double min, double max, double perLevel) {
+			minWeightDist = min;
+			maxWeightDist = max;
+			distPerLevel = perLevel;
 			return this;
 		}
 

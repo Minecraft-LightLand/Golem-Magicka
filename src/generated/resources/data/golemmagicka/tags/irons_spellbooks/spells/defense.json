@@ -1,3 +1,10 @@
 {
-  "values": []
+  "values": [
+    "irons_spellbooks:shield",
+    "irons_spellbooks:thunderstorm",
+    "irons_spellbooks:flaming_strike",
+    "irons_spellbooks:divine_smite",
+    "irons_spellbooks:gust",
+    "irons_spellbooks:fang_ward"
+  ]
 }

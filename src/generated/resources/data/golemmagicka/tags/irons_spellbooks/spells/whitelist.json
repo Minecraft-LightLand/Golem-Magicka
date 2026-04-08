@@ -1,5 +1,7 @@
 {
   "values": [
-    "irons_spellbooks:eldritch_blast"
+    "irons_spellbooks:flaming_barrage",
+    "irons_spellbooks:eldritch_blast",
+    "irons_spellbooks:raise_hell"
   ]
 }

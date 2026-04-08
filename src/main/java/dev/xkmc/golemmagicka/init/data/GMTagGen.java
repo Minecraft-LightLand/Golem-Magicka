@@ -22,8 +22,11 @@ public class GMTagGen {
 	public static final TagKey<AbstractSpell> BLACKLIST = loc("blacklist");
 	public static final TagKey<AbstractSpell> DEFENSE = loc("defense");
 	public static final TagKey<AbstractSpell> MOVEMENT = loc("movement");
+	public static final TagKey<AbstractSpell> ENHANCE = loc("enhance");
+	public static final TagKey<AbstractSpell> CONTROL = loc("control");
 	public static final TagKey<AbstractSpell> SUPPORT = loc("support");
 	public static final TagKey<AbstractSpell> SUMMON = loc("summon");
+	public static final TagKey<AbstractSpell> NON_OFFENSIVE = loc("non_offensive");
 
 	public static void genSpellTag(RegistrateTagsProvider.IntrinsicImpl<AbstractSpell> pvd) {
 		pvd.addTag(WHITELIST).add(SpellRegistry.ELDRITCH_BLAST_SPELL.get());
@@ -40,8 +43,11 @@ public class GMTagGen {
 		);
 		pvd.addTag(DEFENSE);
 		pvd.addTag(MOVEMENT);
+		pvd.addTag(ENHANCE);
+		pvd.addTag(CONTROL);
 		pvd.addTag(SUPPORT);
 		pvd.addTag(SUMMON);
+		pvd.addTag(NON_OFFENSIVE).addTags(ENHANCE, CONTROL, SUPPORT);
 	}
 
 	public static TagKey<AbstractSpell> loc(String id) {

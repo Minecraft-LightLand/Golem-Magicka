@@ -11,6 +11,7 @@ import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
+import io.redspace.ironsspellbooks.registries.DataAttachmentRegistry;
 import io.redspace.ironsspellbooks.spells.ender.TeleportSpell;
 import io.redspace.ironsspellbooks.spells.fire.BurningDashSpell;
 import net.minecraft.nbt.CompoundTag;
@@ -36,13 +37,18 @@ public class GolemMagicData {
 	private SpellData castingSpell;
 	@Nullable
 	private CastingSpellData castingData;
+	@Nullable
+	private CombatMemory memory;
+
 	private boolean recreateSpell, syncCooldowns;
+
 	private boolean cancelCastAnimation = false;
 	private AbstractSpell lastCastSpellType = SpellRegistry.none();
 	private AbstractSpell instantCastSpellType = SpellRegistry.none();
 
 	public GolemMagicData(AbstractGolemEntity<?, ?> golem) {
 		this.golem = golem;
+		golem.setData(DataAttachmentRegistry.MAGIC_DATA, data);
 	}
 
 	public void onEntityEvent() {
@@ -231,6 +237,8 @@ public class GolemMagicData {
 				data.initiateCast(castingSpell.getSpell(), castingSpell.getLevel(), castingSpell.getSpell().getEffectiveCastTime(castingSpell.getLevel(), golem), CastSource.MOB, SpellSelectionManager.MAINHAND);
 				if (!golem.level().isClientSide) {
 					castingSpell.getSpell().onServerPreCast(golem.level(), castingSpell.getLevel(), golem, data);
+					if (memory != null)
+						memory.castSpell(spell);
 				}
 
 			}
@@ -309,4 +317,14 @@ public class GolemMagicData {
 		castingData = data;
 	}
 
+	public CombatMemory getMemory(LivingEntity target) {
+		if (memory == null || memory.target != target) {
+			memory = new CombatMemory(target);
+		}
+		return memory;
+	}
+
+	public void setNewTarget(LivingEntity target) {
+		memory = new CombatMemory(target);
+	}
 }

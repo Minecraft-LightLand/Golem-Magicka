@@ -1,6 +1,7 @@
 package dev.xkmc.golemmagicka.content.entity;
 
 import dev.xkmc.golemmagicka.init.GolemMagicka;
+import dev.xkmc.golemmagicka.init.data.GMTagGen;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
@@ -10,7 +11,9 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 
@@ -24,6 +27,19 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, double pSpeedModifier, int pAttackInterval) {
 		super(entity, pSpeedModifier, pAttackInterval);
 		this.data = data;
+	}
+
+	public boolean canUse() {
+		LivingEntity livingentity = this.mob.getTarget();
+		if (livingentity != null && livingentity.isAlive()) {
+			if (target != livingentity) {
+				data.setNewTarget(target);
+			}
+			this.target = livingentity;
+			return this.mob.canAttack(this.target);
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -99,10 +115,22 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				continue;
 			if (data.getMagicData().getPlayerCooldowns().isOnCooldown(e))
 				continue;
-			int weight = merged.get(e).weight(data.golem, target, data.getMagicData(), mana, 0);
+			if (isUnavailable(e, target))
+				continue;
+			var mem = target == null ? 0 : data.getMemory(target).attackSpellCount();
+			int weight = merged.get(e).weight(data.golem, target, data.getMagicData(), mana, mem);
 			builder.add(ent, weight);
 		}
 		return builder.build();
+	}
+
+	private boolean isUnavailable(AbstractSpell e, @Nullable LivingEntity target) {
+		if (!data.golem.getMode().isMovable()) {
+			if (SpellCategoryUtil.is(e, GMTagGen.MOVEMENT)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

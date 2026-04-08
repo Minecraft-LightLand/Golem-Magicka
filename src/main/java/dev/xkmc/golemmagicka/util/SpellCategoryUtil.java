@@ -10,6 +10,7 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.item.SpellBook;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -21,26 +22,18 @@ import java.util.List;
 
 public class SpellCategoryUtil {
 
-	public static boolean isSupport(AbstractSpell e) {
-		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.SUPPORT);
+	public static boolean is(AbstractSpell e, TagKey<AbstractSpell> tag) {
+		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(tag);
 	}
 
-	public static boolean isMovement(AbstractSpell e) {
-		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.MOVEMENT);
-	}
-
-	public static boolean isDefense(AbstractSpell e) {
-		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.DEFENSE);
-	}
-
-	public static boolean isSummon(AbstractSpell e) {
-		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.SUMMON);
+	public static boolean nonOffensive(AbstractSpell e) {
+		return is(e, GMTagGen.NON_OFFENSIVE);
 	}
 
 	public static boolean isBanned(AbstractSpell e) {
-		if (SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.WHITELIST)) return false;
+		if (is(e, GMTagGen.WHITELIST)) return false;
 		if (e.getRecastCount(1, null) > 0) return true;
-		return SpellRegistry.REGISTRY.wrapAsHolder(e).is(GMTagGen.BLACKLIST);
+		return is(e, GMTagGen.BLACKLIST);
 	}
 
 	public static List<ItemStack> getGolemSpellItems(LivingEntity e) {
@@ -66,7 +59,7 @@ public class SpellCategoryUtil {
 				ISpellContainer cont = ISpellContainer.get(stack);
 				if (cont == null) continue;
 				for (var spell : cont.getActiveSpells()) {
-					if (SpellCategoryUtil.isBanned(spell.getSpell())) continue;
+					if (isBanned(spell.getSpell())) continue;
 					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SPELLBOOK));
 				}
 			}
@@ -77,12 +70,12 @@ public class SpellCategoryUtil {
 			if (cont == null) {
 				for (var spell : sword.getSpells()) {
 					if (spell == null) continue;
-					if (SpellCategoryUtil.isBanned(spell.getSpell())) continue;
+					if (isBanned(spell.getSpell())) continue;
 					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD));
 				}
 			} else {
 				for (var spell : cont.getActiveSpells()) {
-					if (SpellCategoryUtil.isBanned(spell.getSpell())) continue;
+					if (isBanned(spell.getSpell())) continue;
 					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD));
 				}
 			}
@@ -97,7 +90,7 @@ public class SpellCategoryUtil {
 			if (stack.getItem() instanceof SpellBook) {
 				ISpellContainer cont = ISpellContainer.get(stack);
 				for (var spell : cont.getActiveSpells()) {
-					if (SpellCategoryUtil.isBanned(spell.getSpell()))
+					if (isBanned(spell.getSpell()))
 						ans.add(spell.getSpell());
 				}
 			}
@@ -106,7 +99,7 @@ public class SpellCategoryUtil {
 		if (mainhand.getItem() instanceof MagicSwordItem sword) {
 			for (var spell : sword.getSpells()) {
 				if (spell == null) continue;
-				if (SpellCategoryUtil.isBanned(spell.getSpell()))
+				if (isBanned(spell.getSpell()))
 					ans.add(spell.getSpell());
 			}
 		}

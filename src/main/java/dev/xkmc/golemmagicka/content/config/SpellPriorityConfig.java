@@ -77,7 +77,11 @@ public class SpellPriorityConfig extends BaseConfig {
 			}
 			if (target != null && aoeRange > 0) {
 				var range = aoeRange + aoeRangePerLevel * (level - 1);
-				var aabb = AABB.ofSize(target.getBoundingBox().getCenter(), range * 2, range * 2, range * 2);
+				var pos = target.getBoundingBox().getCenter();
+				if (range > maxWeightDist + distPerLevel * level && minWeightDist > maxWeightDist) {
+					pos = user.getBoundingBox().getCenter();
+				}
+				var aabb = AABB.ofSize(pos, range * 2, range * 2, range * 2);
 				int size = target.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), aabb, user::predicateTarget).size();
 				ans *= 1 + aoeCountBonus * size;
 			}

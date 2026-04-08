@@ -1,5 +1,6 @@
 package dev.xkmc.golemmagicka.content.entity;
 
+import dev.xkmc.golemmagicka.events.GolemCheckSpellEvent;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.data.GMTagGen;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
@@ -13,6 +14,7 @@ import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
@@ -116,6 +118,8 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			if (data.getMagicData().getPlayerCooldowns().isOnCooldown(e))
 				continue;
 			if (isUnavailable(e, target))
+				continue;
+			if (NeoForge.EVENT_BUS.post(new GolemCheckSpellEvent(data.golem, target, data, ent)).isCanceled())
 				continue;
 			var mem = target == null ? 0 : data.getMemory(target).attackSpellCount();
 			int weight = merged.get(e).weight(data.golem, target, data.getMagicData(), mana, mem);

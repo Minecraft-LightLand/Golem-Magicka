@@ -94,6 +94,11 @@ public class SpellPriorityConfig extends BaseConfig {
 			return (float) (maxWeightDist * maxWeightDist);
 		}
 
+		public Data weight(int weight){
+			this.weight = weight;
+			return this;
+		}
+
 		public Data dist(double min, double max) {
 			minWeightDist = min;
 			maxWeightDist = max;

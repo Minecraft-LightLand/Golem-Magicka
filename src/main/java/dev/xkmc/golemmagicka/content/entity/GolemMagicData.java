@@ -111,6 +111,9 @@ public class GolemMagicData {
 	public void addAdditionalSaveData(CompoundTag tag) {
 		data.getSyncedData().saveNBTData(tag, golem.level().registryAccess());
 		tag.putFloat("Mana", data.getMana());
+		tag.putFloat("MaxMana", (float) golem.getAttributeValue(AttributeRegistry.MAX_MANA));
+		tag.putFloat("ManaRegen", (float) golem.getAttributeValue(AttributeRegistry.MANA_REGEN));
+		tag.putLong("SpellLastTimeStamp", golem.level().getGameTime());
 		tag.put("Cooldowns", data.getPlayerCooldowns().saveNBTData());
 		if (castingData != null) {
 			var extra = new CompoundTag();
@@ -130,14 +133,27 @@ public class GolemMagicData {
 			recreateSpell = true;
 		}
 		data.setSyncedData(syncedSpellData);
+		int forwardTick = 0;
 		if (!tag.contains("Mana")) {
 			data.setMana((float) golem.getAttributeValue(AttributeRegistry.MAX_MANA));
 		} else {
-			data.setMana(tag.getFloat("Mana"));
+			var mana = tag.getFloat("Mana");
+			var max = tag.getFloat("MaxMana");
+			var regen = tag.getFloat("ManaRegen");
+			long last = tag.getLong("SpellLastTimeStamp");
+			long current = golem.level().getGameTime();
+			if (current > last) {
+				forwardTick = (int) (current - last);
+				int diff = forwardTick / 10;
+				mana = Math.min(max, mana + max * 0.01f * regen * diff);
+			}
+			data.setMana(mana);
 		}
 		if (tag.contains("Cooldowns")) {
 			var cds = tag.getList("Cooldowns", CompoundTag.TAG_COMPOUND);
 			data.getPlayerCooldowns().loadNBTData(cds);
+			if (forwardTick > 0)
+				data.getPlayerCooldowns().tick(forwardTick);
 		}
 		if (tag.contains("ExtraData")) {
 			var extra = tag.getCompound("ExtraData");

@@ -56,6 +56,7 @@ public class GolemEnergySwirlLayer<
 			float f = (float) pLivingEntity.tickCount + pPartialTicks;
 			M entitymodel = this.model();
 			this.getParentModel().copyPropertiesTo(entitymodel);
+			entitymodel.prepareMobModel(pLivingEntity, pLimbSwing, pLimbSwingAmount, pPartialTicks);
 			entitymodel.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
 			VertexConsumer vertexconsumer = pBuffer.getBuffer(getRenderType(this.TEXTURE, f));
 			entitymodel.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, COLOR);

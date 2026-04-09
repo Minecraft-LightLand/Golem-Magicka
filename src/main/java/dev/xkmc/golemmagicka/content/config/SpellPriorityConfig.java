@@ -138,7 +138,7 @@ public class SpellPriorityConfig extends BaseConfig {
 		}
 
 		public Data effect(Holder<MobEffect> effect) {
-			effect = effectLock;
+			effectLock = effect;
 			return this;
 		}
 	}

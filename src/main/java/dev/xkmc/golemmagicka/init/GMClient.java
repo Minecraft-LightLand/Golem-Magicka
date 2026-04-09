@@ -1,5 +1,7 @@
 package dev.xkmc.golemmagicka.init;
 
+import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
+import dev.xkmc.golemmagicka.compat.maid.MaidEventHandlers;
 import dev.xkmc.golemmagicka.content.client.GolemEnergySwirlLayer;
 import dev.xkmc.golemmagicka.content.client.GolemModelDefinitions;
 import dev.xkmc.modulargolems.content.entity.dog.DogGolemModel;
@@ -14,15 +16,20 @@ import io.redspace.ironsspellbooks.render.EnergySwirlLayer;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = GolemMagicka.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class GMClient {
 
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
+		if (ModList.get().isLoaded(TouhouLittleMaid.MOD_ID)) {
+			NeoForge.EVENT_BUS.register(MaidEventHandlers.class);
+		}
 	}
 
 	@SubscribeEvent
@@ -40,8 +47,8 @@ public class GMClient {
 			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new MetalGolemModel(set.bakeLayer(GolemEnergySwirlLayer.LARGE)), EnergySwirlLayer.CHARGE_TEXTURE, MobEffectRegistry.CHARGED));
 		}
 		if (event.getRenderer(GolemTypes.ENTITY_HUMANOID.get()) instanceof HumanoidGolemRenderer ler) {
-			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new HumanoidGolemModel(set.bakeLayer(GolemEnergySwirlLayer.HUMANOID),false), EnergySwirlLayer.EVASION_TEXTURE, MobEffectRegistry.EVASION));
-			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new HumanoidGolemModel(set.bakeLayer(GolemEnergySwirlLayer.HUMANOID),false), EnergySwirlLayer.CHARGE_TEXTURE, MobEffectRegistry.CHARGED));
+			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new HumanoidGolemModel(set.bakeLayer(GolemEnergySwirlLayer.HUMANOID), false), EnergySwirlLayer.EVASION_TEXTURE, MobEffectRegistry.EVASION));
+			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new HumanoidGolemModel(set.bakeLayer(GolemEnergySwirlLayer.HUMANOID), false), EnergySwirlLayer.CHARGE_TEXTURE, MobEffectRegistry.CHARGED));
 		}
 		if (event.getRenderer(GolemTypes.ENTITY_DOG.get()) instanceof DogGolemRenderer ler) {
 			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new DogGolemModel(set.bakeLayer(GolemEnergySwirlLayer.DOG)), EnergySwirlLayer.EVASION_TEXTURE, MobEffectRegistry.EVASION));

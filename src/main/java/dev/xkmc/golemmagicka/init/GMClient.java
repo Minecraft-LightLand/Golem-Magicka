@@ -27,25 +27,25 @@ public class GMClient {
 
 	@SubscribeEvent
 	public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(GolemEnergySwirlLayer.LARGE, () -> GolemModelDefinitions.createGolemLayer(new CubeDeformation(0.5f)));
-		event.registerLayerDefinition(GolemEnergySwirlLayer.HUMANOID, () -> GolemModelDefinitions.createHumanoidLayer(new CubeDeformation(0.5f)));
-		event.registerLayerDefinition(GolemEnergySwirlLayer.DOG, () -> GolemModelDefinitions.createDogLayer(new CubeDeformation(0.5f)));
+		event.registerLayerDefinition(GolemEnergySwirlLayer.LARGE, () -> GolemModelDefinitions.createGolemLayer(new CubeDeformation(0.3f)));
+		event.registerLayerDefinition(GolemEnergySwirlLayer.HUMANOID, () -> GolemModelDefinitions.createHumanoidLayer(new CubeDeformation(0.3f)));
+		event.registerLayerDefinition(GolemEnergySwirlLayer.DOG, () -> GolemModelDefinitions.createDogLayer(new CubeDeformation(0.3f)));
 	}
 
 	@SubscribeEvent
 	public static void addLayer(EntityRenderersEvent.AddLayers event) {
 		var set = event.getEntityModels();
 		if (event.getRenderer(GolemTypes.ENTITY_GOLEM.get()) instanceof MetalGolemRenderer ler) {
-			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new MetalGolemModel(set), EnergySwirlLayer.EVASION_TEXTURE, MobEffectRegistry.EVASION));
-			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new MetalGolemModel(set), EnergySwirlLayer.CHARGE_TEXTURE, MobEffectRegistry.CHARGED));
+			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new MetalGolemModel(set.bakeLayer(GolemEnergySwirlLayer.LARGE)), EnergySwirlLayer.EVASION_TEXTURE, MobEffectRegistry.EVASION));
+			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new MetalGolemModel(set.bakeLayer(GolemEnergySwirlLayer.LARGE)), EnergySwirlLayer.CHARGE_TEXTURE, MobEffectRegistry.CHARGED));
 		}
 		if (event.getRenderer(GolemTypes.ENTITY_HUMANOID.get()) instanceof HumanoidGolemRenderer ler) {
 			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new HumanoidGolemModel(set), EnergySwirlLayer.EVASION_TEXTURE, MobEffectRegistry.EVASION));
 			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new HumanoidGolemModel(set), EnergySwirlLayer.CHARGE_TEXTURE, MobEffectRegistry.CHARGED));
 		}
 		if (event.getRenderer(GolemTypes.ENTITY_DOG.get()) instanceof DogGolemRenderer ler) {
-			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new DogGolemModel(set), EnergySwirlLayer.EVASION_TEXTURE, MobEffectRegistry.EVASION));
-			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new DogGolemModel(set), EnergySwirlLayer.CHARGE_TEXTURE, MobEffectRegistry.CHARGED));
+			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new DogGolemModel(set.bakeLayer(GolemEnergySwirlLayer.DOG)), EnergySwirlLayer.EVASION_TEXTURE, MobEffectRegistry.EVASION));
+			ler.addLayer(new GolemEnergySwirlLayer<>(ler, new DogGolemModel(set.bakeLayer(GolemEnergySwirlLayer.DOG)), EnergySwirlLayer.CHARGE_TEXTURE, MobEffectRegistry.CHARGED));
 		}
 	}
 

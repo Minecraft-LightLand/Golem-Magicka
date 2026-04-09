@@ -1,13 +1,16 @@
 {
   "values": [
-    "irons_spellbooks:poison_splash",
-    "irons_spellbooks:telekinesis",
-    "irons_spellbooks:pocket_dimension",
-    "irons_spellbooks:spectral_hammer",
     "irons_spellbooks:angel_wing",
+    "irons_spellbooks:planar_sight",
+    "irons_spellbooks:gluttony",
+    "irons_spellbooks:spectral_hammer",
     "irons_spellbooks:portal",
     "irons_spellbooks:summon_ender_chest",
+    "irons_spellbooks:touch_dig",
+    "irons_spellbooks:wololo",
     "irons_spellbooks:recall",
-    "irons_spellbooks:wall_of_fire"
+    "irons_spellbooks:pocket_dimension",
+    "irons_spellbooks:sacrifice",
+    "irons_spellbooks:summon_horse"
   ]
 }

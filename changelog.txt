@@ -1,3 +1,11 @@
+0.1.4
+- Golem regen mana as item as well
+- Fix golem having 0 mana at start
+- Golem choose spells wisely
+- Golem supports instant mana potion
+- Golem renders ray of siphoning and evocation / charged layer
+- Golem with GeckoLib TLM skin supports ISS spell casting animation
+
 0.1.3
 - Fix spell cast mana cost for continuous spells
 - Fix cooldown applied at the beginning of a cast

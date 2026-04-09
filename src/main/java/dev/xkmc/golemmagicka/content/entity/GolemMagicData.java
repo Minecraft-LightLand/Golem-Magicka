@@ -49,6 +49,7 @@ public class GolemMagicData {
 	public GolemMagicData(AbstractGolemEntity<?, ?> golem) {
 		this.golem = golem;
 		golem.setData(DataAttachmentRegistry.MAGIC_DATA, data);
+		data.setMana((float) golem.getAttributeValue(AttributeRegistry.MAX_MANA));
 	}
 
 	public void onEntityEvent() {

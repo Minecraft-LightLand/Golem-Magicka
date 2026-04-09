@@ -12,6 +12,7 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.NeoForge;
@@ -32,6 +33,8 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	public boolean canUse() {
+		if (GolemSpellManager.predicate(data.golem, data.golem.getMainHandItem(), InteractionHand.MAIN_HAND).isEmpty())
+			return false;
 		LivingEntity livingentity = this.mob.getTarget();
 		if (livingentity != null && livingentity.isAlive()) {
 			if (target != livingentity) {

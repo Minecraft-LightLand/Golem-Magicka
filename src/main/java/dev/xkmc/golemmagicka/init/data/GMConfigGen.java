@@ -1,6 +1,7 @@
 package dev.xkmc.golemmagicka.init.data;
 
 import dev.xkmc.golemmagicka.content.config.MagicStatBuilder;
+import dev.xkmc.golemmagicka.content.config.SpellPriorityConfig;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.l2library.serial.config.ConfigDataProvider;
@@ -12,7 +13,9 @@ import dev.xkmc.modulargolems.init.ModularGolems;
 import dev.xkmc.modulargolems.init.registrate.GolemModifiers;
 import dev.xkmc.modulargolems.init.registrate.GolemTypes;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
+import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -68,6 +71,8 @@ public class GMConfigGen extends ConfigDataProvider {
 				.end()
 		);
 
+		genSpell(map);
+
 		map.add(L2Tabs.ATTRIBUTE_ENTRY, GolemMagicka.loc("iron_spell"), new AttributeDisplayConfig()
 				.add(AttributeRegistry.MAX_MANA.get(), 50000)
 				.add(AttributeRegistry.MANA_REGEN.get(), true, 50100, 0)
@@ -75,6 +80,99 @@ public class GMConfigGen extends ConfigDataProvider {
 				.add(AttributeRegistry.SPELL_POWER.get(), true, 50300, 0)
 		);
 
+	}
+
+	private void genSpell(Collector map) {
+		var config = new SpellPriorityConfig();
+		config.start(SpellRegistry.TELEKINESIS_SPELL.get()).dist(12, 10, 2).mana(1.5, 3); // 念力
+		config.start(SpellRegistry.COUNTERSPELL_SPELL.get()).mana(3, 5); // 法术反制
+		config.start(SpellRegistry.SHIELD_SPELL.get()).dist(3, 10).mana(1.5, 3).health(1, 0.5).castCount(1, 5); // 护盾术
+		config.start(SpellRegistry.FROSTBITE_SPELL.get()).weight(150).mana(1.5, 3).effect(MobEffectRegistry.FROSTBITTEN_STRIKES); // 霜噬
+		config.start(SpellRegistry.ICE_TOMB_SPELL.get()).dist(5, 10).mana(1.5, 3).health(1, 0.8); // 冰霜之墓
+		config.start(SpellRegistry.CHARGE_SPELL.get()).weight(152).mana(1.5, 3).effect(MobEffectRegistry.CHARGED); // 超负荷
+		config.start(SpellRegistry.ECHOING_STRIKES_SPELL.get()).weight(150).mana(1.5, 3).effect(MobEffectRegistry.ECHOING_STRIKES); // 回响打击
+		config.start(SpellRegistry.EVASION_SPELL.get()).weight(150).mana(1.5, 3).effect(MobEffectRegistry.EVASION); // 末影闪避
+		config.start(SpellRegistry.HEAL_SPELL.get()).weight(150).mana(1.5, 3).health(1, 0.9); // 治疗
+		config.start(SpellRegistry.ABYSSAL_SHROUD_SPELL.get()).weight(150).mana(1.5, 3).effect(MobEffectRegistry.ABYSSAL_SHROUD); // 深渊庇佑
+		config.start(SpellRegistry.HEARTSTOP_SPELL.get()).weight(150).mana(1.5, 3).effect(MobEffectRegistry.HEARTSTOP); // 止心术
+		config.start(SpellRegistry.OAKSKIN_SPELL.get()).weight(150).mana(1.5, 3).effect(MobEffectRegistry.OAKSKIN); // 橡肤
+		config.start(SpellRegistry.SPIDER_ASPECT_SPELL.get()).weight(150).mana(1.5, 3).effect(MobEffectRegistry.SPIDER_ASPECT); // 蛛毒之相
+		config.start(SpellRegistry.SNOWBALL_SPELL.get()).dist(10, 6).mana(1.5, 3).aoe(4, 0.5, 0.15); // 雪球术
+		config.start(SpellRegistry.ACID_ORB_SPELL.get()).dist(10, 6).mana(1.5, 3).aoe(3, 0, 0.15); // 腐蚀喷吐
+		config.start(SpellRegistry.SLOW_SPELL.get()).dist(32, 30).mana(1.5, 3); // 迟缓
+		config.start(SpellRegistry.HEALING_CIRCLE_SPELL.get()).weight(150).mana(1.5, 3).health(1, 0.7); // 治愈之环
+		config.start(SpellRegistry.HASTE_SPELL.get()).weight(151).mana(1.5, 3).effect(MobEffectRegistry.HASTENED); // 急迫
+		config.start(SpellRegistry.BLIGHT_SPELL.get()).dist(32, 30).mana(1.5, 3); // 枯萎术
+		config.start(SpellRegistry.ROOT_SPELL.get()).dist(32, 30).mana(1.5, 3); // 纠缠根须
+		config.start(SpellRegistry.BLESSING_OF_LIFE_SPELL.get()).mana(1.5, 3); // 生命祝福
+		config.start(SpellRegistry.FROSTWAVE_SPELL.get()).dist(6.75, 6.75, 0.75).mana(1.5, 3).aoe(7, 0.75, 0.15); // 冰浪
+		config.start(SpellRegistry.HEAT_SURGE_SPELL.get()).dist(6, 6, 0.5).mana(1.5, 3).aoe(7, 0.5, 0.15); // 焰涌
+		config.start(SpellRegistry.CLEANSE_SPELL.get()).weight(150).mana(1.5, 3); // 净化
+		config.start(SpellRegistry.FORTIFY_SPELL.get()).weight(150).mana(1.5, 3).effect(MobEffectRegistry.FORTIFY); // 神圣守护
+		config.start(SpellRegistry.INVISIBILITY_SPELL.get()).weight(150).mana(1.5, 3).effect(MobEffectRegistry.TRUE_INVISIBILITY); // 隐身术
+		config.start(SpellRegistry.THUNDERSTORM_SPELL.get()).weight(150).mana(1.5, 3).aoe(8, 0, 0.2).effect(MobEffectRegistry.THUNDERSTORM); // 雷暴
+		config.start(SpellRegistry.GREATER_HEAL_SPELL.get()).weight(150).mana(1.5, 3).health(1, 0.5); // 强效治疗
+		config.start(SpellRegistry.BLAZE_STORM_SPELL.get()).dist(12, 8).mana(0.5, 2); // 烈焰风暴
+		config.start(SpellRegistry.RAY_OF_SIPHONING_SPELL.get()).dist(12, 8).mana(0.5, 2); // 血吸光束
+		config.start(SpellRegistry.CONE_OF_COLD_SPELL.get()).dist(10, 7).mana(0.5, 2).aoe(2, 0, 0.15); // 刺骨寒风
+		config.start(SpellRegistry.FIRE_BREATH_SPELL.get()).dist(10, 7).mana(0.5, 2).aoe(2, 0, 0.15); // 火焰吐息
+		config.start(SpellRegistry.ELECTROCUTE_SPELL.get()).dist(10, 7).mana(0.5, 2).aoe(2, 0, 0.15); // 电刑
+		config.start(SpellRegistry.DRAGON_BREATH_SPELL.get()).dist(10, 7).mana(0.5, 2).aoe(2, 0, 0.15); // 龙息
+		config.start(SpellRegistry.POISON_BREATH_SPELL.get()).dist(10, 7).mana(0.5, 2).aoe(2, 0, 0.15); // 毒雾喷射
+		config.start(SpellRegistry.STARFALL_SPELL.get()).dist(12, 8).mana(0.5, 2).aoe(6, 0, 0.15); // 星海落瀑
+		config.start(SpellRegistry.LOB_CREEPER_SPELL.get()).dist(10, 6).mana(0.5, 2); // 苦力怕迫击炮
+		config.start(SpellRegistry.FLAMING_BARRAGE_SPELL.get()).dist(12, 8).mana(0.5, 2); // 炽焰追踪弹幕
+		config.start(SpellRegistry.ELDRITCH_BLAST_SPELL.get()).dist(30, 20).mana(0.5, 2); // 邪术冲击波
+		config.start(SpellRegistry.RAY_OF_FROST_SPELL.get()).dist(30, 20).mana(0.5, 2); // 冰霜射线
+		config.start(SpellRegistry.ICE_SPIKES_SPELL.get()).dist(8, 4, 1.5).mana(0.5, 2); // 冰霜尖刺
+		config.start(SpellRegistry.ICICLE_SPELL.get()).dist(64, 20).mana(0.5, 2); // 冰霜箭
+		config.start(SpellRegistry.FIREBOLT_SPELL.get()).dist(64, 20).mana(0.5, 2); // 火焰箭
+		config.start(SpellRegistry.BALL_LIGHTNING_SPELL.get()).dist(50, 20).mana(0.5, 2); // 闪电球
+		config.start(SpellRegistry.MAGIC_MISSILE_SPELL.get()).dist(64, 20).mana(0.5, 2); // 魔法飞弹
+		config.start(SpellRegistry.GUIDING_BOLT_SPELL.get()).dist(64, 20).mana(0.5, 2); // 曳光弹
+		config.start(SpellRegistry.BLOOD_NEEDLES_SPELL.get()).dist(22, 16).mana(0.5, 2); // 猩红之刺
+		config.start(SpellRegistry.BLOOD_SLASH_SPELL.get()).dist(64, 20).mana(0.5, 2).aoe(2, 0, 0.15); // 猩红斩击
+		config.start(SpellRegistry.WITHER_SKULL_SPELL.get()).dist(42, 10).mana(0.5, 2); // 凋灵之首
+		config.start(SpellRegistry.FIRECRACKER_SPELL.get()).dist(32, 30).mana(0.5, 2); // 烟火四射
+		config.start(SpellRegistry.LIGHTNING_BOLT_SPELL.get()).dist(64, 62).mana(0.5, 2).aoe(3, 0, 0.15); // 落雷
+		config.start(SpellRegistry.CHAIN_LIGHTNING_SPELL.get()).dist(4, 3, 0.5).mana(0.5, 2).aoe(3, 0.5, 0.15); // 连锁闪电
+		config.start(SpellRegistry.SUNBEAM_SPELL.get()).dist(48, 46).mana(0.5, 2).aoe(3, 0, 0.15); // 烈阳射线
+		config.start(SpellRegistry.ACUPUNCTURE_SPELL.get()).dist(32, 30).mana(0.5, 2); // 猩红刺狱
+		config.start(SpellRegistry.DEVOUR_SPELL.get()).dist(8, 6).mana(0.5, 2); // 嗜血啃咬
+		config.start(SpellRegistry.MAGMA_BOMB_SPELL.get()).dist(12, 8).mana(0.5, 2).aoe(4, 0, 0.15); // 岩浆炸弹
+		config.start(SpellRegistry.THROW_SPELL.get()).dist(10, 6).mana(0.5, 2); // 投掷
+		config.start(SpellRegistry.LIGHTNING_LANCE_SPELL.get()).dist(24, 16).mana(0.5, 2); // 雷鸣长枪
+		config.start(SpellRegistry.POISON_ARROW_SPELL.get()).dist(24, 16).mana(0.5, 2).aoe(2, 0, 0.15); // 毒箭射击
+		config.start(SpellRegistry.RAISE_HELL_SPELL.get()).dist(8, 6).mana(0.5, 2).aoe(7, 0, 0.15); // 地狱浮现
+		config.start(SpellRegistry.SONIC_BOOM_SPELL.get()).dist(20, 18, 5).mana(0.5, 2); // 音爆
+		config.start(SpellRegistry.FLAMING_STRIKE_SPELL.get()).dist(3, 2).mana(0.5, 2).aoe(2, 0, 0.15); // 炽焰斩击
+		config.start(SpellRegistry.DIVINE_SMITE_SPELL.get()).dist(4, 3).mana(0.5, 2).aoe(2, 0, 0.15); // 神圣打击
+		config.start(SpellRegistry.GUST_SPELL.get()).dist(7, 4).mana(0.5, 2); // 呼啸之风
+		config.start(SpellRegistry.FANG_STRIKE_SPELL.get()).dist(8, 6, 1).mana(0.5, 2); // 唤魔尖牙
+		config.start(SpellRegistry.STOMP_SPELL.get()).dist(5, 4, 1).mana(0.5, 2).aoe(4, 1, 0.15); // 践踏
+		config.start(SpellRegistry.FIRE_ARROW_SPELL.get()).dist(32, 16).mana(0.5, 2).aoe(2, 0, 0.15); // 爆裂炽焰箭
+		config.start(SpellRegistry.FIREBALL_SPELL.get()).dist(64, 20).mana(0.5, 2).aoe(3, 1, 0.15); // 火球术
+		config.start(SpellRegistry.MAGIC_ARROW_SPELL.get()).dist(64, 20).mana(0.5, 2); // 魔法箭
+		config.start(SpellRegistry.BLACK_HOLE_SPELL.get()).dist(8, 6, 2).mana(0.5, 2).aoe(6, 2, 0.15); // 黑洞
+		config.start(SpellRegistry.ICE_BLOCK_SPELL.get()).dist(48, 46).mana(0.5, 2).aoe(3, 0, 0.15); // 霜降
+		config.start(SpellRegistry.SCORCH_SPELL.get()).dist(32, 30).mana(0.5, 2).aoe(2.5, 0, 0.15); // 灼烧
+		config.start(SpellRegistry.ARROW_VOLLEY_SPELL.get()).dist(48, 46).mana(0.5, 2).aoe(2, 0.2, 0.15); // 万箭齐发
+		config.start(SpellRegistry.CHAIN_CREEPER_SPELL.get()).dist(48, 46).mana(0.5, 2).aoe(5, 0.2, 0.15); // 苦力怕之环
+		config.start(SpellRegistry.FANG_WARD_SPELL.get()).dist(2, 1, 0.3).mana(0.5, 2).aoe(1.5, 0.3, 0.15); // 尖牙之环
+		config.start(SpellRegistry.WISP_SPELL.get()).dist(48, 46).mana(0.5, 2); // 圣灵
+		config.start(SpellRegistry.SCULK_TENTACLES_SPELL.get()).dist(32, 30).mana(0.5, 2).aoe(2.5, 1.3, 0.15); // 幽匿之触
+		config.start(SpellRegistry.EARTHQUAKE_SPELL.get()).dist(32, 30).mana(0.5, 2).aoe(8, 0, 0.15); // 地震
+		config.start(SpellRegistry.FIREFLY_SWARM_SPELL.get()).dist(32, 30).mana(0.5, 2); // 萤火虫群
+		config.start(SpellRegistry.POISON_SPLASH_SPELL.get()).dist(32, 30).mana(0.5, 2).aoe(2, 0, 0.15); // 毒液飞溅
+		config.start(SpellRegistry.SHOCKWAVE_SPELL.get()).dist(9, 7, 1).mana(0.5, 2).aoe(8, 1, 0.15); // 震荡波
+		config.start(SpellRegistry.FROST_STEP_SPELL.get()).dist(3, 10.5, 1.5).mana(0.5, 2); // 霜步
+		config.start(SpellRegistry.BURNING_DASH_SPELL.get()).dist(8, 4).mana(0.5, 2); // 烈焰冲锋
+		config.start(SpellRegistry.ASCENSION_SPELL.get()).dist(4, 2).mana(0.5, 2); // 飞升
+		config.start(SpellRegistry.VOLT_STRIKE_SPELL.get()).dist(12, 6).mana(0.5, 2); // 伏特打击
+		config.start(SpellRegistry.SHADOW_SLASH.get()).dist(12, 6).mana(0.5, 2); // 暗影斩击
+		config.start(SpellRegistry.TELEPORT_SPELL.get()).dist(3, 10, 10).mana(0.5, 2); // 传送术
+		config.start(SpellRegistry.BLOOD_STEP_SPELL.get()).dist(3, 12, 4).mana(0.5, 2); // 血步
+		map.add(GolemMagicka.SPELL, GolemMagicka.loc("iron_spell"), config);
 	}
 
 }

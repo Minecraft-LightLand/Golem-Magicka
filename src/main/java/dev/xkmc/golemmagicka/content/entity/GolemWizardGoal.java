@@ -1,5 +1,8 @@
 package dev.xkmc.golemmagicka.content.entity;
 
+import dev.xkmc.golemmagicka.events.GolemCheckSpellEvent;
+import dev.xkmc.golemmagicka.init.GolemMagicka;
+import dev.xkmc.golemmagicka.init.data.GMTagGen;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
@@ -8,11 +11,14 @@ import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
+import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 /// Goal for golem to cast spell
 public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends WizardAttackGoal implements IWeaponGoal<E> {
@@ -26,18 +32,31 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		this.data = data;
 	}
 
+	public boolean canUse() {
+		if (GolemSpellManager.predicate(data.golem, data.golem.getMainHandItem(), InteractionHand.MAIN_HAND).isEmpty())
+			return false;
+		LivingEntity livingentity = this.mob.getTarget();
+		if (livingentity != null && livingentity.isAlive()) {
+			if (target != livingentity) {
+				data.setNewTarget(target);
+			}
+			this.target = livingentity;
+			return this.mob.canAttack(this.target);
+		} else {
+			return false;
+		}
+	}
+
 	@Override
 	protected AbstractSpell getNextSpellType() {
-		updateAvailableSpells();
-		return super.getNextSpellType();
+		var opt = updateAvailableSpells().getRandomValue(mob.getRandom());
+		return opt.map(SpellEntry::spell).orElseGet(SpellRegistry::none);
 	}
 
 	@Override
 	public boolean mayActivate(ItemStack stack) {
 		if (data.isCasting()) return true;
-		updateAvailableSpells();
-		return !attackSpells.isEmpty() || !defenseSpells.isEmpty() ||
-				!movementSpells.isEmpty() || !supportSpells.isEmpty();
+		return !updateAvailableSpells().isEmpty();
 	}
 
 	@Override
@@ -74,23 +93,22 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			data.setCastingData(new CastingSpellData(spell, entry.level(), entry.source(), cost, cd));
 			this.spellCastingMob.initiateCastSpell(spell, entry.level());
 			this.fleeCooldown = 7 + spell.getCastTime(entry.level());
+			spellcastingRangeSqr = GolemMagicka.SPELL.getMerged().get(spell).getPreferredDistSqr();
 		} else {
 			this.spellAttackDelay = 5;
 		}
 		spellCache = null;
 	}
 
-	public void updateAvailableSpells() {
+	public SimpleWeightedRandomList<SpellEntry> updateAvailableSpells() {
 		if (spellCache == null || spellCache.isEmpty()) {
 			var spells = SpellCategoryUtil.getSpells(data.golem);
 			spellCache = new LinkedHashMap<>();
 			for (var e : spells)
 				spellCache.put(e.spell(), e);
 		}
-		List<AbstractSpell> atkSpells = new ArrayList<>();
-		List<AbstractSpell> defSpells = new ArrayList<>();
-		List<AbstractSpell> movSpells = new ArrayList<>();
-		List<AbstractSpell> sptSpells = new ArrayList<>();
+		SimpleWeightedRandomList.Builder<SpellEntry> builder = new SimpleWeightedRandomList.Builder<>();
+		var merged = GolemMagicka.SPELL.getMerged();
 		for (var ent : spellCache.values()) {
 			var e = ent.spell();
 			int mana = e.getManaCost(ent.level());
@@ -102,15 +120,24 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				continue;
 			if (data.getMagicData().getPlayerCooldowns().isOnCooldown(e))
 				continue;
-			if (SpellCategoryUtil.isSupport(e))
-				sptSpells.add(e);
-			else if (SpellCategoryUtil.isMovement(e))
-				movSpells.add(e);
-			else if (SpellCategoryUtil.isDefense(e))
-				defSpells.add(e);
-			else atkSpells.add(e);
+			if (isUnavailable(e, target))
+				continue;
+			if (MinecraftForge.EVENT_BUS.post(new GolemCheckSpellEvent(data.golem, target, data, ent)))
+				continue;
+			var mem = target == null ? 0 : data.getMemory(target).attackSpellCount();
+			int weight = merged.get(e).weight(data.golem, target, data.getMagicData(), mana, mem, ent.level());
+			builder.add(ent, weight);
 		}
-		setSpells(atkSpells, defSpells, movSpells, sptSpells);
+		return builder.build();
+	}
+
+	private boolean isUnavailable(AbstractSpell e, @Nullable LivingEntity target) {
+		if (!data.golem.getMode().isMovable()) {
+			if (SpellCategoryUtil.is(e, GMTagGen.MOVEMENT)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

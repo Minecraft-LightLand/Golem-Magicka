@@ -1,7 +1,11 @@
 package dev.xkmc.golemmagicka.content.entity;
 
-public interface IGolemMagicka {
+import io.redspace.ironsspellbooks.api.magic.MagicData;
+
+public interface IGolemMagicka extends MagicData.IExtendedEntity{
 
 	GolemMagicData magicka$getGolemMagicData();
 
+	@Override
+	MagicData irons_spellbooks$getMagicData();
 }

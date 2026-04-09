@@ -1,5 +1,7 @@
 package dev.xkmc.golemmagicka.content.entity;
 
+import dev.xkmc.golemmagicka.api.IGolemCastingStateHolder;
+import dev.xkmc.golemmagicka.compat.CompatDispatch;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
@@ -36,13 +38,16 @@ public class GolemMagicData {
 	private SpellData castingSpell;
 	@Nullable
 	private CastingSpellData castingData;
+	@Nullable
+	private CombatMemory memory;
+
 	private boolean recreateSpell, syncCooldowns;
-	private boolean cancelCastAnimation = false;
-	private AbstractSpell lastCastSpellType = SpellRegistry.none();
-	private AbstractSpell instantCastSpellType = SpellRegistry.none();
+
+	public IGolemCastingStateHolder castingState = CompatDispatch.getCastingStateHolder();
 
 	public GolemMagicData(AbstractGolemEntity<?, ?> golem) {
 		this.golem = golem;
+		data.setMana((float) golem.getAttributeValue(AttributeRegistry.MAX_MANA.get()));
 	}
 
 	public void onEntityEvent() {
@@ -106,6 +111,9 @@ public class GolemMagicData {
 	public void addAdditionalSaveData(CompoundTag tag) {
 		data.getSyncedData().saveNBTData(tag, golem.level().registryAccess());
 		tag.putFloat("Mana", data.getMana());
+		tag.putFloat("MaxMana", (float) golem.getAttributeValue(AttributeRegistry.MAX_MANA.get()));
+		tag.putFloat("ManaRegen", (float) golem.getAttributeValue(AttributeRegistry.MANA_REGEN.get()));
+		tag.putLong("SpellLastTimeStamp", golem.level().getGameTime());
 		tag.put("Cooldowns", data.getPlayerCooldowns().saveNBTData());
 		if (castingData != null) {
 			var extra = new CompoundTag();
@@ -125,14 +133,27 @@ public class GolemMagicData {
 			recreateSpell = true;
 		}
 		data.setSyncedData(syncedSpellData);
+		int forwardTick = 0;
 		if (!tag.contains("Mana")) {
 			data.setMana((float) golem.getAttributeValue(AttributeRegistry.MAX_MANA.get()));
 		} else {
-			data.setMana(tag.getFloat("Mana"));
+			var mana = tag.getFloat("Mana");
+			var max = tag.getFloat("MaxMana");
+			var regen = tag.getFloat("ManaRegen");
+			long last = tag.getLong("SpellLastTimeStamp");
+			long current = golem.level().getGameTime();
+			if (current > last) {
+				forwardTick = (int) (current - last);
+				int diff = forwardTick / 10;
+				mana = Math.min(max, mana + max * 0.01f * regen * diff);
+			}
+			data.setMana(mana);
 		}
 		if (tag.contains("Cooldowns")) {
 			var cds = tag.getList("Cooldowns", CompoundTag.TAG_COMPOUND);
 			data.getPlayerCooldowns().loadNBTData(cds);
+			if (forwardTick > 0)
+				data.getPlayerCooldowns().tick(forwardTick);
 		}
 		if (tag.contains("ExtraData")) {
 			var extra = tag.getCompound("ExtraData");
@@ -156,7 +177,7 @@ public class GolemMagicData {
 	public void cancelCast() {
 		if (isCasting()) {
 			if (golem.level().isClientSide()) {
-				cancelCastAnimation = true;
+				castingState.setCancelled(true);
 			} else {
 				golem.level().broadcastEntityEvent(golem, EntityEvent.STOP_OFFER_FLOWER);
 			}
@@ -183,6 +204,7 @@ public class GolemMagicData {
 
 	public void setSyncedSpellData(SyncedSpellData syncedSpellData) {
 		if (!golem.level().isClientSide()) return;
+		castingState.updateState(golem, syncedSpellData);
 		boolean isCasting = data.isCasting();
 		data.setSyncedData(syncedSpellData);
 		castingSpell = data.getCastingSpell();
@@ -193,7 +215,7 @@ public class GolemMagicData {
 				AbstractSpell spell = data.getCastingSpell().getSpell();
 				initiateCastSpell(spell, data.getCastingSpellLevel());
 				if (castingSpell.getSpell().getCastType() == CastType.INSTANT) {
-					instantCastSpellType = castingSpell.getSpell();
+					//instantCastSpellType = castingSpell.getSpell();
 					castingSpell.getSpell().onClientPreCast(golem.level(), castingSpell.getLevel(), golem, InteractionHand.MAIN_HAND, data);
 					castComplete();
 				}
@@ -208,7 +230,7 @@ public class GolemMagicData {
 			castingSpell = null;
 		} else {
 			if (golem.level().isClientSide) {
-				cancelCastAnimation = false;
+				castingState.setCancelled(false);
 			}
 
 			castingSpell = new SpellData(spell, spellLevel);
@@ -232,6 +254,8 @@ public class GolemMagicData {
 				data.initiateCast(castingSpell.getSpell(), castingSpell.getLevel(), castingSpell.getSpell().getEffectiveCastTime(castingSpell.getLevel(), golem), CastSource.MOB, SpellSelectionManager.MAINHAND);
 				if (!golem.level().isClientSide) {
 					castingSpell.getSpell().onServerPreCast(golem.level(), castingSpell.getLevel(), golem, data);
+					if (memory != null)
+						memory.castSpell(spell);
 				}
 
 			}
@@ -308,6 +332,17 @@ public class GolemMagicData {
 
 	public void setCastingData(CastingSpellData data) {
 		castingData = data;
+	}
+
+	public CombatMemory getMemory(LivingEntity target) {
+		if (memory == null || memory.target != target) {
+			memory = new CombatMemory(target);
+		}
+		return memory;
+	}
+
+	public void setNewTarget(LivingEntity target) {
+		memory = new CombatMemory(target);
 	}
 
 }

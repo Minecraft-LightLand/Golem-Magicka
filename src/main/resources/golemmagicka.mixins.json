@@ -6,7 +6,8 @@
 	"refmap": "golemmagicka.refmap.json",
 	"mixins": [
 		"AbstractGolemMixin",
-		"SpellRegistryMixin"
+		"SpellRegistryMixin",
+		"UtilsMixin"
 	],
 	"client": [
 	],

@@ -1,5 +1,7 @@
 package dev.xkmc.golemmagicka.content.entity;
 
+import dev.xkmc.golemmagicka.api.IGolemCastingStateHolder;
+import dev.xkmc.golemmagicka.compat.CompatDispatch;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
@@ -42,9 +44,7 @@ public class GolemMagicData {
 
 	private boolean recreateSpell, syncCooldowns;
 
-	private boolean cancelCastAnimation = false;
-	private AbstractSpell lastCastSpellType = SpellRegistry.none();
-	private AbstractSpell instantCastSpellType = SpellRegistry.none();
+	public IGolemCastingStateHolder castingState = CompatDispatch.getCastingStateHolder();
 
 	public GolemMagicData(AbstractGolemEntity<?, ?> golem) {
 		this.golem = golem;
@@ -177,7 +177,7 @@ public class GolemMagicData {
 	public void cancelCast() {
 		if (isCasting()) {
 			if (golem.level().isClientSide()) {
-				cancelCastAnimation = true;
+				castingState.setCancelled(true);
 			} else {
 				golem.level().broadcastEntityEvent(golem, EntityEvent.STOP_OFFER_FLOWER);
 			}
@@ -194,7 +194,6 @@ public class GolemMagicData {
 					data.getPlayerCooldowns().addCooldown(castingData.spell().getSpellId(), castingData.cooldown());
 					GolemSpellInfoToClient.send(golem, data.getMana(), castingData.spell(), castingData.cooldown());
 				}
-
 			}
 		}
 		data.resetCastingState();
@@ -204,6 +203,7 @@ public class GolemMagicData {
 
 	public void setSyncedSpellData(SyncedSpellData syncedSpellData) {
 		if (!golem.level().isClientSide()) return;
+		castingState.updateState(golem, syncedSpellData);
 		boolean isCasting = data.isCasting();
 		data.setSyncedData(syncedSpellData);
 		castingSpell = data.getCastingSpell();
@@ -214,7 +214,7 @@ public class GolemMagicData {
 				AbstractSpell spell = data.getCastingSpell().getSpell();
 				initiateCastSpell(spell, data.getCastingSpellLevel());
 				if (castingSpell.getSpell().getCastType() == CastType.INSTANT) {
-					instantCastSpellType = castingSpell.getSpell();
+					//instantCastSpellType = castingSpell.getSpell();
 					castingSpell.getSpell().onClientPreCast(golem.level(), castingSpell.getLevel(), golem, InteractionHand.MAIN_HAND, data);
 					castComplete();
 				}
@@ -229,7 +229,7 @@ public class GolemMagicData {
 			castingSpell = null;
 		} else {
 			if (golem.level().isClientSide) {
-				cancelCastAnimation = false;
+				castingState.setCancelled(false);
 			}
 
 			castingSpell = new SpellData(spell, spellLevel);

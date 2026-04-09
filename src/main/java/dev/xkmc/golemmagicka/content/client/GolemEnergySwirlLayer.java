@@ -54,12 +54,12 @@ public class GolemEnergySwirlLayer<
 	public void render(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
 		if (shouldRender.test(pLivingEntity)) {
 			float f = (float) pLivingEntity.tickCount + pPartialTicks;
-			M entitymodel = this.model();
-			this.getParentModel().copyPropertiesTo(entitymodel);
-			entitymodel.prepareMobModel(pLivingEntity, pLimbSwing, pLimbSwingAmount, pPartialTicks);
-			entitymodel.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
+			M m = this.model();
+			this.getParentModel().copyPropertiesTo(m);
+			m.prepareMobModel(pLivingEntity, pLimbSwing, pLimbSwingAmount, pPartialTicks);
+			m.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
 			VertexConsumer vertexconsumer = pBuffer.getBuffer(getRenderType(this.TEXTURE, f));
-			entitymodel.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, COLOR);
+			m.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, COLOR);
 		}
 
 	}

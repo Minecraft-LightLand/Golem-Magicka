@@ -53,7 +53,7 @@ public class ClientGolemEventHandlers {
 
 	@SubscribeEvent
 	public static void renderGolem(RenderLivingEvent.Post<?, ?> event) {
-		if (event.getEntity() instanceof AbstractGolemEntity<?, ?> golem) {
+		if (event.getEntity() instanceof AbstractGolemEntity<?, ?> golem && golem.isAddedToLevel()) {
 			SpellRenderingHelper.renderSpellHelper(ClientMagicData.getSyncedSpellData(golem), golem, event.getPoseStack(), event.getMultiBufferSource(), event.getPartialTick());
 		}
 	}

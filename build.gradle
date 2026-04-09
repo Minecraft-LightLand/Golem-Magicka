@@ -177,6 +177,8 @@ dependencies {
     implementation "mezz.jei:jei-${jei_minecraft_version}:${jei_version}"
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
+    implementation "curse.maven:touhou-little-maid-355044:7510722-sources-7510726"
+
     implementation "curse.maven:playeranimator-658587:7389814"
     implementation "curse.maven:geckolib-388172:7707149"
     implementation "curse.maven:irons-patreon-library-1492763:7830106"

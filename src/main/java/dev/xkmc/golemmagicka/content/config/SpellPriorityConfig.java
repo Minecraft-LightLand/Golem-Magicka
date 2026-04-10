@@ -1,5 +1,6 @@
 package dev.xkmc.golemmagicka.content.config;
 
+import dev.xkmc.golemmagicka.content.entity.CombatMemory;
 import dev.xkmc.l2core.serial.config.BaseConfig;
 import dev.xkmc.l2core.serial.config.CollectType;
 import dev.xkmc.l2core.serial.config.ConfigCollect;
@@ -59,13 +60,16 @@ public class SpellPriorityConfig extends BaseConfig {
 
 		@SerialField
 		@Nullable
-		public Holder<MobEffect> effectLock;
+		public Holder<MobEffect> effectLock, inflictedEffect;
 
-		public int weight(AbstractGolemEntity<?, ?> user, @Nullable LivingEntity target, MagicData magic, float totalCost, int castCount, int level) {
+		public int weight(AbstractGolemEntity<?, ?> user, @Nullable LivingEntity target, MagicData magic, float totalCost, @Nullable CombatMemory memory, int level) {
 			double ans = weight;
 			if (effectLock != null && user.hasEffect(effectLock)) {
 				return 0;
 			}
+			if (inflictedEffect != null && (target == null || target.hasEffect(inflictedEffect) ||
+					memory != null && !memory.canInflict(inflictedEffect)))
+				return 0;
 			if (minWeightDist != maxWeightDist && target != null) {
 				var dist = user.distanceTo(target) - distPerLevel * level;
 				ans *= Mth.clamp((dist - minWeightDist) / (maxWeightDist - minWeightDist), 0, 1);
@@ -78,8 +82,9 @@ public class SpellPriorityConfig extends BaseConfig {
 				var php = user.getHealth() / user.getMaxHealth();
 				ans *= Mth.clamp((php - minWeightPHP) / (maxWeightPHP - minWeightPHP), 0, 1);
 			}
+			int attackCount = memory == null ? 0 : memory.attackSpellCount();
 			if (minWeightCastCount != maxWeightCastCount) {
-				ans *= Mth.clamp(1d * (castCount - minWeightCastCount) / (maxWeightCastCount - minWeightCastCount), 0, 1);
+				ans *= Mth.clamp(1d * (attackCount - minWeightCastCount) / (maxWeightCastCount - minWeightCastCount), 0, 1);
 			}
 			if (target != null && aoeRange > 0) {
 				var range = aoeRange + aoeRangePerLevel * (level - 1);
@@ -100,7 +105,7 @@ public class SpellPriorityConfig extends BaseConfig {
 			return (float) (maxWeightDist * maxWeightDist);
 		}
 
-		public Data weight(int weight){
+		public Data weight(int weight) {
 			this.weight = weight;
 			return this;
 		}
@@ -145,6 +150,11 @@ public class SpellPriorityConfig extends BaseConfig {
 
 		public Data effect(Holder<MobEffect> effect) {
 			effectLock = effect;
+			return this;
+		}
+
+		public Data targetEffect(Holder<MobEffect> effect) {
+			inflictedEffect = effect;
 			return this;
 		}
 	}

@@ -105,6 +105,8 @@ public class GolemMagicData {
 			if (isCasting() && castingSpell == null) {
 				castComplete();
 			}
+			if (memory != null)
+				memory.tick();
 		}
 		GolemSpellManager.tickGolemSpellData(golem, data);
 	}

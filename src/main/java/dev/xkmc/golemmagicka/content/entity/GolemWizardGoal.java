@@ -125,7 +125,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				continue;
 			if (NeoForge.EVENT_BUS.post(new GolemCheckSpellEvent(data.golem, target, data, ent)).isCanceled())
 				continue;
-			var mem = target == null ? 0 : data.getMemory(target).attackSpellCount();
+			var mem = target == null ? null : data.getMemory(target);
 			int weight = merged.get(e).weight(data.golem, target, data.getMagicData(), mana, mem, ent.level());
 			if (weight <= 0) continue;
 			builder.add(ent, weight);

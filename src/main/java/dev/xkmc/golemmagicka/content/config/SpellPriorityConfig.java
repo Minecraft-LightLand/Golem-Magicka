@@ -33,6 +33,12 @@ public class SpellPriorityConfig extends BaseConfig {
 		return data;
 	}
 
+	public Data start(String spell) {
+		var data = new Data();
+		spellData.put(spell, data);
+		return data;
+	}
+
 	public Data get(AbstractSpell e) {
 		var ans = spellData.get(e.getSpellId());
 		return ans == null ? DEF : ans;

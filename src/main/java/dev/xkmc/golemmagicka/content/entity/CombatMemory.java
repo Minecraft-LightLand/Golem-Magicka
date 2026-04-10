@@ -2,23 +2,28 @@ package dev.xkmc.golemmagicka.content.entity;
 
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
+import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.neoforge.common.CommonHooks;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CombatMemory {
 
+	public final AbstractGolemEntity<?,?> golem;
 	public final LivingEntity target;
 
 	private int attackSpellCount;
 
 	private final Map<MobEffect, EffectMemory> effectMemory = new LinkedHashMap<>();
 
-	public CombatMemory(LivingEntity target) {
+	public CombatMemory(AbstractGolemEntity<?,?> golem, LivingEntity target) {
+		this.golem = golem;
 		this.target = target;
 	}
 
@@ -57,6 +62,9 @@ public class CombatMemory {
 	}
 
 	public boolean canInflict(Holder<MobEffect> effect) {
+		if (!CommonHooks.canMobEffectBeApplied(target, new MobEffectInstance(effect, 0, 20), golem)) {
+			return false;
+		}
 		var mem = effectMemory.get(effect.value());
 		if (mem != null && mem.immune) return false;
 		return true;

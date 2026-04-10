@@ -127,6 +127,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				continue;
 			var mem = target == null ? 0 : data.getMemory(target).attackSpellCount();
 			int weight = merged.get(e).weight(data.golem, target, data.getMagicData(), mana, mem, ent.level());
+			if (weight <= 0) continue;
 			builder.add(ent, weight);
 		}
 		return builder.build();

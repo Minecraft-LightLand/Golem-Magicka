@@ -15,14 +15,14 @@ import java.util.Map;
 
 public class CombatMemory {
 
-	public final AbstractGolemEntity<?,?> golem;
+	public final AbstractGolemEntity<?, ?> golem;
 	public final LivingEntity target;
 
 	private int attackSpellCount;
 
 	private final Map<MobEffect, EffectMemory> effectMemory = new LinkedHashMap<>();
 
-	public CombatMemory(AbstractGolemEntity<?,?> golem, LivingEntity target) {
+	public CombatMemory(AbstractGolemEntity<?, ?> golem, LivingEntity target) {
 		this.golem = golem;
 		this.target = target;
 	}
@@ -62,11 +62,12 @@ public class CombatMemory {
 	}
 
 	public boolean canInflict(Holder<MobEffect> effect) {
-		if (!CommonHooks.canMobEffectBeApplied(target, new MobEffectInstance(effect, 0, 20), golem)) {
-			return false;
-		}
 		var mem = effectMemory.get(effect.value());
 		if (mem != null && mem.immune) return false;
+		if (!CommonHooks.canMobEffectBeApplied(target, new MobEffectInstance(effect, 0, 20), golem)) {
+			effectMemory.put(effect.value(), new EffectMemory(effect, true));
+			return false;
+		}
 		return true;
 	}
 
@@ -79,6 +80,11 @@ public class CombatMemory {
 		public EffectMemory(Holder<MobEffect> eff, int t) {
 			this.eff = eff;
 			this.time = t;
+		}
+
+		public EffectMemory(Holder<MobEffect> eff, boolean imm) {
+			this.eff = eff;
+			this.immune = imm;
 		}
 
 	}

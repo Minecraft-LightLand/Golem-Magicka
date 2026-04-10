@@ -58,6 +58,8 @@ public class GMConfigGen extends ConfigDataProvider {
 				.add(ModularGolems.loc("netherite"), 200, 0.4)
 				.add(ModularGolems.loc("sculk"), 100, 0.2)
 				.add(ModularGolems.loc("sculk"), GMTypes.ELDRITCH_SPELL_POWER.get(), 0.4)
+				.add(ModularGolems.loc("copper"), GMTypes.LIGHTNING_RESIST.get(), 0.5)
+				.add(ModularGolems.loc("netherite"), GMTypes.FIRE_RESIST.get(), 0.8)
 				.build()
 		);
 
@@ -70,6 +72,7 @@ public class GMConfigGen extends ConfigDataProvider {
 				.addStat(GMTypes.STAT_MANA_REGEN.get(), 1)
 				.addStat(GMTypes.STAT_SPELL_POWER.get(), 0.5)
 				.addStat(GMTypes.STAT_CD.get(), 0.4)
+				.addStat(GMTypes.FIRE_RESIST.get(), 1)
 				.addModifier(GolemModifiers.DAMAGE_CAP.get(), 1)
 				.addModifier(GolemModifiers.FIRE_IMMUNE.get(), 1)
 				.end()

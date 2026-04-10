@@ -17,6 +17,7 @@
   },
   "stats": {
     "golemmagicka:pyrium": {
+      "golemmagicka:fire_resist": 1.0,
       "golemmagicka:mana_regen": 1.0,
       "golemmagicka:max_mana": 800.0,
       "golemmagicka:spell_cooldown": 0.4,

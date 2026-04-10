@@ -4,6 +4,7 @@ import dev.xkmc.golemmagicka.events.GolemCheckSpellEvent;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.data.GMTagGen;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
+import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
@@ -24,16 +25,19 @@ import java.util.LinkedHashMap;
 public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends WizardAttackGoal implements IWeaponGoal<E> {
 
 	private final GolemMagicData data;
+	private final IMeleeGoal melee;
 
 	private LinkedHashMap<AbstractSpell, SpellEntry> spellCache = null;
 
-	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, double pSpeedModifier, int pAttackInterval) {
+	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, IMeleeGoal melee, double pSpeedModifier, int pAttackInterval) {
 		super(entity, pSpeedModifier, pAttackInterval);
+		this.melee = melee;
 		this.data = data;
 	}
 
 	public boolean canUse() {
-		if (GolemSpellManager.predicate(data.golem, data.golem.getMainHandItem(), InteractionHand.MAIN_HAND).isEmpty())
+		ItemStack stack = data.golem.getMainHandItem();
+		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
 			return false;
 		LivingEntity livingentity = this.mob.getTarget();
 		if (livingentity != null && livingentity.isAlive()) {
@@ -41,7 +45,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				data.setNewTarget(target);
 			}
 			this.target = livingentity;
-			return this.mob.canAttack(this.target);
+			return this.mob.canAttack(this.target) && mayActivate(stack);
 		} else {
 			return false;
 		}
@@ -62,6 +66,18 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	@Override
 	public double range(ItemStack stack) {
 		return 35;
+	}
+
+	@Override
+	protected void handleAttackLogic(double distanceSquared) {
+		if (!data.isCasting() && spellAttackDelay <= 1) {
+			if (target != null && melee.canReachTarget(target)) {
+				mob.doHurtTarget(target);
+				mob.swing(InteractionHand.MAIN_HAND);
+				spellAttackDelay += melee.getMeleeInterval();
+			}
+		}
+		super.handleAttackLogic(distanceSquared);
 	}
 
 	@Override

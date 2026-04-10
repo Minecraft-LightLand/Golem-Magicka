@@ -4,7 +4,6 @@ import dev.xkmc.golemmagicka.events.GolemCheckSpellEvent;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.data.GMTagGen;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
-import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
@@ -25,13 +24,11 @@ import java.util.LinkedHashMap;
 public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends WizardAttackGoal implements IWeaponGoal<E> {
 
 	private final GolemMagicData data;
-	private final IMeleeGoal melee;
 
 	private LinkedHashMap<AbstractSpell, SpellEntry> spellCache = null;
 
-	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, IMeleeGoal melee, double pSpeedModifier, int pAttackInterval) {
+	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, double pSpeedModifier, int pAttackInterval) {
 		super(entity, pSpeedModifier, pAttackInterval);
-		this.melee = melee;
 		this.data = data;
 	}
 
@@ -66,18 +63,6 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	@Override
 	public double range(ItemStack stack) {
 		return 35;
-	}
-
-	@Override
-	protected void handleAttackLogic(double distanceSquared) {
-		if (!data.isCasting() && spellAttackDelay <= 1) {
-			if (target != null && melee.canReachTarget(target)) {
-				mob.doHurtTarget(target);
-				mob.swing(InteractionHand.MAIN_HAND);
-				spellAttackDelay += melee.getMeleeInterval();
-			}
-		}
-		super.handleAttackLogic(distanceSquared);
 	}
 
 	@Override

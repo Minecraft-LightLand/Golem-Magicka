@@ -343,7 +343,11 @@ public class GolemMagicData {
 		return memory;
 	}
 
-	public void setNewTarget(LivingEntity target) {
+	public void setNewTarget(@Nullable LivingEntity target) {
+		if (target == null) {
+			memory = null;
+			return;
+		}
 		memory = new CombatMemory(golem, target);
 	}
 }

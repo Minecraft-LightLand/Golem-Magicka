@@ -7,6 +7,7 @@ import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastType;
@@ -141,8 +142,17 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	private boolean isUnavailable(AbstractSpell e, @Nullable LivingEntity target) {
-		if (target == null && !SpellCategoryUtil.is(e, GMTagGen.NO_TARGET))
+		if (target == null) {
+			if (SpellCategoryUtil.is(e, GMTagGen.NO_TARGET))
+				return true;
+			if (SpellCategoryUtil.is(e, GMTagGen.ENHANCE) || SpellCategoryUtil.is(e, GMTagGen.SUPPORT)) {
+				var max = data.golem.getAttributeValue(AttributeRegistry.MAX_MANA);
+				var mana = data.getMagicData().getMana();
+				if (mana > max - 1)
+					return true;
+			}
 			return false;
+		}
 		if (!data.golem.getMode().isMovable()) {
 			if (SpellCategoryUtil.is(e, GMTagGen.MOVEMENT)) {
 				return true;

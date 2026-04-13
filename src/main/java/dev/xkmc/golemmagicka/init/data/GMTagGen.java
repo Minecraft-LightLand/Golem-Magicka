@@ -77,8 +77,6 @@ public class GMTagGen {
 				SpellRegistry.HEARTSTOP_SPELL.get(), // 止心术
 				SpellRegistry.OAKSKIN_SPELL.get(), // 橡肤
 				SpellRegistry.SPIDER_ASPECT_SPELL.get(), // 蛛毒之相
-				SpellRegistry.HEALING_CIRCLE_SPELL.get(), // 治愈之环
-				SpellRegistry.HASTE_SPELL.get(), // 急迫
 				SpellRegistry.CLEANSE_SPELL.get(), // 净化
 				SpellRegistry.FORTIFY_SPELL.get(), // 神圣守护
 				SpellRegistry.INVISIBILITY_SPELL.get(), // 隐身术
@@ -91,6 +89,8 @@ public class GMTagGen {
 				SpellRegistry.ROOT_SPELL.get() // 纠缠根须
 		);
 		pvd.addTag(SUPPORT).add(
+				SpellRegistry.HEALING_CIRCLE_SPELL.get(), // 治愈之环
+				SpellRegistry.HASTE_SPELL.get(), // 急迫
 				SpellRegistry.BLESSING_OF_LIFE_SPELL.get() // 生命祝福
 		);
 		pvd.addTag(SUMMON).add(

@@ -1,3 +1,10 @@
+0.1.5
+- some golem materials have magic resist properties now
+- allow golem to melee attack with staff
+- golem no longer use support spells on enemies
+- golem use control spells only when target is not immune to the effect and does not have the effect
+- golem use fortify spell only when it has no damage absorption
+
 0.1.4
 - Golem regen mana as item as well
 - Fix golem having 0 mana at start

@@ -57,6 +57,11 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	@Override
+	public boolean shouldUseForMelee() {
+		return canUse();
+	}
+
+	@Override
 	public boolean mayActivate(ItemStack stack) {
 		return canUse();
 	}

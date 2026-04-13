@@ -96,11 +96,11 @@ public class GMConfigGen extends ConfigDataProvider {
 		config.start(SpellRegistry.COUNTERSPELL_SPELL.get()).mana(3, 5); // 法术反制
 		config.start(SpellRegistry.SHIELD_SPELL.get()).weight(185).dist(6, 3).mana(1, 3).health(0.75, 0.5); // 护盾术
 		config.start(SpellRegistry.FROSTBITE_SPELL.get()).weight(200).mana(1, 3).effect(MobEffectRegistry.FROSTBITTEN_STRIKES); // 霜噬
-		config.start(SpellRegistry.ICE_TOMB_SPELL.get()).weight(200).dist(5, 10).mana(1, 2).health(1, 0.8); // 冰霜之墓
+		config.start(SpellRegistry.ICE_TOMB_SPELL.get()).weight(200).dist(5, 10).mana(1, 2).health(1, 0.75); // 冰霜之墓
 		config.start(SpellRegistry.CHARGE_SPELL.get()).weight(202).mana(1, 3).effect(MobEffectRegistry.CHARGED); // 超负荷
 		config.start(SpellRegistry.ECHOING_STRIKES_SPELL.get()).weight(200).mana(1, 3).effect(MobEffectRegistry.ECHOING_STRIKES); // 回响打击
 		config.start(SpellRegistry.EVASION_SPELL.get()).weight(200).mana(1, 3).effect(MobEffectRegistry.EVASION); // 末影闪避
-		config.start(SpellRegistry.HEAL_SPELL.get()).weight(200).mana(1, 2).health(1, 0.9); // 治疗
+		config.start(SpellRegistry.HEAL_SPELL.get()).weight(200).mana(1, 2).health(1, 0.75); // 治疗
 		config.start(SpellRegistry.ABYSSAL_SHROUD_SPELL.get()).weight(200).mana(1, 3).effect(MobEffectRegistry.ABYSSAL_SHROUD); // 深渊庇佑
 		config.start(SpellRegistry.HEARTSTOP_SPELL.get()).weight(200).mana(1, 3).effect(MobEffectRegistry.HEARTSTOP); // 止心术
 		config.start(SpellRegistry.OAKSKIN_SPELL.get()).weight(200).mana(1, 3).effect(MobEffectRegistry.OAKSKIN); // 橡肤
@@ -108,15 +108,15 @@ public class GMConfigGen extends ConfigDataProvider {
 		config.start(SpellRegistry.SNOWBALL_SPELL.get()).weight(192).dist(10, 6).mana(1, 3).aoe(4, 0.5, 1); // 雪球术
 		config.start(SpellRegistry.ACID_ORB_SPELL.get()).weight(192).dist(10, 6).mana(1, 3).aoe(3, 0, 1).targetEffect(MobEffectRegistry.REND); // 腐蚀喷吐
 		config.start(SpellRegistry.SLOW_SPELL.get()).weight(192).dist(32, 30).mana(1, 3).targetEffect(MobEffectRegistry.SLOWED); // 迟缓
-		config.start(SpellRegistry.HEALING_CIRCLE_SPELL.get()).weight(200).mana(1, 2).health(1, 0.7); // 治愈之环
+		config.start(SpellRegistry.HEALING_CIRCLE_SPELL.get()).weight(200).mana(1, 2).health(1, 0.75); // 治愈之环
 		config.start(SpellRegistry.HASTE_SPELL.get()).weight(201).mana(1, 3).effect(MobEffectRegistry.HASTENED); // 急迫
 		config.start(SpellRegistry.BLIGHT_SPELL.get()).weight(192).dist(32, 30).mana(1, 3).targetEffect(MobEffectRegistry.BLIGHT); // 枯萎术
 		config.start(SpellRegistry.ROOT_SPELL.get()).weight(192).dist(32, 30).mana(1, 3); // 纠缠根须
-		config.start(SpellRegistry.BLESSING_OF_LIFE_SPELL.get()).mana(1, 2); // 生命祝福
+		config.start(SpellRegistry.BLESSING_OF_LIFE_SPELL.get()).weight(200).mana(1, 2).health(1, 0.75); // 生命祝福
 		config.start(SpellRegistry.FROSTWAVE_SPELL.get()).weight(192).dist(6.75, 5.75, 0.75).mana(1, 3).aoe(7, 0.75, 1).targetEffect(MobEffectRegistry.CHILLED); // 冰浪
 		config.start(SpellRegistry.HEAT_SURGE_SPELL.get()).weight(192).dist(6, 5, 0.5).mana(1, 3).aoe(7, 0.5, 1).targetEffect(MobEffectRegistry.REND); // 焰涌
 		config.start(SpellRegistry.CLEANSE_SPELL.get()).weight(200).mana(1, 2); // 净化
-		config.start(SpellRegistry.FORTIFY_SPELL.get()).weight(200).mana(1, 2).effect(MobEffectRegistry.FORTIFY); // 神圣守护
+		config.start(SpellRegistry.FORTIFY_SPELL.get()).weight(200).mana(1, 2); // 神圣守护
 		config.start(SpellRegistry.INVISIBILITY_SPELL.get()).weight(202).mana(1, 3).health(0.75, 0.5).effect(MobEffectRegistry.TRUE_INVISIBILITY); // 隐身术
 		config.start(SpellRegistry.THUNDERSTORM_SPELL.get()).weight(200).mana(1, 3).aoe(8, 0, 0.2).effect(MobEffectRegistry.THUNDERSTORM); // 雷暴
 		config.start(SpellRegistry.GREATER_HEAL_SPELL.get()).weight(201).mana(1, 2).health(0.75, 0.5); // 强效治疗

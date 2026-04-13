@@ -243,16 +243,13 @@ public class GolemMagicData {
 			if (!golem.level().isClientSide && !castingSpell.getSpell().checkPreCastConditions(golem.level(), spellLevel, golem, data)) {
 				castingSpell = null;
 			} else {
-				if (spell != SpellRegistry.TELEPORT_SPELL.get() && spell != SpellRegistry.FROST_STEP_SPELL.get()) {
-					if (spell == SpellRegistry.BLOOD_STEP_SPELL.get()) {
-						setTeleportLocationBehindTarget(3);
-					} else if (spell == SpellRegistry.BURNING_DASH_SPELL.get()) {
-						setBurningDashDirectionData();
-					}
-				} else {
+				if (spell == SpellRegistry.TELEPORT_SPELL.get() || spell == SpellRegistry.FROST_STEP_SPELL.get()) {
 					setTeleportLocationBehindTarget(10);
+				} else if (spell == SpellRegistry.BLOOD_STEP_SPELL.get()) {
+					setTeleportLocationBehindTarget(3);
+				} else if (spell == SpellRegistry.BURNING_DASH_SPELL.get()) {
+					setBurningDashDirectionData();
 				}
-
 				data.initiateCast(castingSpell.getSpell(), castingSpell.getLevel(), castingSpell.getSpell().getEffectiveCastTime(castingSpell.getLevel(), golem), CastSource.MOB, SpellSelectionManager.MAINHAND);
 				if (!golem.level().isClientSide) {
 					castingSpell.getSpell().onServerPreCast(golem.level(), castingSpell.getLevel(), golem, data);

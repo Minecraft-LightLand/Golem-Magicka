@@ -27,6 +27,7 @@ public class GMTagGen {
 	public static final TagKey<AbstractSpell> SUPPORT = loc("support");
 	public static final TagKey<AbstractSpell> SUMMON = loc("summon");
 	public static final TagKey<AbstractSpell> NON_OFFENSIVE = loc("non_offensive");
+	public static final TagKey<AbstractSpell> NO_TARGET = loc("no_target");
 
 	public static void genSpellTag(RegistrateTagsProvider.IntrinsicImpl<AbstractSpell> pvd) {
 		pvd.addTag(WHITELIST).add(
@@ -97,6 +98,12 @@ public class GMTagGen {
 				SpellRegistry.SUMMON_VEX_SPELL.get(), // 召唤恼鬼
 				SpellRegistry.SUMMON_SWORDS.get(), // 召唤利剑
 				SpellRegistry.RAISE_DEAD_SPELL.get() // 驱役亡灵
+		);
+		pvd.addTag(NO_TARGET).add(
+				SpellRegistry.HEAL_SPELL.get(),
+				SpellRegistry.GREATER_HEAL_SPELL.get(),
+				SpellRegistry.HEALING_CIRCLE_SPELL.get(),
+				SpellRegistry.CLEANSE_SPELL.get()
 		);
 		pvd.addTag(NON_OFFENSIVE).addTags(ENHANCE, CONTROL, SUPPORT);
 	}

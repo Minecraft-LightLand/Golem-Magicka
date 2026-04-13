@@ -36,16 +36,18 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		ItemStack stack = data.golem.getMainHandItem();
 		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
 			return false;
+		if (data.isCasting()) return true;
 		LivingEntity livingentity = this.mob.getTarget();
-		if (livingentity != null && livingentity.isAlive()) {
-			if (target != livingentity) {
-				data.setNewTarget(target);
-			}
-			this.target = livingentity;
-			return this.mob.canAttack(this.target) && mayActivate(stack);
-		} else {
-			return false;
+		if (livingentity == null || !livingentity.isAlive()) {
+			target = null;
+			return !updateAvailableSpells().isEmpty();
 		}
+		if (!this.mob.canAttack(this.target))
+			return false;
+		if (target != livingentity)
+			data.setNewTarget(target);
+		this.target = livingentity;
+		return !updateAvailableSpells().isEmpty();
 	}
 
 	@Override
@@ -56,8 +58,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 
 	@Override
 	public boolean mayActivate(ItemStack stack) {
-		if (data.isCasting()) return true;
-		return !updateAvailableSpells().isEmpty();
+		return canUse();
 	}
 
 	@Override
@@ -102,6 +103,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	public SimpleWeightedRandomList<SpellEntry> updateAvailableSpells() {
+		@Nullable var target = this.target;
 		if (spellCache == null || spellCache.isEmpty()) {
 			var spells = SpellCategoryUtil.getSpells(data.golem);
 			spellCache = new LinkedHashMap<>();
@@ -134,6 +136,8 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	private boolean isUnavailable(AbstractSpell e, @Nullable LivingEntity target) {
+		if (target == null && !SpellCategoryUtil.is(e, GMTagGen.NO_TARGET))
+			return false;
 		if (!data.golem.getMode().isMovable()) {
 			if (SpellCategoryUtil.is(e, GMTagGen.MOVEMENT)) {
 				return true;

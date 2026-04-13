@@ -2,6 +2,8 @@ package dev.xkmc.golemmagicka.content.entity;
 
 import dev.xkmc.golemmagicka.api.IGolemCastingStateHolder;
 import dev.xkmc.golemmagicka.compat.CompatDispatch;
+import dev.xkmc.golemmagicka.init.data.GMTagGen;
+import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
@@ -13,6 +15,7 @@ import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
+import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
 import io.redspace.ironsspellbooks.spells.ender.TeleportSpell;
 import io.redspace.ironsspellbooks.spells.fire.BurningDashSpell;
 import net.minecraft.nbt.CompoundTag;
@@ -243,16 +246,16 @@ public class GolemMagicData {
 			if (!golem.level().isClientSide && !castingSpell.getSpell().checkPreCastConditions(golem.level(), spellLevel, golem, data)) {
 				castingSpell = null;
 			} else {
-				if (spell != SpellRegistry.TELEPORT_SPELL.get() && spell != SpellRegistry.FROST_STEP_SPELL.get()) {
-					if (spell == SpellRegistry.BLOOD_STEP_SPELL.get()) {
-						setTeleportLocationBehindTarget(3);
-					} else if (spell == SpellRegistry.BURNING_DASH_SPELL.get()) {
-						setBurningDashDirectionData();
-					}
-				} else {
-					setTeleportLocationBehindTarget(10);
+				if (SpellCategoryUtil.is(spell, GMTagGen.SUPPORT)) {
+					data.setAdditionalCastData(new TargetEntityCastData(golem));
 				}
-
+				if (spell == SpellRegistry.TELEPORT_SPELL.get() || spell == SpellRegistry.FROST_STEP_SPELL.get()) {
+					setTeleportLocationBehindTarget(10);
+				} else if (spell == SpellRegistry.BLOOD_STEP_SPELL.get()) {
+					setTeleportLocationBehindTarget(3);
+				} else if (spell == SpellRegistry.BURNING_DASH_SPELL.get()) {
+					setBurningDashDirectionData();
+				}
 				data.initiateCast(castingSpell.getSpell(), castingSpell.getLevel(), castingSpell.getSpell().getEffectiveCastTime(castingSpell.getLevel(), golem), CastSource.MOB, SpellSelectionManager.MAINHAND);
 				if (!golem.level().isClientSide) {
 					castingSpell.getSpell().onServerPreCast(golem.level(), castingSpell.getLevel(), golem, data);

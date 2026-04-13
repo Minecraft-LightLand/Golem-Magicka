@@ -92,9 +92,6 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			return;
 		}
 		if (!spell.shouldAIStopCasting(entry.level(), this.mob, this.target)) {
-			if (SpellCategoryUtil.is(spell, GMTagGen.SUPPORT)) {
-				data.getMagicData().setAdditionalCastData(new TargetEntityCastData(mob));
-			}
 			data.setCastingData(new CastingSpellData(spell, entry.level(), entry.source(), cost, cd));
 			this.spellCastingMob.initiateCastSpell(spell, entry.level());
 			this.fleeCooldown = 7 + spell.getCastTime(entry.level());

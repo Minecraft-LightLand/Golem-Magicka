@@ -246,9 +246,6 @@ public class GolemMagicData {
 			if (!golem.level().isClientSide && !castingSpell.getSpell().checkPreCastConditions(golem.level(), spellLevel, golem, data)) {
 				castingSpell = null;
 			} else {
-				if (SpellCategoryUtil.is(spell, GMTagGen.SUPPORT)) {
-					data.setAdditionalCastData(new TargetEntityCastData(golem));
-				}
 				if (spell == SpellRegistry.TELEPORT_SPELL.get() || spell == SpellRegistry.FROST_STEP_SPELL.get()) {
 					setTeleportLocationBehindTarget(10);
 				} else if (spell == SpellRegistry.BLOOD_STEP_SPELL.get()) {

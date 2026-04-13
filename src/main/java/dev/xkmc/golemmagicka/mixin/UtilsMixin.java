@@ -27,7 +27,7 @@ public class UtilsMixin {
 		}
 	}
 
-	@Inject(method = "preCastTargetHelper(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lio/redspace/ironsspellbooks/api/magic/MagicData;Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;IFZLjava/util/function/Predicate;)Z", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "preCastTargetHelper(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lio/redspace/ironsspellbooks/api/magic/MagicData;Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;IFZLjava/util/function/Predicate;)Z", at = @At("HEAD"), cancellable = true, remap = false)
 	private static void golemMagicka$golemSupport(Level level, LivingEntity caster, MagicData playerMagicData, AbstractSpell spell, int range, float aimAssist, boolean sendFailureMessage, Predicate<LivingEntity> filter, CallbackInfoReturnable<Boolean> cir) {
 		if (SpellCategoryUtil.is(spell, GMTagGen.SUPPORT)) {
 			playerMagicData.setAdditionalCastData(new TargetEntityCastData(caster));

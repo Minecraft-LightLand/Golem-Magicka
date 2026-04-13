@@ -1,5 +1,6 @@
 package dev.xkmc.golemmagicka.content.config;
 
+import dev.xkmc.golemmagicka.content.entity.CombatMemory;
 import dev.xkmc.l2library.serial.config.BaseConfig;
 import dev.xkmc.l2library.serial.config.CollectType;
 import dev.xkmc.l2library.serial.config.ConfigCollect;
@@ -32,6 +33,12 @@ public class SpellPriorityConfig extends BaseConfig {
 		return data;
 	}
 
+	public Data start(String spell) {
+		var data = new Data();
+		spellData.put(spell, data);
+		return data;
+	}
+
 	public Data get(AbstractSpell e) {
 		var ans = spellData.get(e.getSpellId());
 		return ans == null ? DEF : ans;
@@ -52,13 +59,16 @@ public class SpellPriorityConfig extends BaseConfig {
 
 		@SerialClass.SerialField
 		@Nullable
-		public MobEffect effectLock;
+		public MobEffect effectLock, inflictedEffect;
 
-		public int weight(AbstractGolemEntity<?, ?> user, @Nullable LivingEntity target, MagicData magic, float totalCost, int castCount, int level) {
+		public int weight(AbstractGolemEntity<?, ?> user, @Nullable LivingEntity target, MagicData magic, float totalCost, @Nullable CombatMemory memory, int level) {
 			double ans = weight;
 			if (effectLock != null && user.hasEffect(effectLock)) {
 				return 0;
 			}
+			if (inflictedEffect != null && (target == null || target.hasEffect(inflictedEffect) ||
+					memory != null && !memory.canInflict(inflictedEffect)))
+				return 0;
 			if (minWeightDist != maxWeightDist && target != null) {
 				var dist = user.distanceTo(target) - distPerLevel * level;
 				ans *= Mth.clamp((dist - minWeightDist) / (maxWeightDist - minWeightDist), 0, 1);
@@ -71,8 +81,9 @@ public class SpellPriorityConfig extends BaseConfig {
 				var php = user.getHealth() / user.getMaxHealth();
 				ans *= Mth.clamp((php - minWeightPHP) / (maxWeightPHP - minWeightPHP), 0, 1);
 			}
+			int attackCount = memory == null ? 0 : memory.attackSpellCount();
 			if (minWeightCastCount != maxWeightCastCount) {
-				ans *= Mth.clamp(1d * (castCount - minWeightCastCount) / (maxWeightCastCount - minWeightCastCount), 0, 1);
+				ans *= Mth.clamp(1d * (attackCount - minWeightCastCount) / (maxWeightCastCount - minWeightCastCount), 0, 1);
 			}
 			if (target != null && aoeRange > 0) {
 				var range = aoeRange + aoeRangePerLevel * (level - 1);
@@ -138,6 +149,11 @@ public class SpellPriorityConfig extends BaseConfig {
 
 		public Data effect(Supplier<MobEffect> effect) {
 			effectLock = effect.get();
+			return this;
+		}
+
+		public Data targetEffect(Supplier<MobEffect> effect) {
+			inflictedEffect = effect.get();
 			return this;
 		}
 	}

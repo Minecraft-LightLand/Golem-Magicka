@@ -3,11 +3,15 @@
   "modifiers": {},
   "repairIngredients": {},
   "stats": {
+    "modulargolems:copper": {
+      "golemmagicka:lightning_resist": 0.5
+    },
     "modulargolems:gold": {
       "golemmagicka:mana_regen": 0.4,
       "golemmagicka:max_mana": 100.0
     },
     "modulargolems:netherite": {
+      "golemmagicka:fire_resist": 0.8,
       "golemmagicka:mana_regen": 0.4,
       "golemmagicka:max_mana": 200.0
     },

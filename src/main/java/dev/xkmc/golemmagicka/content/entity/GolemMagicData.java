@@ -103,6 +103,8 @@ public class GolemMagicData {
 			if (isCasting() && castingSpell == null) {
 				castComplete();
 			}
+			if (memory != null)
+				memory.tick();
 		}
 
 		GolemSpellManager.tickGolemSpellData(golem, data);
@@ -336,13 +338,17 @@ public class GolemMagicData {
 
 	public CombatMemory getMemory(LivingEntity target) {
 		if (memory == null || memory.target != target) {
-			memory = new CombatMemory(target);
+			memory = new CombatMemory(golem, target);
 		}
 		return memory;
 	}
 
-	public void setNewTarget(LivingEntity target) {
-		memory = new CombatMemory(target);
+	public void setNewTarget(@Nullable LivingEntity target) {
+		if (target == null) {
+			memory = null;
+			return;
+		}
+		memory = new CombatMemory(golem, target);
 	}
 
 }

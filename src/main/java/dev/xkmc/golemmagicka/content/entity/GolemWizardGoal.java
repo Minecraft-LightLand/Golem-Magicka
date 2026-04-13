@@ -33,7 +33,8 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	public boolean canUse() {
-		if (GolemSpellManager.predicate(data.golem, data.golem.getMainHandItem(), InteractionHand.MAIN_HAND).isEmpty())
+		ItemStack stack = data.golem.getMainHandItem();
+		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
 			return false;
 		LivingEntity livingentity = this.mob.getTarget();
 		if (livingentity != null && livingentity.isAlive()) {
@@ -41,7 +42,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				data.setNewTarget(target);
 			}
 			this.target = livingentity;
-			return this.mob.canAttack(this.target);
+			return this.mob.canAttack(this.target) && mayActivate(stack);
 		} else {
 			return false;
 		}
@@ -124,8 +125,9 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				continue;
 			if (MinecraftForge.EVENT_BUS.post(new GolemCheckSpellEvent(data.golem, target, data, ent)))
 				continue;
-			var mem = target == null ? 0 : data.getMemory(target).attackSpellCount();
+			var mem = target == null ? null : data.getMemory(target);
 			int weight = merged.get(e).weight(data.golem, target, data.getMagicData(), mana, mem, ent.level());
+			if (weight <= 0) continue;
 			builder.add(ent, weight);
 		}
 		return builder.build();

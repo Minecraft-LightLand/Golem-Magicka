@@ -12,24 +12,25 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:acid_orb": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 3.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
+      "inflictedEffect": "irons_spellbooks:rend",
       "maxWeightCastCount": 0,
       "maxWeightDist": 6.0,
       "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 10.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 192
     },
     "irons_spellbooks:acupuncture": {
       "aoeCountBonus": 0.0,
@@ -38,16 +39,16 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 30.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:arrow_volley": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.2,
       "distPerLevel": 0.0,
@@ -57,9 +58,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 48.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:ascension": {
       "aoeCountBonus": 0.0,
@@ -72,39 +73,39 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 4.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 195
     },
     "irons_spellbooks:ball_lightning": {
-      "aoeCountBonus": 0.0,
-      "aoeRange": 0.0,
+      "aoeCountBonus": 1.0,
+      "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
-      "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightDist": 10.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 50.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
       "weight": 100
     },
     "irons_spellbooks:black_hole": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 5.0,
       "aoeRange": 6.0,
       "aoeRangePerLevel": 2.0,
       "distPerLevel": 2.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 6.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 4.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 8.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:blaze_storm": {
       "aoeCountBonus": 0.0,
@@ -117,7 +118,7 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 12.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
       "weight": 100
     },
@@ -128,11 +129,11 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 0.0,
-      "maxWeightManaFactor": 3.0,
+      "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
       "weight": 100
     },
@@ -141,15 +142,16 @@
       "aoeRange": 0.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
+      "inflictedEffect": "irons_spellbooks:blight",
       "maxWeightCastCount": 0,
       "maxWeightDist": 30.0,
       "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 192
     },
     "irons_spellbooks:blood_needles": {
       "aoeCountBonus": 0.0,
@@ -158,43 +160,43 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 16.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 22.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
       "weight": 100
     },
     "irons_spellbooks:blood_slash": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
-      "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightDist": 16.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 64.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:blood_step": {
       "aoeCountBonus": 0.0,
       "aoeRange": 0.0,
       "aoeRangePerLevel": 0.0,
-      "distPerLevel": 4.0,
+      "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
-      "maxWeightDist": 12.0,
+      "maxWeightDist": 3.0,
       "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
-      "minWeightDist": 3.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightDist": 12.0,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 195
     },
     "irons_spellbooks:burning_dash": {
       "aoeCountBonus": 0.0,
@@ -207,39 +209,39 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 8.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 195
     },
     "irons_spellbooks:chain_creeper": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 3.0,
       "aoeRange": 5.0,
       "aoeRangePerLevel": 0.2,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 46.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 48.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:chain_lightning": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 2.0,
       "aoeRange": 3.0,
       "aoeRangePerLevel": 0.5,
       "distPerLevel": 0.5,
       "maxWeightCastCount": 0,
       "maxWeightDist": 3.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 4.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:charge": {
       "aoeCountBonus": 0.0,
@@ -253,9 +255,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 152
+      "weight": 202
     },
     "irons_spellbooks:cleanse": {
       "aoeCountBonus": 0.0,
@@ -264,16 +266,16 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 0.0,
-      "maxWeightManaFactor": 3.0,
+      "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:cone_of_cold": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -283,9 +285,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 10.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 120
     },
     "irons_spellbooks:counterspell": {
       "aoeCountBonus": 0.0,
@@ -309,16 +311,16 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 6.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 8.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:divine_smite": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -328,12 +330,12 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 4.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 185
     },
     "irons_spellbooks:dragon_breath": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -343,24 +345,24 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 10.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 120
     },
     "irons_spellbooks:earthquake": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 5.0,
       "aoeRange": 8.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 30.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:echoing_strikes": {
       "aoeCountBonus": 0.0,
@@ -374,9 +376,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:eldritch_blast": {
       "aoeCountBonus": 0.0,
@@ -385,16 +387,16 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 30.0,
       "minWeightManaFactor": 0.5,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:electrocute": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -404,9 +406,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 10.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 120
     },
     "irons_spellbooks:evasion": {
       "aoeCountBonus": 0.0,
@@ -420,9 +422,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:fang_strike": {
       "aoeCountBonus": 0.0,
@@ -431,46 +433,46 @@
       "distPerLevel": 1.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 6.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 8.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:fang_ward": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 1.5,
       "aoeRangePerLevel": 0.3,
       "distPerLevel": 0.3,
       "maxWeightCastCount": 0,
       "maxWeightDist": 1.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 2.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 120
     },
     "irons_spellbooks:fire_arrow": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 16.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:fire_breath": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -480,24 +482,24 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 10.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 120
     },
     "irons_spellbooks:fireball": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 4.0,
       "aoeRange": 3.0,
       "aoeRangePerLevel": 1.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 64.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:firebolt": {
       "aoeCountBonus": 0.0,
@@ -505,29 +507,29 @@
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
-      "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightDist": 16.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 64.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
       "weight": 100
     },
     "irons_spellbooks:firecracker": {
-      "aoeCountBonus": 0.0,
-      "aoeRange": 0.0,
+      "aoeCountBonus": 1.0,
+      "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 30.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:firefly_swarm": {
       "aoeCountBonus": 0.0,
@@ -540,9 +542,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:flaming_barrage": {
       "aoeCountBonus": 0.0,
@@ -551,7 +553,7 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 8.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 12.0,
@@ -560,7 +562,7 @@
       "weight": 100
     },
     "irons_spellbooks:flaming_strike": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -570,9 +572,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 3.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 185
     },
     "irons_spellbooks:fortify": {
       "aoeCountBonus": 0.0,
@@ -582,28 +584,28 @@
       "effectLock": "irons_spellbooks:fortify",
       "maxWeightCastCount": 0,
       "maxWeightDist": 0.0,
-      "maxWeightManaFactor": 3.0,
+      "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:frost_step": {
       "aoeCountBonus": 0.0,
       "aoeRange": 0.0,
       "aoeRangePerLevel": 0.0,
-      "distPerLevel": 1.5,
+      "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
-      "maxWeightDist": 10.5,
+      "maxWeightDist": 3.0,
       "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
-      "minWeightDist": 3.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightDist": 12.0,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 195
     },
     "irons_spellbooks:frostbite": {
       "aoeCountBonus": 0.0,
@@ -617,24 +619,25 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:frostwave": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 7.0,
       "aoeRangePerLevel": 0.75,
       "distPerLevel": 0.75,
+      "inflictedEffect": "irons_spellbooks:chilled",
       "maxWeightCastCount": 0,
-      "maxWeightDist": 6.75,
+      "maxWeightDist": 5.75,
       "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 6.75,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 192
     },
     "irons_spellbooks:greater_heal": {
       "aoeCountBonus": 0.0,
@@ -643,28 +646,29 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 0.0,
-      "maxWeightManaFactor": 3.0,
+      "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.5,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
-      "minWeightPHP": 1.0,
-      "weight": 150
+      "minWeightManaFactor": 1.0,
+      "minWeightPHP": 0.75,
+      "weight": 201
     },
     "irons_spellbooks:guiding_bolt": {
       "aoeCountBonus": 0.0,
       "aoeRange": 0.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
+      "inflictedEffect": "irons_spellbooks:guided",
       "maxWeightCastCount": 0,
-      "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightDist": 16.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 64.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 192
     },
     "irons_spellbooks:gust": {
       "aoeCountBonus": 0.0,
@@ -677,9 +681,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 7.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 120
     },
     "irons_spellbooks:haste": {
       "aoeCountBonus": 0.0,
@@ -693,9 +697,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 151
+      "weight": 201
     },
     "irons_spellbooks:heal": {
       "aoeCountBonus": 0.0,
@@ -704,13 +708,13 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 0.0,
-      "maxWeightManaFactor": 3.0,
+      "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.9,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 1.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:healing_circle": {
       "aoeCountBonus": 0.0,
@@ -719,13 +723,13 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 0.0,
-      "maxWeightManaFactor": 3.0,
+      "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.7,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 1.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:heartstop": {
       "aoeCountBonus": 0.0,
@@ -739,27 +743,28 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:heat_surge": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 7.0,
       "aoeRangePerLevel": 0.5,
       "distPerLevel": 0.5,
+      "inflictedEffect": "irons_spellbooks:rend",
       "maxWeightCastCount": 0,
-      "maxWeightDist": 6.0,
+      "maxWeightDist": 5.0,
       "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 6.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 192
     },
     "irons_spellbooks:ice_block": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 2.0,
       "aoeRange": 3.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -769,9 +774,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 48.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:ice_spikes": {
       "aoeCountBonus": 0.0,
@@ -780,11 +785,11 @@
       "distPerLevel": 1.5,
       "maxWeightCastCount": 0,
       "maxWeightDist": 4.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 8.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
       "weight": 100
     },
@@ -795,13 +800,13 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 10.0,
-      "maxWeightManaFactor": 3.0,
+      "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.8,
       "minWeightCastCount": 0,
       "minWeightDist": 5.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 1.0,
-      "weight": 100
+      "weight": 200
     },
     "irons_spellbooks:icicle": {
       "aoeCountBonus": 0.0,
@@ -809,12 +814,12 @@
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
-      "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightDist": 16.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 64.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
       "weight": 100
     },
@@ -827,27 +832,27 @@
       "maxWeightCastCount": 0,
       "maxWeightDist": 0.0,
       "maxWeightManaFactor": 3.0,
-      "maxWeightPHP": 0.0,
+      "maxWeightPHP": 0.5,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
-      "minWeightPHP": 0.0,
-      "weight": 150
+      "minWeightManaFactor": 1.0,
+      "minWeightPHP": 0.75,
+      "weight": 202
     },
     "irons_spellbooks:lightning_bolt": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 2.0,
       "aoeRange": 3.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 62.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 64.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:lightning_lance": {
       "aoeCountBonus": 0.0,
@@ -856,28 +861,28 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 16.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 24.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:lob_creeper": {
-      "aoeCountBonus": 0.0,
-      "aoeRange": 0.0,
+      "aoeCountBonus": 1.0,
+      "aoeRange": 4.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 6.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 10.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:magic_arrow": {
       "aoeCountBonus": 0.0,
@@ -886,13 +891,13 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 64.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:magic_missile": {
       "aoeCountBonus": 0.0,
@@ -900,17 +905,17 @@
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
-      "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightDist": 16.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 64.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
       "weight": 100
     },
     "irons_spellbooks:magma_bomb": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 3.0,
       "aoeRange": 4.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -920,9 +925,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 12.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:oakskin": {
       "aoeCountBonus": 0.0,
@@ -936,27 +941,27 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:poison_arrow": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 16.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 24.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:poison_breath": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -966,12 +971,12 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 10.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 120
     },
     "irons_spellbooks:poison_splash": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 2.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -981,24 +986,24 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:raise_hell": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 4.0,
       "aoeRange": 7.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 6.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 8.0,
       "minWeightManaFactor": 0.5,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 120
     },
     "irons_spellbooks:ray_of_frost": {
       "aoeCountBonus": 0.0,
@@ -1007,13 +1012,13 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 20.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 30.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:ray_of_siphoning": {
       "aoeCountBonus": 0.0,
@@ -1026,9 +1031,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 12.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:root": {
       "aoeCountBonus": 0.0,
@@ -1041,12 +1046,12 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 192
     },
     "irons_spellbooks:scorch": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 2.0,
       "aoeRange": 2.5,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -1056,24 +1061,24 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:sculk_tentacles": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 2.0,
       "aoeRange": 2.5,
       "aoeRangePerLevel": 1.3,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 30.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:shadow_slash": {
       "aoeCountBonus": 0.0,
@@ -1086,57 +1091,58 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 12.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 195
     },
     "irons_spellbooks:shield": {
       "aoeCountBonus": 0.0,
       "aoeRange": 0.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
-      "maxWeightCastCount": 5,
-      "maxWeightDist": 10.0,
+      "maxWeightCastCount": 0,
+      "maxWeightDist": 3.0,
       "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.5,
-      "minWeightCastCount": 1,
-      "minWeightDist": 3.0,
-      "minWeightManaFactor": 1.5,
-      "minWeightPHP": 1.0,
-      "weight": 100
+      "minWeightCastCount": 0,
+      "minWeightDist": 6.0,
+      "minWeightManaFactor": 1.0,
+      "minWeightPHP": 0.75,
+      "weight": 185
     },
     "irons_spellbooks:shockwave": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 5.0,
       "aoeRange": 8.0,
       "aoeRangePerLevel": 1.0,
       "distPerLevel": 1.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 7.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 9.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 120
     },
     "irons_spellbooks:slow": {
       "aoeCountBonus": 0.0,
       "aoeRange": 0.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
+      "inflictedEffect": "irons_spellbooks:slowed",
       "maxWeightCastCount": 0,
       "maxWeightDist": 30.0,
       "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 32.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 192
     },
     "irons_spellbooks:snowball": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 4.0,
       "aoeRangePerLevel": 0.5,
       "distPerLevel": 0.0,
@@ -1146,9 +1152,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 10.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 192
     },
     "irons_spellbooks:sonic_boom": {
       "aoeCountBonus": 0.0,
@@ -1157,13 +1163,13 @@
       "distPerLevel": 5.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 18.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 3.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 20.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:spider_aspect": {
       "aoeCountBonus": 0.0,
@@ -1177,12 +1183,12 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:starfall": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 1.0,
       "aoeRange": 6.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
@@ -1192,39 +1198,39 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 12.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:stomp": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 3.0,
       "aoeRange": 4.0,
       "aoeRangePerLevel": 1.0,
       "distPerLevel": 1.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 4.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 5.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:sunbeam": {
-      "aoeCountBonus": 0.15,
+      "aoeCountBonus": 2.0,
       "aoeRange": 3.0,
       "aoeRangePerLevel": 0.0,
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 46.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 2.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 48.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 110
     },
     "irons_spellbooks:telekinesis": {
       "aoeCountBonus": 0.0,
@@ -1237,24 +1243,24 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 12.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 192
     },
     "irons_spellbooks:teleport": {
       "aoeCountBonus": 0.0,
       "aoeRange": 0.0,
       "aoeRangePerLevel": 0.0,
-      "distPerLevel": 10.0,
+      "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
-      "maxWeightDist": 10.0,
+      "maxWeightDist": 3.0,
       "maxWeightManaFactor": 2.0,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
-      "minWeightDist": 3.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightDist": 12.0,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 195
     },
     "irons_spellbooks:throw": {
       "aoeCountBonus": 0.0,
@@ -1263,13 +1269,13 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 6.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 10.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:thunderstorm": {
       "aoeCountBonus": 0.2,
@@ -1283,9 +1289,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 0.0,
-      "minWeightManaFactor": 1.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 150
+      "weight": 200
     },
     "irons_spellbooks:volt_strike": {
       "aoeCountBonus": 0.0,
@@ -1298,9 +1304,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 12.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 195
     },
     "irons_spellbooks:wisp": {
       "aoeCountBonus": 0.0,
@@ -1313,9 +1319,9 @@
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 48.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 100
+      "weight": 105
     },
     "irons_spellbooks:wither_skull": {
       "aoeCountBonus": 0.0,
@@ -1324,11 +1330,11 @@
       "distPerLevel": 0.0,
       "maxWeightCastCount": 0,
       "maxWeightDist": 10.0,
-      "maxWeightManaFactor": 2.0,
+      "maxWeightManaFactor": 1.5,
       "maxWeightPHP": 0.0,
       "minWeightCastCount": 0,
       "minWeightDist": 42.0,
-      "minWeightManaFactor": 0.5,
+      "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
       "weight": 100
     }

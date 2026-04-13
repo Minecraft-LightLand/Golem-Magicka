@@ -10,6 +10,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -22,6 +23,7 @@ public class GMTypes {
 	public static final RegistryEntry<GolemStatType> STAT_MANA_REGEN;
 	public static final RegistryEntry<GolemStatType> STAT_SPELL_POWER;
 	public static final RegistryEntry<GolemStatType> STAT_CD;
+	public static final RegistryEntry<GolemStatType> STAT_RESIST;
 
 
 	public static final RegistryEntry<GolemStatType>
@@ -29,31 +31,46 @@ public class GMTypes {
 			ENDER_SPELL_POWER, BLOOD_SPELL_POWER, EVOCATION_SPELL_POWER,
 			NATURE_SPELL_POWER, ELDRITCH_SPELL_POWER;
 
+	public static final RegistryEntry<GolemStatType>
+			FIRE_RESIST, ICE_RESIST, LIGHTNING_RESIST, HOLY_RESIST,
+			ENDER_RESIST, BLOOD_RESIST, EVOCATION_RESIST,
+			NATURE_RESIST, ELDRITCH_RESIST;
+
 	static {
-		STAT_MAX_MANA = regStatPlain("max_mana", () -> AttributeRegistry.MAX_MANA.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		STAT_MANA_REGEN = regStat("mana_regen", () -> AttributeRegistry.MANA_REGEN.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		STAT_SPELL_POWER = regStat("spell_power", () -> AttributeRegistry.SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		STAT_CD = regStat("spell_cooldown", () -> AttributeRegistry.COOLDOWN_REDUCTION.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_MAX_MANA = regStatPlain("max_mana", () -> AttributeRegistry.MAX_MANA, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_MANA_REGEN = regStat("mana_regen", () -> AttributeRegistry.MANA_REGEN, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_SPELL_POWER = regStat("spell_power", () -> AttributeRegistry.SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_CD = regStat("spell_cooldown", () -> AttributeRegistry.COOLDOWN_REDUCTION, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_RESIST = regStat("spell_resist", () -> AttributeRegistry.SPELL_RESIST, GolemStatType.Kind.ADD, StatFilterType.MASS);
 
-		FIRE_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.FIRE_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		ICE_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ICE_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		LIGHTNING_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.LIGHTNING_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		HOLY_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.HOLY_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		ENDER_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ENDER_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		BLOOD_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.BLOOD_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		EVOCATION_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.EVOCATION_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		NATURE_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.NATURE_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
-		ELDRITCH_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ELDRITCH_SPELL_POWER.get(), GolemStatType.Kind.ADD, StatFilterType.MASS);
+		FIRE_SPELL_POWER = regStat("fire_spell_power", () -> AttributeRegistry.FIRE_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		ICE_SPELL_POWER = regStat("ice_spell_power", () -> AttributeRegistry.ICE_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		LIGHTNING_SPELL_POWER = regStat("lightning_spell_power", () -> AttributeRegistry.LIGHTNING_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		HOLY_SPELL_POWER = regStat("holy_spell_power", () -> AttributeRegistry.HOLY_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		ENDER_SPELL_POWER = regStat("ender_spell_power", () -> AttributeRegistry.ENDER_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		BLOOD_SPELL_POWER = regStat("blood_spell_power", () -> AttributeRegistry.BLOOD_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		EVOCATION_SPELL_POWER = regStat("evocation_spell_power", () -> AttributeRegistry.EVOCATION_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		NATURE_SPELL_POWER = regStat("nature_spell_power", () -> AttributeRegistry.NATURE_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		ELDRITCH_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ELDRITCH_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
 
+		FIRE_RESIST = regStat("fire_resist", () -> AttributeRegistry.FIRE_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
+		ICE_RESIST = regStat("ice_resist", () -> AttributeRegistry.ICE_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
+		LIGHTNING_RESIST = regStat("lightning_resist", () -> AttributeRegistry.LIGHTNING_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
+		HOLY_RESIST = regStat("holy_resist", () -> AttributeRegistry.HOLY_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
+		ENDER_RESIST = regStat("ender_resist", () -> AttributeRegistry.ENDER_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
+		BLOOD_RESIST = regStat("blood_resist", () -> AttributeRegistry.BLOOD_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
+		EVOCATION_RESIST = regStat("evocation_resist", () -> AttributeRegistry.EVOCATION_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
+		NATURE_RESIST = regStat("nature_resist", () -> AttributeRegistry.NATURE_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
+		ELDRITCH_RESIST = regStat("eldritch_resist", () -> AttributeRegistry.ELDRITCH_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
 
 	}
 
-	private static RegistryEntry<GolemStatType> regStatPlain(String id, Supplier<Attribute> sup, GolemStatType.Kind kind, StatFilterType type) {
-		return GolemMagicka.REGISTRATE.generic(id, STAT_TYPES, () -> new GolemStatType(sup, kind, type)).register();
+	private static RegistryEntry<GolemStatType> regStatPlain(String id, Supplier<RegistryObject<Attribute>> sup, GolemStatType.Kind kind, StatFilterType type) {
+		return GolemMagicka.REGISTRATE.generic(id, STAT_TYPES, () -> new GolemStatType(sup.get(), kind, type)).register();
 	}
 
-	private static RegistryEntry<GolemStatType> regStat(String id, Supplier<Attribute> sup, GolemStatType.Kind kind, StatFilterType type) {
-		return GolemMagicka.REGISTRATE.generic(id, STAT_TYPES, () -> new GolemStatType(sup, kind, type, true)).register();
+	private static RegistryEntry<GolemStatType> regStat(String id, Supplier<RegistryObject<Attribute>> sup, GolemStatType.Kind kind, StatFilterType type) {
+		return GolemMagicka.REGISTRATE.generic(id, STAT_TYPES, () -> new GolemStatType(sup.get(), kind, type, true)).register();
 	}
 
 

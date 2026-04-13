@@ -2,8 +2,16 @@
   "filters": {},
   "magnifiers": {
     "modulargolems:dog_golem": {
+      "golemmagicka:blood_spell_power": 0.0,
       "golemmagicka:eldritch_spell_power": 0.0,
+      "golemmagicka:ender_spell_power": 0.0,
+      "golemmagicka:evocation_spell_power": 0.0,
+      "golemmagicka:fire_spell_power": 0.0,
+      "golemmagicka:holy_spell_power": 0.0,
+      "golemmagicka:ice_spell_power": 0.0,
+      "golemmagicka:lightning_spell_power": 0.0,
       "golemmagicka:max_mana": 0.5,
+      "golemmagicka:nature_spell_power": 0.0,
       "golemmagicka:spell_cooldown": 0.0,
       "golemmagicka:spell_power": 0.0
     },

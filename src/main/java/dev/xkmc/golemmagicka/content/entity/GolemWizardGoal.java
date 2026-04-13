@@ -10,6 +10,7 @@ import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastType;
+import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
 import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.InteractionHand;
@@ -91,6 +92,9 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			return;
 		}
 		if (!spell.shouldAIStopCasting(entry.level(), this.mob, this.target)) {
+			if (SpellCategoryUtil.is(spell, GMTagGen.SUPPORT)) {
+				data.getMagicData().setAdditionalCastData(new TargetEntityCastData(mob));
+			}
 			data.setCastingData(new CastingSpellData(spell, entry.level(), entry.source(), cost, cd));
 			this.spellCastingMob.initiateCastSpell(spell, entry.level());
 			this.fleeCooldown = 7 + spell.getCastTime(entry.level());

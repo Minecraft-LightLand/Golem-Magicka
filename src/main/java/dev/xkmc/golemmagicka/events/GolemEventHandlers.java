@@ -32,6 +32,11 @@ public class GolemEventHandlers {
 			}
 			event.setCanceled(true);
 		}
+		if (event.getEntry().spell() == SpellRegistry.FORTIFY_SPELL.get()) {
+			if (event.getGolem().getAbsorptionAmount() > 0) {
+				event.setCanceled(true);
+			}
+		}
 
 	}
 

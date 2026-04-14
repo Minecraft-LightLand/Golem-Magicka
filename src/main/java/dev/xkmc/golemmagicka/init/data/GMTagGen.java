@@ -100,10 +100,12 @@ public class GMTagGen {
 				SpellRegistry.RAISE_DEAD_SPELL.get() // 驱役亡灵
 		);
 		pvd.addTag(NO_TARGET).add(
-				SpellRegistry.HEAL_SPELL.get(),
-				SpellRegistry.GREATER_HEAL_SPELL.get(),
-				SpellRegistry.HEALING_CIRCLE_SPELL.get(),
-				SpellRegistry.CLEANSE_SPELL.get()
+				SpellRegistry.ICE_TOMB_SPELL.get(), // 冰霜之墓
+				SpellRegistry.HEAL_SPELL.get(), // 治疗
+				SpellRegistry.HEALING_CIRCLE_SPELL.get(), // 治愈之环
+				SpellRegistry.BLESSING_OF_LIFE_SPELL.get(), // 生命祝福
+				SpellRegistry.CLEANSE_SPELL.get(), // 净化
+				SpellRegistry.GREATER_HEAL_SPELL.get() // 强效治疗
 		);
 		pvd.addTag(NON_OFFENSIVE).addTags(ENHANCE, CONTROL, SUPPORT);
 	}

@@ -30,10 +30,10 @@ public class ClientGolemEventHandlers {
 		var data = ((IMagicEntity) event.getGolem()).getMagicData();
 		int maxMana = (int) event.getGolem().getAttributeValue(AttributeRegistry.MAX_MANA);
 		int mana = (int) data.getMana();
-		boolean hasSpell = GolemSpellManager.predicate(event.getGolem(), event.getGolem().getMainHandItem(), null).isPresent();
-		if (mana == maxMana && !hasSpell) return;
-		event.addLine(GMLang.MANA.get(mana, maxMana));
 		var cds = data.getPlayerCooldowns();
+		boolean hasSpell = GolemSpellManager.predicate(event.getGolem(), event.getGolem().getMainHandItem(), null).isPresent();
+		if (mana == maxMana && !hasSpell && cds.getSpellCooldowns().isEmpty()) return;
+		event.addLine(GMLang.MANA.get(mana, maxMana));
 		if (!cds.getSpellCooldowns().isEmpty()) {
 			event.addLine(GMLang.CDS.get());
 			for (var e : cds.getSpellCooldowns().entrySet()) {

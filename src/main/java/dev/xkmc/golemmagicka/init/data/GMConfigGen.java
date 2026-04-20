@@ -157,7 +157,7 @@ public class GMConfigGen extends ConfigDataProvider {
 		config.start(SpellRegistry.DIVINE_SMITE_SPELL.get()).weight(185).dist(4, 3).mana(1, 2).aoe(2, 0, 1); // 神圣打击
 		config.start(SpellRegistry.GUST_SPELL.get()).weight(120).dist(7, 4).mana(1, 2); // 呼啸之风
 		config.start(SpellRegistry.FANG_STRIKE_SPELL.get()).weight(110).dist(8, 6, 1).mana(1, 2.5); // 唤魔尖牙
-		config.start(SpellRegistry.STOMP_SPELL.get()).weight(110).dist(5, 4, 1).mana(1, 2.5).aoe(4, 1, 3); // 践踏
+		config.start(SpellRegistry.STOMP_SPELL.get()).weight(120).dist(5, 4, 1).mana(1, 2.5).aoe(4, 1, 3); // 践踏
 		config.start(SpellRegistry.FIRE_ARROW_SPELL.get()).weight(105).dist(32, 16).mana(1, 2.5).aoe(2, 0, 1); // 爆裂炽焰箭
 		config.start(SpellRegistry.FIREBALL_SPELL.get()).weight(105).dist(64, 20).mana(1, 3).aoe(3, 1, 4); // 火球术
 		config.start(SpellRegistry.MAGIC_ARROW_SPELL.get()).weight(105).dist(64, 20).mana(1, 2.5); // 魔法箭

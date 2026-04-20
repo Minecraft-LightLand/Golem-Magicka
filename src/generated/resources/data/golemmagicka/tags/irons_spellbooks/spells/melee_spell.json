@@ -1,0 +1,11 @@
+{
+  "values": [
+    "#golemmagicka:defense",
+    "#golemmagicka:movement",
+    "#golemmagicka:enhance",
+    "#golemmagicka:control",
+    "#golemmagicka:support",
+    "irons_spellbooks:thunderstorm",
+    "irons_spellbooks:gust"
+  ]
+}

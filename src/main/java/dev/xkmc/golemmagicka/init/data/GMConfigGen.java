@@ -64,6 +64,15 @@ public class GMConfigGen extends ConfigDataProvider {
 		);
 
 		map.add(ModularGolems.MATERIALS, GolemMagicka.loc("iron_spells"), new GolemMaterialConfig()
+				.addMaterial(GolemMagicka.loc("mithril"), Ingredient.of(ItemRegistry.MITHRIL_INGOT.get()))
+				.addStat(GolemTypes.STAT_HEALTH.get(), 200)
+				.addStat(GolemTypes.STAT_ATTACK.get(), 15)
+				.addStat(GMTypes.STAT_MAX_MANA.get(), 400)
+				.addStat(GMTypes.STAT_MANA_REGEN.get(), 1)
+				.addStat(GMTypes.STAT_SPELL_POWER.get(), 0.25)
+				.addStat(GMTypes.STAT_CD.get(), 0.2)
+				.end()
+
 				.addMaterial(GolemMagicka.loc("pyrium"), Ingredient.of(ItemRegistry.PYRIUM_INGOT.get()))
 				.addStat(GolemTypes.STAT_HEALTH.get(), 400)
 				.addStat(GolemTypes.STAT_ATTACK.get(), 30)

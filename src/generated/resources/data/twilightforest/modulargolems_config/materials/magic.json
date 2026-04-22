@@ -1,0 +1,23 @@
+{
+  "ingredients": {},
+  "modifiers": {},
+  "repairIngredients": {},
+  "stats": {
+    "twilightforest:fiery": {
+      "golemmagicka:fire_resist": 0.8,
+      "golemmagicka:fire_spell_power": 0.5,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 100.0
+    },
+    "twilightforest:ironwood": {
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 50.0,
+      "golemmagicka:nature_spell_power": 0.5
+    },
+    "twilightforest:steeleaf": {
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 100.0,
+      "golemmagicka:nature_spell_power": 0.5
+    }
+  }
+}

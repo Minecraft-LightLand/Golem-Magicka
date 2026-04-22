@@ -1,0 +1,15 @@
+{
+  "ingredients": {},
+  "modifiers": {},
+  "repairIngredients": {},
+  "stats": {
+    "l2hostility:chaotic": {
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 200.0
+    },
+    "l2hostility:miraculous": {
+      "golemmagicka:mana_regen": 0.4,
+      "golemmagicka:max_mana": 400.0
+    }
+  }
+}

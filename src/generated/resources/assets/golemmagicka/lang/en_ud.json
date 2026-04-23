@@ -1,6 +1,8 @@
 {
   "golem_material.golemmagicka.mithril": "ןıɹɥʇıW",
   "golem_material.golemmagicka.pyrium": "ɯnıɹʎԀ",
+  "golemmagicka.configuration.manaMendingRate": "ǝʇɐɹ uoısɹǝʌuoɔ ԀH - ɐuɐW :buıpuǝW ɐuɐW",
+  "golemmagicka.configuration.manaMendingRate.tooltip": "0˙00Ɩ ~ Ɩ0˙0 :ǝbuɐᴚ \n0˙0Ɩ :ʇןnɐɟǝᗡ ",
   "golemmagicka.configuration.section.l2configs.golemmagicka.client.toml": "uoıʇɐɹnbıɟuoƆ ʇuǝıןƆ ɐʞɔıbɐW ɯǝןo⅁",
   "golemmagicka.configuration.section.l2configs.golemmagicka.client.toml.title": "uoıʇɐɹnbıɟuoƆ ʇuǝıןƆ ɐʞɔıbɐW ɯǝןo⅁",
   "golemmagicka.configuration.section.l2configs.golemmagicka.server.toml": "uoıʇɐɹnbıɟuoƆ ɹǝʌɹǝS ɐʞɔıbɐW ɯǝןo⅁",
@@ -11,5 +13,7 @@
   "golemmagicka.info.invalid": "%s -",
   "golemmagicka.info.invalids": ":sןןǝdS pıןɐʌuI",
   "golemmagicka.info.mana": "%s/%s :ɐuɐW",
-  "golemmagicka.title": "ɐʞɔıbɐW ɯǝןo⅁"
+  "golemmagicka.title": "ɐʞɔıbɐW ɯǝןo⅁",
+  "modifier.golemmagicka.mana_mending": "buıpuǝW ɐuɐW",
+  "modifier.modulargolems.mana_mending.desc": "ǝbɐʇuǝɔɹǝd ɐuɐɯ uɐɥʇ ɹǝʍoן sı ǝbɐʇuǝɔɹǝd ɥʇןɐǝɥ uǝɥʍ ɟןǝsʇı ɹıɐdǝɹ oʇ uǝbǝɹ ɐuɐɯ ǝs∩"
 }

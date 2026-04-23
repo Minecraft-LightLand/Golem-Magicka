@@ -1,6 +1,8 @@
 package dev.xkmc.golemmagicka.content.entity;
 
 import dev.xkmc.golemmagicka.init.GolemMagicka;
+import dev.xkmc.golemmagicka.init.data.GMConfig;
+import dev.xkmc.golemmagicka.init.reg.GMModifiers;
 import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.registry.WeaponStatus;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
@@ -52,9 +54,9 @@ public class GolemSpellManager {
 		if (e.tickCount % 10 != 0) return;
 		if (e.getAttribute(AttributeRegistry.MAX_MANA) == null) return;
 		if (e.getAttribute(AttributeRegistry.MANA_REGEN) == null) return;
-		int playerMaxMana = (int) e.getAttributeValue(AttributeRegistry.MAX_MANA);
+		int maxMana = (int) e.getAttributeValue(AttributeRegistry.MAX_MANA);
 		float rate = (float) e.getAttributeValue(AttributeRegistry.MANA_REGEN);
-		float increment = playerMaxMana * 0.01F * rate;
+		float increment = maxMana * 0.01F * rate;
 		for (var p : e.getPassengers()) {
 			if (!(p instanceof LivingEntity passenger)) continue;
 			if (passenger.getAttribute(AttributeRegistry.MAX_MANA) == null) continue;
@@ -74,8 +76,20 @@ public class GolemSpellManager {
 			}
 		}
 		float mana = data.getMana();
-		if (mana != (float) playerMaxMana) {
-			data.setMana(Mth.clamp(data.getMana() + increment, 0, playerMaxMana));
+		if (mana != (float) maxMana) {
+			int lv = e.getModifiers().get(GMModifiers.MANA_MENDING.get());
+			if (lv > 0) {
+				float hp = e.getHealth();
+				float mhp = e.getMaxHealth();
+				if (hp / mhp < mana / maxMana) {
+					float f = GMConfig.COMMON.manaMendingRate.get().floatValue();
+					e.heal(increment / f);
+					float nhp = e.getHealth();
+					increment -= (nhp - hp) * f;
+					if (increment < 0) return;
+				}
+			}
+			data.setMana(Mth.clamp(data.getMana() + increment, 0, maxMana));
 		}
 		GolemSpellInfoToClient.send(e, data.getMana());
 	}

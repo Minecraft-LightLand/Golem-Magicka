@@ -7,13 +7,13 @@
 	"golemmagicka.info.invalids": "无效法术:",
 	"golemmagicka.info.mana": "法力值: %s/%s",
 	"modifier.golemmagicka.mana_mending": "法力修补",
-	"modifier.golemmagicka.mana_mending.desc": "傀儡法力百分比高于血量百分比时，回复的法力会优先用于修补自身",
+	"modifier.golemmagicka.mana_mending.desc": "法力值百分比高于生命值百分比时，回复的法力会优先用于修补自身",
 	"golemmagicka.configuration.section.l2configs.golemmagicka.client.toml": "傀儡装配·奥法魔像 - 客户端配置",
 	"golemmagicka.configuration.section.l2configs.golemmagicka.client.toml.title": "傀儡装配·奥法魔像 - 客户端配置",
 	"golemmagicka.configuration.section.l2configs.golemmagicka.server.toml": "傀儡装配·奥法魔像 - 服务端配置",
 	"golemmagicka.configuration.section.l2configs.golemmagicka.server.toml.title": "傀儡装配·奥法魔像 - 服务端配置",
 	"golemmagicka.configuration.title": "傀儡装配·奥法魔像 - 配置",
 	"golemmagicka.title": "傀儡装配·奥法魔像",
-	"golemmagicka.configuration.manaMendingRate": "法力修补：法力血量转化比例",
-	"golemmagicka.configuration.manaMendingRate.tooltip": " 默认: 10（10法力=1血量）\n 范围: 0.01 ~ 100.0"
-	}
+	"golemmagicka.configuration.manaMendingRate": "法力修补：法力生命转化比例",
+	"golemmagicka.configuration.manaMendingRate.tooltip": " 默认: 10（10法力值=1生命值）\n 范围: 0.01 ~ 100.0"
+}

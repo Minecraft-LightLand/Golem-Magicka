@@ -1,0 +1,24 @@
+{
+  "ingredients": {},
+  "modifiers": {},
+  "repairIngredients": {},
+  "stats": {
+    "iceandfire:fire_dragonsteel": {
+      "golemmagicka:fire_resist": 0.8,
+      "golemmagicka:fire_spell_power": 0.5,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 100.0
+    },
+    "iceandfire:ice_dragonsteel": {
+      "golemmagicka:ice_spell_power": 1.0,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 100.0
+    },
+    "iceandfire:lightning_dragonsteel": {
+      "golemmagicka:lightning_resist": 0.8,
+      "golemmagicka:lightning_spell_power": 0.5,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 100.0
+    }
+  }
+}

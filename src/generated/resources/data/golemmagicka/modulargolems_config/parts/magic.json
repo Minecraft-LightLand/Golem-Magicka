@@ -16,7 +16,17 @@
       "golemmagicka:spell_power": 0.0
     },
     "modulargolems:metal_golem": {
-      "golemmagicka:max_mana": 2.0
+      "golemmagicka:blood_spell_power": 1.4,
+      "golemmagicka:eldritch_spell_power": 1.4,
+      "golemmagicka:ender_spell_power": 1.4,
+      "golemmagicka:evocation_spell_power": 1.4,
+      "golemmagicka:fire_spell_power": 1.4,
+      "golemmagicka:holy_spell_power": 1.4,
+      "golemmagicka:ice_spell_power": 1.4,
+      "golemmagicka:lightning_spell_power": 1.4,
+      "golemmagicka:max_mana": 2.0,
+      "golemmagicka:nature_spell_power": 1.4,
+      "golemmagicka:spell_power": 1.4
     }
   }
 }

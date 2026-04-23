@@ -1,0 +1,34 @@
+{
+  "ingredients": {},
+  "modifiers": {},
+  "repairIngredients": {},
+  "stats": {
+    "cataclysm:ancient_metal": {
+      "golemmagicka:max_mana": 100.0,
+      "golemmagicka:nature_spell_power": 0.5
+    },
+    "cataclysm:cursium": {
+      "golemmagicka:ice_spell_power": 1.0,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 200.0
+    },
+    "cataclysm:ender_guardian": {
+      "golemmagicka:ender_spell_power": 0.5,
+      "golemmagicka:max_mana": 100.0
+    },
+    "cataclysm:ignitium": {
+      "golemmagicka:fire_resist": 0.8,
+      "golemmagicka:fire_spell_power": 0.5,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 200.0
+    },
+    "cataclysm:storm": {
+      "golemmagicka:lightning_spell_power": 0.5,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 200.0
+    },
+    "cataclysm:witherite": {
+      "golemmagicka:max_mana": 200.0
+    }
+  }
+}

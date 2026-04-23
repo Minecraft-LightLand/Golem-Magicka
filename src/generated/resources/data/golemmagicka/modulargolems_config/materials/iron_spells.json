@@ -1,27 +1,44 @@
 {
   "ingredients": {
+    "golemmagicka:mithril": {
+      "item": "irons_spellbooks:mithril_ingot"
+    },
     "golemmagicka:pyrium": {
       "item": "irons_spellbooks:pyrium_ingot"
     }
   },
   "modifiers": {
+    "golemmagicka:mithril": {},
     "golemmagicka:pyrium": {
       "modulargolems:damage_cap": 1,
       "modulargolems:fire_immune": 1
     }
   },
   "repairIngredients": {
+    "golemmagicka:mithril": {
+      "item": "irons_spellbooks:mithril_ingot"
+    },
     "golemmagicka:pyrium": {
       "item": "irons_spellbooks:pyrium_ingot"
     }
   },
   "stats": {
+    "golemmagicka:mithril": {
+      "golemmagicka:mana_regen": 1.0,
+      "golemmagicka:max_mana": 400.0,
+      "golemmagicka:spell_cooldown": 0.2,
+      "golemmagicka:spell_power": 0.5,
+      "modulargolems:attack": 15.0,
+      "modulargolems:max_health": 200.0,
+      "modulargolems:speed": 0.2
+    },
     "golemmagicka:pyrium": {
       "golemmagicka:fire_resist": 1.0,
+      "golemmagicka:fire_spell_power": 0.5,
       "golemmagicka:mana_regen": 1.0,
       "golemmagicka:max_mana": 800.0,
       "golemmagicka:spell_cooldown": 0.4,
-      "golemmagicka:spell_power": 0.5,
+      "golemmagicka:spell_power": 1.0,
       "modulargolems:attack": 30.0,
       "modulargolems:max_health": 400.0,
       "modulargolems:sweep": 1.0

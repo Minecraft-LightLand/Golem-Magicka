@@ -8,6 +8,11 @@ import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.l2core.serial.config.ConfigDataProvider;
 import dev.xkmc.l2tabs.init.L2Tabs;
 import dev.xkmc.l2tabs.init.data.AttrDispEntry;
+import dev.xkmc.modulargolems.compat.materials.cataclysm.CataDispatch;
+import dev.xkmc.modulargolems.compat.materials.iceandfire.IAFDispatch;
+import dev.xkmc.modulargolems.compat.materials.l2complements.LCDispatch;
+import dev.xkmc.modulargolems.compat.materials.l2hostility.LHDispatch;
+import dev.xkmc.modulargolems.compat.materials.twilightforest.TFDispatch;
 import dev.xkmc.modulargolems.content.config.GolemMaterialConfig;
 import dev.xkmc.modulargolems.content.config.GolemPartConfig;
 import dev.xkmc.modulargolems.init.ModularGolems;
@@ -19,6 +24,7 @@ import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.concurrent.CompletableFuture;
@@ -34,6 +40,16 @@ public class GMConfigGen extends ConfigDataProvider {
 		map.add(ModularGolems.PARTS, GolemMagicka.loc("magic"), new GolemPartConfig()
 				.addEntity(GolemTypes.TYPE_GOLEM.get())
 				.addFilter(GMTypes.STAT_MAX_MANA.get(), 2)
+				.addFilter(GMTypes.STAT_SPELL_POWER.get(), 1.4)
+				.addFilter(GMTypes.FIRE_SPELL_POWER.get(), 1.4)
+				.addFilter(GMTypes.ICE_SPELL_POWER.get(), 1.4)
+				.addFilter(GMTypes.LIGHTNING_SPELL_POWER.get(), 1.4)
+				.addFilter(GMTypes.HOLY_SPELL_POWER.get(), 1.4)
+				.addFilter(GMTypes.ENDER_SPELL_POWER.get(), 1.4)
+				.addFilter(GMTypes.BLOOD_SPELL_POWER.get(), 1.4)
+				.addFilter(GMTypes.EVOCATION_SPELL_POWER.get(), 1.4)
+				.addFilter(GMTypes.NATURE_SPELL_POWER.get(), 1.4)
+				.addFilter(GMTypes.ELDRITCH_SPELL_POWER.get(), 1.4)
 				.end()
 
 				.addEntity(GolemTypes.TYPE_DOG.get())
@@ -64,18 +80,85 @@ public class GMConfigGen extends ConfigDataProvider {
 		);
 
 		map.add(ModularGolems.MATERIALS, GolemMagicka.loc("iron_spells"), new GolemMaterialConfig()
+				.addMaterial(GolemMagicka.loc("mithril"), Ingredient.of(ItemRegistry.MITHRIL_INGOT.get()))
+				.addStat(GolemTypes.STAT_HEALTH.get(), 200)
+				.addStat(GolemTypes.STAT_ATTACK.get(), 15)
+				.addStat(GolemTypes.STAT_SPEED.get(), 0.2)
+				.addStat(GMTypes.STAT_MAX_MANA.get(), 400)
+				.addStat(GMTypes.STAT_MANA_REGEN.get(), 1)
+				.addStat(GMTypes.STAT_SPELL_POWER.get(), 0.5)
+				.addStat(GMTypes.STAT_CD.get(), 0.2)
+				.end()
+
 				.addMaterial(GolemMagicka.loc("pyrium"), Ingredient.of(ItemRegistry.PYRIUM_INGOT.get()))
 				.addStat(GolemTypes.STAT_HEALTH.get(), 400)
 				.addStat(GolemTypes.STAT_ATTACK.get(), 30)
 				.addStat(GolemTypes.STAT_SWEEP.get(), 1)
 				.addStat(GMTypes.STAT_MAX_MANA.get(), 800)
 				.addStat(GMTypes.STAT_MANA_REGEN.get(), 1)
-				.addStat(GMTypes.STAT_SPELL_POWER.get(), 0.5)
+				.addStat(GMTypes.STAT_SPELL_POWER.get(), 1)
+				.addStat(GMTypes.FIRE_SPELL_POWER.get(), 0.5)
 				.addStat(GMTypes.STAT_CD.get(), 0.4)
 				.addStat(GMTypes.FIRE_RESIST.get(), 1)
 				.addModifier(GolemModifiers.DAMAGE_CAP.get(), 1)
 				.addModifier(GolemModifiers.FIRE_IMMUNE.get(), 1)
 				.end()
+		);
+
+		map.add(ModularGolems.MATERIALS, ResourceLocation.fromNamespaceAndPath("l2complements", "magic"), new MagicStatBuilder()
+				.add(ResourceLocation.fromNamespaceAndPath(LCDispatch.MODID, "totemic_gold"), 200, 0.4)
+				.add(ResourceLocation.fromNamespaceAndPath(LCDispatch.MODID, "totemic_gold"), GMTypes.HOLY_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(LCDispatch.MODID, "poseidite"), 100, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(LCDispatch.MODID, "poseidite"), GMTypes.LIGHTNING_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(LCDispatch.MODID, "shulkerate"), 100, 0)
+				.add(ResourceLocation.fromNamespaceAndPath(LCDispatch.MODID, "shulkerate"), GMTypes.ENDER_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(LCDispatch.MODID, "eternium"), 100, 1)
+				.build()
+		);
+
+		map.add(ModularGolems.MATERIALS, ResourceLocation.fromNamespaceAndPath("l2hostility", "magic"), new MagicStatBuilder()
+				.add(ResourceLocation.fromNamespaceAndPath(LHDispatch.MODID, "chaotic"), 200, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(LHDispatch.MODID, "miraculous"), 400, 0.4)
+				.build()
+		);
+
+		map.add(ModularGolems.MATERIALS, ResourceLocation.fromNamespaceAndPath("iceandfire", "magic"), new MagicStatBuilder()
+				.add(ResourceLocation.fromNamespaceAndPath(IAFDispatch.MODID, "fire_dragonsteel"), 100, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(IAFDispatch.MODID, "fire_dragonsteel"), GMTypes.FIRE_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(IAFDispatch.MODID, "fire_dragonsteel"), GMTypes.FIRE_RESIST.get(), 0.8)
+				.add(ResourceLocation.fromNamespaceAndPath(IAFDispatch.MODID, "ice_dragonsteel"), 100, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(IAFDispatch.MODID, "ice_dragonsteel"), GMTypes.ICE_SPELL_POWER.get(), 1)
+				.add(ResourceLocation.fromNamespaceAndPath(IAFDispatch.MODID, "lightning_dragonsteel"), 100, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(IAFDispatch.MODID, "lightning_dragonsteel"), GMTypes.LIGHTNING_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(IAFDispatch.MODID, "lightning_dragonsteel"), GMTypes.LIGHTNING_RESIST.get(), 0.8)
+				.build()
+		);
+
+		map.add(ModularGolems.MATERIALS, ResourceLocation.fromNamespaceAndPath("twilightforest", "magic"), new MagicStatBuilder()
+				.add(ResourceLocation.fromNamespaceAndPath(TFDispatch.MODID, "ironwood"), 50, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(TFDispatch.MODID, "ironwood"), GMTypes.NATURE_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(TFDispatch.MODID, "steeleaf"), 100, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(TFDispatch.MODID, "steeleaf"), GMTypes.NATURE_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(TFDispatch.MODID, "fiery"), 100, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(TFDispatch.MODID, "fiery"), GMTypes.FIRE_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(TFDispatch.MODID, "fiery"), GMTypes.FIRE_RESIST.get(), 0.8)
+				.build()
+		);
+
+		map.add(ModularGolems.MATERIALS, ResourceLocation.fromNamespaceAndPath("cataclysm", "magic"), new MagicStatBuilder()
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "ignitium"), 200, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "ignitium"), GMTypes.FIRE_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "ignitium"), GMTypes.FIRE_RESIST.get(), 0.8)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "witherite"), 200, 0)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "cursium"), 200, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "cursium"), GMTypes.ICE_SPELL_POWER.get(), 1)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "ender_guardian"), 100, 0)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "ender_guardian"), GMTypes.ENDER_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "storm"), 200, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "storm"), GMTypes.LIGHTNING_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "ancient_metal"), 100, 0)
+				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "ancient_metal"), GMTypes.NATURE_SPELL_POWER.get(), 0.5)
+				.build()
 		);
 
 		genSpell(map);

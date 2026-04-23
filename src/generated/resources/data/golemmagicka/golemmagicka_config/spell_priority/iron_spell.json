@@ -1214,7 +1214,7 @@
       "minWeightDist": 5.0,
       "minWeightManaFactor": 1.0,
       "minWeightPHP": 0.0,
-      "weight": 110
+      "weight": 120
     },
     "irons_spellbooks:sunbeam": {
       "aoeCountBonus": 2.0,

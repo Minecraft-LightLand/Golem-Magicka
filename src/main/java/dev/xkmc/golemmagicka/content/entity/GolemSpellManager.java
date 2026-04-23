@@ -76,7 +76,7 @@ public class GolemSpellManager {
 			}
 		}
 		float mana = data.getMana();
-		int lv = e.getModifiers().get(GMModifiers.MANA_MENDING.get());
+		int lv = e.getModifiers().getOrDefault(GMModifiers.MANA_MENDING.get(), 0);
 		if (lv > 0) {
 			float hp = e.getHealth();
 			float mhp = e.getMaxHealth();

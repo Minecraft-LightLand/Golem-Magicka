@@ -1,3 +1,9 @@
+0.2.0
+- Add Mithril golem
+- Add mana mending modifier
+- Add more ISS stats to materials from other mods
+- Allow golems to use weapons imbued with spell
+
 0.1.5
 - some golem materials have magic resist properties now
 - allow golem to melee attack with staff

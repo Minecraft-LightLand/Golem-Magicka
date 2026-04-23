@@ -11,6 +11,7 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
+import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.item.CastingItem;
@@ -40,7 +41,8 @@ public class GolemSpellManager {
 	public static Optional<WeaponStatus> predicate(LivingEntity e, ItemStack stack, @Nullable InteractionHand hand) {
 		boolean valid = stack.getItem() instanceof SpellBook ||
 				stack.getItem() instanceof CastingItem ||
-				stack.getItem() instanceof MagicSwordItem;
+				stack.getItem() instanceof MagicSwordItem ||
+				ISpellContainer.isSpellContainer(stack);
 		return WeaponStatus.OFFENSIVE.withPriority(1000).of(valid);
 	}
 

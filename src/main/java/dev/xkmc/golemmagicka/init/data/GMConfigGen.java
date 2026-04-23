@@ -4,6 +4,7 @@ import com.tterrag.registrate.providers.RegistrateDataMapProvider;
 import dev.xkmc.golemmagicka.content.config.MagicStatBuilder;
 import dev.xkmc.golemmagicka.content.config.SpellPriorityConfig;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
+import dev.xkmc.golemmagicka.init.reg.GMModifiers;
 import dev.xkmc.golemmagicka.init.reg.GMTypes;
 import dev.xkmc.l2core.serial.config.ConfigDataProvider;
 import dev.xkmc.l2tabs.init.L2Tabs;
@@ -88,6 +89,7 @@ public class GMConfigGen extends ConfigDataProvider {
 				.addStat(GMTypes.STAT_MANA_REGEN.get(), 1)
 				.addStat(GMTypes.STAT_SPELL_POWER.get(), 0.5)
 				.addStat(GMTypes.STAT_CD.get(), 0.2)
+				.addModifier(GMModifiers.MANA_MENDING.get(), 1)
 				.end()
 
 				.addMaterial(GolemMagicka.loc("pyrium"), Ingredient.of(ItemRegistry.PYRIUM_INGOT.get()))
@@ -102,6 +104,7 @@ public class GMConfigGen extends ConfigDataProvider {
 				.addStat(GMTypes.FIRE_RESIST.get(), 1)
 				.addModifier(GolemModifiers.DAMAGE_CAP.get(), 1)
 				.addModifier(GolemModifiers.FIRE_IMMUNE.get(), 1)
+				.addModifier(GMModifiers.MANA_MENDING.get(), 1)
 				.end()
 		);
 

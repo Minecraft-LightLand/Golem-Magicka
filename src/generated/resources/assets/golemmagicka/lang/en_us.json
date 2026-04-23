@@ -1,6 +1,8 @@
 {
   "golem_material.golemmagicka.mithril": "Mithril",
   "golem_material.golemmagicka.pyrium": "Pyrium",
+  "golemmagicka.configuration.manaMendingRate": "Mana Mending: Mana - HP conversion rate",
+  "golemmagicka.configuration.manaMendingRate.tooltip": " Default: 10.0\n Range: 0.01 ~ 100.0",
   "golemmagicka.configuration.section.l2configs.golemmagicka.client.toml": "Golem Magicka Client Configuration",
   "golemmagicka.configuration.section.l2configs.golemmagicka.client.toml.title": "Golem Magicka Client Configuration",
   "golemmagicka.configuration.section.l2configs.golemmagicka.server.toml": "Golem Magicka Server Configuration",
@@ -11,5 +13,7 @@
   "golemmagicka.info.invalid": "- %s",
   "golemmagicka.info.invalids": "Invalid Spells:",
   "golemmagicka.info.mana": "Mana: %s/%s",
-  "golemmagicka.title": "Golem Magicka"
+  "golemmagicka.title": "Golem Magicka",
+  "modifier.golemmagicka.mana_mending": "Mana Mending",
+  "modifier.modulargolems.mana_mending.desc": "Use mana regen to repair itself when health percentage is lower than mana percentage"
 }

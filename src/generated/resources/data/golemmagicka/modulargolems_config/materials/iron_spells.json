@@ -8,8 +8,11 @@
     }
   },
   "modifiers": {
-    "golemmagicka:mithril": {},
+    "golemmagicka:mithril": {
+      "golemmagicka:mana_mending": 1
+    },
     "golemmagicka:pyrium": {
+      "golemmagicka:mana_mending": 1,
       "modulargolems:damage_cap": 1,
       "modulargolems:fire_immune": 1
     }

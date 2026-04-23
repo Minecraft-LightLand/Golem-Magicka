@@ -9,9 +9,11 @@ import dev.xkmc.l2library.serial.config.ConfigDataProvider;
 import dev.xkmc.l2tabs.init.L2Tabs;
 import dev.xkmc.l2tabs.init.data.AttributeDisplayConfig;
 import dev.xkmc.modulargolems.compat.materials.cataclysm.CataDispatch;
+import dev.xkmc.modulargolems.compat.materials.goety.revelation.GRDispatch;
 import dev.xkmc.modulargolems.compat.materials.iceandfire.IAFDispatch;
 import dev.xkmc.modulargolems.compat.materials.l2complements.LCDispatch;
 import dev.xkmc.modulargolems.compat.materials.l2hostility.LHDispatch;
+import dev.xkmc.modulargolems.compat.materials.legendarymonsters.LMDispatch;
 import dev.xkmc.modulargolems.compat.materials.twilightforest.TFDispatch;
 import dev.xkmc.modulargolems.content.config.GolemMaterialConfig;
 import dev.xkmc.modulargolems.content.config.GolemPartConfig;
@@ -157,6 +159,21 @@ public class GMConfigGen extends ConfigDataProvider {
 				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "storm"), GMTypes.LIGHTNING_SPELL_POWER.get(), 0.5)
 				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "ancient_metal"), 100, 0)
 				.add(ResourceLocation.fromNamespaceAndPath(CataDispatch.MODID, "ancient_metal"), GMTypes.NATURE_SPELL_POWER.get(), 0.5)
+				.build()
+		);
+
+		map.add(ModularGolems.MATERIALS, ResourceLocation.fromNamespaceAndPath("legendary_monsters", "magic"), new MagicStatBuilder()
+				.add(ResourceLocation.fromNamespaceAndPath(LMDispatch.MODID, "cloud"), 200, 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(LMDispatch.MODID, "cloud"), GMTypes.LIGHTNING_SPELL_POWER.get(), 0.5)
+				.build()
+		);
+
+		map.add(ModularGolems.MATERIALS, ResourceLocation.fromNamespaceAndPath("goety_revelation", "magic"), new MagicStatBuilder()
+				.add(ResourceLocation.fromNamespaceAndPath(GRDispatch.MODID, "apocalyptium"), 333, 1)
+				.add(ResourceLocation.fromNamespaceAndPath(GRDispatch.MODID, "apocalyptium"), GMTypes.STAT_CD.get(), 0.2)
+				.add(ResourceLocation.fromNamespaceAndPath(GRDispatch.MODID, "apocalyptium"), GMTypes.STAT_SPELL_POWER.get(), 0.66)
+				.add(ResourceLocation.fromNamespaceAndPath(GRDispatch.MODID, "apocalyptium"), GMTypes.FIRE_SPELL_POWER.get(), 0.5)
+				.add(ResourceLocation.fromNamespaceAndPath(GRDispatch.MODID, "apocalyptium"), GMTypes.FIRE_RESIST.get(), 1)
 				.build()
 		);
 

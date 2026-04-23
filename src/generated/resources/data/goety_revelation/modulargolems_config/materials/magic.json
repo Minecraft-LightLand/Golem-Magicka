@@ -1,0 +1,15 @@
+{
+  "ingredients": {},
+  "modifiers": {},
+  "repairIngredients": {},
+  "stats": {
+    "goety_revelation:apocalyptium": {
+      "golemmagicka:fire_resist": 1.0,
+      "golemmagicka:fire_spell_power": 0.5,
+      "golemmagicka:mana_regen": 1.0,
+      "golemmagicka:max_mana": 333.0,
+      "golemmagicka:spell_cooldown": 0.2,
+      "golemmagicka:spell_power": 0.66
+    }
+  }
+}

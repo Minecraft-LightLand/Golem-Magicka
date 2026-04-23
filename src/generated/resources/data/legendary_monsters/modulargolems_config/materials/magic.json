@@ -1,0 +1,12 @@
+{
+  "ingredients": {},
+  "modifiers": {},
+  "repairIngredients": {},
+  "stats": {
+    "legendary_monsters:cloud": {
+      "golemmagicka:lightning_spell_power": 0.5,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 200.0
+    }
+  }
+}

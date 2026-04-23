@@ -39,19 +39,19 @@ public class GMTypes {
 	static {
 		STAT_MAX_MANA = regStatPlain("max_mana", () -> AttributeRegistry.MAX_MANA, GolemStatType.Kind.ADD, StatFilterType.MASS);
 		STAT_MANA_REGEN = regStat("mana_regen", () -> AttributeRegistry.MANA_REGEN, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		STAT_SPELL_POWER = regStat("spell_power", () -> AttributeRegistry.SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		STAT_CD = regStat("spell_cooldown", () -> AttributeRegistry.COOLDOWN_REDUCTION, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		STAT_RESIST = regStat("spell_resist", () -> AttributeRegistry.SPELL_RESIST, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		STAT_SPELL_POWER = regStat("spell_power", () -> AttributeRegistry.SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		STAT_CD = regStat("spell_cooldown", () -> AttributeRegistry.COOLDOWN_REDUCTION, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		STAT_RESIST = regStat("spell_resist", () -> AttributeRegistry.SPELL_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
 
-		FIRE_SPELL_POWER = regStat("fire_spell_power", () -> AttributeRegistry.FIRE_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		ICE_SPELL_POWER = regStat("ice_spell_power", () -> AttributeRegistry.ICE_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		LIGHTNING_SPELL_POWER = regStat("lightning_spell_power", () -> AttributeRegistry.LIGHTNING_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		HOLY_SPELL_POWER = regStat("holy_spell_power", () -> AttributeRegistry.HOLY_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		ENDER_SPELL_POWER = regStat("ender_spell_power", () -> AttributeRegistry.ENDER_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		BLOOD_SPELL_POWER = regStat("blood_spell_power", () -> AttributeRegistry.BLOOD_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		EVOCATION_SPELL_POWER = regStat("evocation_spell_power", () -> AttributeRegistry.EVOCATION_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		NATURE_SPELL_POWER = regStat("nature_spell_power", () -> AttributeRegistry.NATURE_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
-		ELDRITCH_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ELDRITCH_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.MASS);
+		FIRE_SPELL_POWER = regStat("fire_spell_power", () -> AttributeRegistry.FIRE_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		ICE_SPELL_POWER = regStat("ice_spell_power", () -> AttributeRegistry.ICE_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		LIGHTNING_SPELL_POWER = regStat("lightning_spell_power", () -> AttributeRegistry.LIGHTNING_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		HOLY_SPELL_POWER = regStat("holy_spell_power", () -> AttributeRegistry.HOLY_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		ENDER_SPELL_POWER = regStat("ender_spell_power", () -> AttributeRegistry.ENDER_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		BLOOD_SPELL_POWER = regStat("blood_spell_power", () -> AttributeRegistry.BLOOD_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		EVOCATION_SPELL_POWER = regStat("evocation_spell_power", () -> AttributeRegistry.EVOCATION_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		NATURE_SPELL_POWER = regStat("nature_spell_power", () -> AttributeRegistry.NATURE_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
+		ELDRITCH_SPELL_POWER = regStat("eldritch_spell_power", () -> AttributeRegistry.ELDRITCH_SPELL_POWER, GolemStatType.Kind.ADD, StatFilterType.ATTACK);
 
 		FIRE_RESIST = regStat("fire_resist", () -> AttributeRegistry.FIRE_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);
 		ICE_RESIST = regStat("ice_resist", () -> AttributeRegistry.ICE_MAGIC_RESIST, GolemStatType.Kind.ADD, StatFilterType.HEALTH);

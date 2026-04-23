@@ -1,4 +1,5 @@
 {
+  "golem_material.golemmagicka.mithril": "Mithril",
   "golem_material.golemmagicka.pyrium": "Pyrium",
   "golemmagicka.info.cd": "- %s: %ss",
   "golemmagicka.info.cds": "Spell Cooldowns:",
@@ -6,5 +7,7 @@
   "golemmagicka.info.invalids": "Invalid Spells:",
   "golemmagicka.info.mana": "Mana: %s/%s",
   "modifier.golemmagicka.cooldown_reduction": "Cooldown Reduction",
+  "modifier.golemmagicka.mana_mending": "Mana Mending",
+  "modifier.golemmagicka.mana_mending.desc": "Use mana regen to repair itself when health percentage is lower than mana percentage",
   "modifier.golemmagicka.mana_regen": "Mana Regen"
 }

@@ -1,6 +1,8 @@
 package dev.xkmc.golemmagicka.content.entity;
 
 import dev.xkmc.golemmagicka.init.GolemMagicka;
+import dev.xkmc.golemmagicka.init.data.GMConfig;
+import dev.xkmc.golemmagicka.init.reg.GMModifiers;
 import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.registry.WeaponStatus;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
@@ -11,6 +13,7 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
+import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.item.CastingItem;
@@ -40,7 +43,8 @@ public class GolemSpellManager {
 	public static Optional<WeaponStatus> predicate(LivingEntity e, ItemStack stack, @Nullable InteractionHand hand) {
 		boolean valid = stack.getItem() instanceof SpellBook ||
 				stack.getItem() instanceof CastingItem ||
-				stack.getItem() instanceof MagicSwordItem;
+				stack.getItem() instanceof MagicSwordItem ||
+				ISpellContainer.isSpellContainer(stack);
 		return WeaponStatus.OFFENSIVE.withPriority(1000).of(valid);
 	}
 
@@ -50,9 +54,9 @@ public class GolemSpellManager {
 		if (e.tickCount % 10 != 0) return;
 		if (e.getAttribute(AttributeRegistry.MAX_MANA.get()) == null) return;
 		if (e.getAttribute(AttributeRegistry.MANA_REGEN.get()) == null) return;
-		int playerMaxMana = (int) e.getAttributeValue(AttributeRegistry.MAX_MANA.get());
+		int maxMana = (int) e.getAttributeValue(AttributeRegistry.MAX_MANA.get());
 		float rate = (float) e.getAttributeValue(AttributeRegistry.MANA_REGEN.get());
-		float increment = playerMaxMana * 0.01F * rate;
+		float increment = maxMana * 0.01F * rate;
 		for (var p : e.getPassengers()) {
 			if (!(p instanceof LivingEntity passenger)) continue;
 			if (passenger.getAttribute(AttributeRegistry.MAX_MANA.get()) == null) continue;
@@ -72,9 +76,19 @@ public class GolemSpellManager {
 			}
 		}
 		float mana = data.getMana();
-		if (mana != (float) playerMaxMana) {
-			data.setMana(Mth.clamp(data.getMana() + increment, 0, playerMaxMana));
+		int lv = e.getModifiers().get(GMModifiers.MANA_MENDING.get());
+		if (lv > 0) {
+			float hp = e.getHealth();
+			float mhp = e.getMaxHealth();
+			if (hp / mhp < mana / maxMana) {
+				float f = GMConfig.COMMON.manaMendingRate.get().floatValue();
+				e.heal(increment / f);
+				float nhp = e.getHealth();
+				increment -= (nhp - hp) * f;
+				if (increment < 0) return;
+			}
 		}
+		data.setMana(Mth.clamp(data.getMana() + increment, 0, maxMana));
 		GolemSpellInfoToClient.send(e, data.getMana());
 	}
 

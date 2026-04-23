@@ -4,5 +4,7 @@
 	"golemmagicka.info.cds": "法术冷却:",
 	"golemmagicka.info.invalid": "- %s",
 	"golemmagicka.info.invalids": "无效法术:",
-	"golemmagicka.info.mana": "法力值: %s/%s"
+	"golemmagicka.info.mana": "法力值: %s/%s",
+	"modifier.golemmagicka.mana_mending": "法力修补",
+	"modifier.golemmagicka.mana_mending.desc": "傀儡法力百分比高于血量百分比时，回复的法力会优先用于修补自身"
 }

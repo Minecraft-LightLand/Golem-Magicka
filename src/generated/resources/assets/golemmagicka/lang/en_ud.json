@@ -1,4 +1,5 @@
 {
+  "golem_material.golemmagicka.mithril": "ןıɹɥʇıW",
   "golem_material.golemmagicka.pyrium": "ɯnıɹʎԀ",
   "golemmagicka.info.cd": "%ss :%s -",
   "golemmagicka.info.cds": ":suʍopןooƆ ןןǝdS",
@@ -6,5 +7,7 @@
   "golemmagicka.info.invalids": ":sןןǝdS pıןɐʌuI",
   "golemmagicka.info.mana": "%s/%s :ɐuɐW",
   "modifier.golemmagicka.cooldown_reduction": "uoıʇɔnpǝᴚ uʍopןooƆ",
+  "modifier.golemmagicka.mana_mending": "buıpuǝW ɐuɐW",
+  "modifier.golemmagicka.mana_mending.desc": "ǝbɐʇuǝɔɹǝd ɐuɐɯ uɐɥʇ ɹǝʍoן sı ǝbɐʇuǝɔɹǝd ɥʇןɐǝɥ uǝɥʍ ɟןǝsʇı ɹıɐdǝɹ oʇ uǝbǝɹ ɐuɐɯ ǝs∩",
   "modifier.golemmagicka.mana_regen": "uǝbǝᴚ ɐuɐW"
 }

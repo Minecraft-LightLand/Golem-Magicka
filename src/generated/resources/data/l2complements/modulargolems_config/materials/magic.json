@@ -1,0 +1,25 @@
+{
+  "ingredients": {},
+  "modifiers": {},
+  "repairIngredients": {},
+  "stats": {
+    "l2complements:eternium": {
+      "golemmagicka:mana_regen": 1.0,
+      "golemmagicka:max_mana": 100.0
+    },
+    "l2complements:poseidite": {
+      "golemmagicka:lightning_spell_power": 0.5,
+      "golemmagicka:mana_regen": 0.2,
+      "golemmagicka:max_mana": 100.0
+    },
+    "l2complements:shulkerate": {
+      "golemmagicka:ender_spell_power": 0.5,
+      "golemmagicka:max_mana": 100.0
+    },
+    "l2complements:totemic_gold": {
+      "golemmagicka:holy_spell_power": 0.5,
+      "golemmagicka:mana_regen": 0.4,
+      "golemmagicka:max_mana": 200.0
+    }
+  }
+}

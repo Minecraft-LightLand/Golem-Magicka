@@ -17,8 +17,11 @@ public class GMConfig {
 
 	public static class Common {
 
+		public final ForgeConfigSpec.DoubleValue manaMendingRate;
 
 		Common(ForgeConfigSpec.Builder builder) {
+			manaMendingRate = builder.comment("Mana Mending: Mana - HP conversion rate")
+					.defineInRange("manaMendingRate", 10, 0.01, 100);
 		}
 
 	}

@@ -4,6 +4,7 @@ import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import dev.xkmc.golemmagicka.content.modifier.ManaMendingModifier;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.l2library.base.L2Registrate;
 import dev.xkmc.modulargolems.content.item.upgrade.SimpleUpgradeItem;
@@ -24,6 +25,7 @@ public class GMModifiers {
 
 	public static final RegistryEntry<GolemModifier> MANA_REGEN;
 	public static final RegistryEntry<GolemModifier> CD_REDUCTION;
+	public static final RegistryEntry<GolemModifier> MANA_MENDING;
 
 	static {
 		MANA_REGEN = reg("mana_regen", () -> new AttributeGolemModifier(4,
@@ -32,10 +34,9 @@ public class GMModifiers {
 		CD_REDUCTION = reg("cooldown_reduction", () -> new AttributeGolemModifier(4,
 				new AttributeGolemModifier.AttrEntry(GMTypes.STAT_CD, () -> 0.1)
 		), null);
+		MANA_MENDING = reg("mana_mending", ManaMendingModifier::new,
+				"Use mana regen to repair itself when health percentage is lower than mana percentage");
 
-		//TODO
-		//regUpgradeImpl("mana_regen", () -> MANA_REGEN, 1, false, GolemMagicka.MODID);
-		//regUpgradeImpl("cooldown_reduction", () -> CD_REDUCTION, 1, false, GolemMagicka.MODID);
 	}
 
 	public static <T extends GolemModifier> RegistryEntry<T> reg(String id, NonNullSupplier<T> sup, @Nullable String def) {

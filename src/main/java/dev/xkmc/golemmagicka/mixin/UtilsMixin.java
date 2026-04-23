@@ -3,6 +3,7 @@ package dev.xkmc.golemmagicka.mixin;
 import dev.xkmc.golemmagicka.init.data.GMTagGen;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
 import dev.xkmc.modulargolems.content.item.equipments.MetalGolemArmorItem;
+import dev.xkmc.modulargolems.content.item.equipments.MetalGolemWeaponItem;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.util.Utils;
@@ -23,6 +24,13 @@ public class UtilsMixin {
 	@Inject(method = "canBeUpgraded", at = @At(value = "HEAD"), cancellable = true, remap = false)
 	private static void golemMagicka$golemArmor(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 		if (stack.getItem() instanceof MetalGolemArmorItem) {
+			cir.setReturnValue(true);
+		}
+	}
+
+	@Inject(method = "canImbue", at = @At(value = "HEAD"), cancellable = true, remap = false)
+	private static void golemMagicka$golemWeapon(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+		if (stack.getItem() instanceof MetalGolemWeaponItem) {
 			cir.setReturnValue(true);
 		}
 	}

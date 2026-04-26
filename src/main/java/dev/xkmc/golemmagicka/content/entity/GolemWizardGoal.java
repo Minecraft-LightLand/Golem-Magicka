@@ -68,6 +68,23 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	@Override
+	public void start() {
+		super.start();
+		if (target != null && target.isAlive()) {
+			mob.setAggressive(true);
+		}
+	}
+
+	@Override
+	public boolean canContinueToUse() {
+		if (super.canContinueToUse()) {
+			mob.setAggressive(target != null && target.isAlive());
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public double range(ItemStack stack) {
 		return 35;
 	}

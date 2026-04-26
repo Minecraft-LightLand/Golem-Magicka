@@ -345,6 +345,7 @@ public class GolemMagicData {
 			memory = null;
 			return;
 		}
+		forceLookAtTarget(target);
 		memory = new CombatMemory(golem, target);
 	}
 }

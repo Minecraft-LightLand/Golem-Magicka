@@ -9,13 +9,11 @@ import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import dev.xkmc.modulargolems.content.entity.common.SweepGolemEntity;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
-import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
-import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
 import io.redspace.ironsspellbooks.item.weapons.StaffItem;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -50,17 +48,23 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		ItemStack stack = data.golem.getMainHandItem();
 		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
 			return false;
-		if (data.isCasting()) return true;
-		LivingEntity livingentity = mob.getTarget();
-		if (livingentity == null || !livingentity.isAlive()) {
+		LivingEntity le = mob.getTarget();
+		if (data.isCasting()) {
+			if (le != null && le.isAlive() && mob.canAttack(le)) {
+				target = le;
+				data.setNewTarget(target);
+			}
+			return true;
+		}
+		if (le == null || !le.isAlive()) {
 			target = null;
 			return !updateAvailableSpells(simulate).isEmpty();
 		}
-		if (!mob.canAttack(livingentity))
+		if (!mob.canAttack(le))
 			return false;
-		if (target != livingentity)
+		if (target != le)
 			data.setNewTarget(target);
-		target = livingentity;
+		target = le;
 		return !updateAvailableSpells(simulate).isEmpty();
 	}
 

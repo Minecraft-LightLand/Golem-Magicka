@@ -7,12 +7,15 @@ import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
+import dev.xkmc.modulargolems.content.entity.common.SweepGolemEntity;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
+import io.redspace.ironsspellbooks.item.weapons.StaffItem;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +24,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
+import java.util.function.Predicate;
 
 /// Goal for golem to cast spell
 public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends WizardAttackGoal implements IWeaponGoal<E> {
@@ -143,6 +147,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			return;
 		}
 		if (target == null || !spell.shouldAIStopCasting(entry.level(), mob, target)) {
+			switchTo(entry);
 			data.setCastingData(new CastingSpellData(spell, entry.level(), entry.source(), cost, cd));
 			spellCastingMob.initiateCastSpell(spell, entry.level());
 			fleeCooldown = 7 + spell.getCastTime(entry.level());
@@ -151,6 +156,32 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			spellAttackDelay = 5;
 		}
 		spellCache = null;
+	}
+
+	private void switchTo(SpellEntry entry) {
+
+		if (entry.source() == CastSource.SWORD) {
+			switchTo(e -> e == entry.stack());
+		} else {
+			switchTo(e -> e.getItem() instanceof StaffItem);
+		}
+	}
+
+	private void switchTo(Predicate<ItemStack> pred) {
+		ItemStack stack = mob.getMainHandItem();
+		if (pred.test(stack)) return;
+		if (pred.test(mob.getOffhandItem())) {
+			mob.setItemInHand(InteractionHand.MAIN_HAND, mob.getOffhandItem());
+			mob.setItemInHand(InteractionHand.OFF_HAND, stack);
+			return;
+		}
+		if (data.golem instanceof SweepGolemEntity<?, ?> sweep) {
+			var backup = sweep.getBackupHand();
+			if (pred.test(backup.getItem())) {
+				mob.setItemInHand(InteractionHand.MAIN_HAND, backup.getItem());
+				backup.setItem(stack);
+			}
+		}
 	}
 
 	public SimpleWeightedRandomList<SpellEntry> updateAvailableSpells(boolean simulate) {

@@ -18,6 +18,7 @@ import net.neoforged.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class SpellCategoryUtil {
@@ -64,14 +65,14 @@ public class SpellCategoryUtil {
 	}
 
 	public static List<SpellEntry> getSpells(LivingEntity e) {
-		List<SpellEntry> ans = new ArrayList<>();
+		LinkedHashMap<AbstractSpell, SpellEntry> ans = new LinkedHashMap<>();
 		for (var stack : getGolemSpellItems(e)) {
 			if (stack.getItem() instanceof SpellBook) {
 				ISpellContainer cont = ISpellContainer.get(stack);
 				if (cont == null) continue;
 				for (var spell : cont.getActiveSpells()) {
 					if (isBanned(spell.getSpell())) continue;
-					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SPELLBOOK, stack));
+					ans.put(spell.getSpell(), new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SPELLBOOK, stack));
 				}
 			}
 		}
@@ -81,7 +82,7 @@ public class SpellCategoryUtil {
 			if (cont != null) {
 				for (var spell : cont.getActiveSpells()) {
 					if (isBanned(spell.getSpell())) continue;
-					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD, stack));
+					ans.put(spell.getSpell(), new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD, stack));
 				}
 				continue;
 			}
@@ -89,11 +90,11 @@ public class SpellCategoryUtil {
 				for (var spell : sword.getSpells()) {
 					if (spell == null) continue;
 					if (isBanned(spell.getSpell())) continue;
-					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD, stack));
+					ans.put(spell.getSpell(), new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD, stack));
 				}
 			}
 		}
-		return ans;
+		return new ArrayList<>(ans.values());
 	}
 
 	public static List<AbstractSpell> getBannedSpells(LivingEntity e) {

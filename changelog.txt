@@ -1,3 +1,9 @@
+1.1.1
+- Golem can use enhance and heal spells even when there are no attack target
+- Golem switch to imbued weapon when using spell from the weapon
+- Golem switch to imbued weapon when using spell that depends on melee attack damage
+- Misc golem spell use optimizations
+
 1.1.0
 - Add Mithril golem
 - Add mana mending modifier

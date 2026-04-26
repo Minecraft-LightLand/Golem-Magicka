@@ -4,6 +4,7 @@ import dev.xkmc.golemmagicka.events.GolemCheckSpellEvent;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.data.GMTagGen;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
+import dev.xkmc.golemmagicka.util.WeaponUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
@@ -81,7 +82,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		// no spell, don't switch in
 		if (mob.getMainHandItem() == other) return false;
 		// switching out
-		return !SpellCategoryUtil.isBetterSpellWeapon(mob, other, mob.getMainHandItem());
+		return !WeaponUtil.isBetterWeapon(mob, other, mob.getMainHandItem());
 	}
 
 	@Override

@@ -38,16 +38,16 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
 			return false;
 		if (data.isCasting()) return true;
-		LivingEntity livingentity = this.mob.getTarget();
+		LivingEntity livingentity = mob.getTarget();
 		if (livingentity == null || !livingentity.isAlive()) {
 			target = null;
 			return !updateAvailableSpells().isEmpty();
 		}
-		if (!this.mob.canAttack(livingentity))
+		if (!mob.canAttack(livingentity))
 			return false;
 		if (target != livingentity)
 			data.setNewTarget(target);
-		this.target = livingentity;
+		target = livingentity;
 		return !updateAvailableSpells().isEmpty();
 	}
 
@@ -93,22 +93,29 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		if (target != null) {
 			super.tick();
 		} else {
-			seeTime = 0;
-			handleAttackLogic(0);
+			spellAttackDelay--;
+			if (spellAttackDelay == 0) {
+				if (!spellCastingMob.isCasting()) {
+					doSpellAction();
+				}
+			}
+			if (spellAttackDelay <= 0) {
+				resetSpellAttackTimer(0);
+			}
 		}
 	}
 
 	@Override
 	protected void doSpellAction() {
-		AbstractSpell spell = this.getNextSpellType();
+		AbstractSpell spell = getNextSpellType();
 		if (spell == SpellRegistry.none()) {
-			this.spellAttackDelay = 5;
+			spellAttackDelay = 5;
 			return;
 		}
 		var entry = spellCache.get(spell);
 		if (entry == null) {
 			spellCache = null;
-			this.spellAttackDelay = 2;
+			spellAttackDelay = 2;
 			return;
 		}
 		int recast = Math.max(1, spell.getRecastCount(entry.level(), mob));
@@ -120,16 +127,16 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			totalCost *= factor;
 		}
 		if (data.getMagicData().getMana() < totalCost) {
-			this.spellAttackDelay = 10;
+			spellAttackDelay = 10;
 			return;
 		}
-		if (!spell.shouldAIStopCasting(entry.level(), this.mob, this.target)) {
+		if (!spell.shouldAIStopCasting(entry.level(), mob, target)) {
 			data.setCastingData(new CastingSpellData(spell, entry.level(), entry.source(), cost, cd));
-			this.spellCastingMob.initiateCastSpell(spell, entry.level());
-			this.fleeCooldown = 7 + spell.getCastTime(entry.level());
+			spellCastingMob.initiateCastSpell(spell, entry.level());
+			fleeCooldown = 7 + spell.getCastTime(entry.level());
 			spellcastingRangeSqr = GolemMagicka.SPELL.getMerged().get(spell).getPreferredDistSqr();
 		} else {
-			this.spellAttackDelay = 5;
+			spellAttackDelay = 5;
 		}
 		spellCache = null;
 	}

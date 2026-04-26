@@ -76,7 +76,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 
 	@Override
 	public boolean shouldUseForMelee(ItemStack other) {
-		return canUse(false);
+		return canUse(false) || !SpellCategoryUtil.isBetterWeapon(mob, other, mob.getMainHandItem());
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			target = null;
 			return !updateAvailableSpells().isEmpty();
 		}
-		if (!this.mob.canAttack(this.target))
+		if (!this.mob.canAttack(livingentity))
 			return false;
 		if (target != livingentity)
 			data.setNewTarget(target);

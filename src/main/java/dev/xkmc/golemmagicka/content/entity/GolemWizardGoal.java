@@ -37,6 +37,10 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	public boolean canUse() {
+		return canUse(false);
+	}
+
+	public boolean canUse(boolean simulate) {
 		ItemStack stack = data.golem.getMainHandItem();
 		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
 			return false;
@@ -44,30 +48,35 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		LivingEntity livingentity = mob.getTarget();
 		if (livingentity == null || !livingentity.isAlive()) {
 			target = null;
-			return !updateAvailableSpells().isEmpty();
+			return !updateAvailableSpells(simulate).isEmpty();
 		}
 		if (!mob.canAttack(livingentity))
 			return false;
 		if (target != livingentity)
 			data.setNewTarget(target);
 		target = livingentity;
-		return !updateAvailableSpells().isEmpty();
+		return !updateAvailableSpells(simulate).isEmpty();
 	}
 
 	@Override
 	protected AbstractSpell getNextSpellType() {
-		var opt = updateAvailableSpells().getRandomValue(mob.getRandom());
+		var opt = updateAvailableSpells(false).getRandomValue(mob.getRandom());
 		return opt.map(SpellEntry::spell).orElseGet(SpellRegistry::none);
 	}
 
 	@Override
-	public boolean shouldUseForMelee() {
-		return canUse();
+	public boolean shouldUseForMelee(ItemStack other) {
+		return canUse(false);
 	}
 
 	@Override
 	public boolean mayActivate(ItemStack stack) {
-		return canUse();
+		return canUse(false);
+	}
+
+	@Override
+	public boolean isAvailable(ItemStack stack) {
+		return canUse(true);
 	}
 
 	@Override
@@ -144,7 +153,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		spellCache = null;
 	}
 
-	public SimpleWeightedRandomList<SpellEntry> updateAvailableSpells() {
+	public SimpleWeightedRandomList<SpellEntry> updateAvailableSpells(boolean simulate) {
 		@Nullable var target = this.target;
 		if (spellCache == null || spellCache.isEmpty()) {
 			var spells = SpellCategoryUtil.getSpells(data.golem);
@@ -165,7 +174,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				continue;
 			if (data.getMagicData().getPlayerCooldowns().isOnCooldown(e))
 				continue;
-			if (!isAvailable(e, target))
+			if (!isAvailable(e, target, simulate))
 				continue;
 			if (NeoForge.EVENT_BUS.post(new GolemCheckSpellEvent(data.golem, target, data, ent)).isCanceled())
 				continue;
@@ -177,7 +186,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		return builder.build();
 	}
 
-	private boolean isAvailable(AbstractSpell e, @Nullable LivingEntity target) {
+	private boolean isAvailable(AbstractSpell e, @Nullable LivingEntity target, boolean simulate) {
 		if (target == null) {
 			if (SpellCategoryUtil.is(e, GMTagGen.NO_TARGET))
 				return true;
@@ -189,7 +198,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			}
 			return false;
 		}
-		if (melee.canReachTarget(target)) {
+		if (!simulate && melee.canReachTarget(target)) {
 			if (!SpellCategoryUtil.is(e, GMTagGen.MELEE_SPELL)) {
 				return false;
 			}

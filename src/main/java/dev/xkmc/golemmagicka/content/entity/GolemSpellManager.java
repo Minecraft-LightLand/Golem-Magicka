@@ -37,7 +37,7 @@ public class GolemSpellManager {
 	}
 
 	private static <T extends AbstractGolemEntity<?, ?>> GolemWizardGoal<T> create(T e, IMeleeGoal melee) {
-		return new GolemWizardGoal<>(((IGolemMagicka) e).magicka$getGolemMagicData(), ((IMagicEntity) e), 1, 20);
+		return new GolemWizardGoal<>(((IGolemMagicka) e).magicka$getGolemMagicData(), ((IMagicEntity) e), melee, 1, 20);
 	}
 
 	public static Optional<WeaponStatus> predicate(LivingEntity e, ItemStack stack, @Nullable InteractionHand hand) {

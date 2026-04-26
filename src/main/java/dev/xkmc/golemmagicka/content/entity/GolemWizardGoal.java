@@ -4,6 +4,7 @@ import dev.xkmc.golemmagicka.events.GolemCheckSpellEvent;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.data.GMTagGen;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
+import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
@@ -25,12 +26,14 @@ import java.util.LinkedHashMap;
 public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends WizardAttackGoal implements IWeaponGoal<E> {
 
 	private final GolemMagicData data;
+	private final IMeleeGoal melee;
 
 	private LinkedHashMap<AbstractSpell, SpellEntry> spellCache = null;
 
-	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, double pSpeedModifier, int pAttackInterval) {
+	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, IMeleeGoal melee, double pSpeedModifier, int pAttackInterval) {
 		super(entity, pSpeedModifier, pAttackInterval);
 		this.data = data;
+		this.melee = melee;
 	}
 
 	public boolean canUse() {
@@ -185,6 +188,11 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 					return true;
 			}
 			return false;
+		}
+		if (melee.canReachTarget(target)) {
+			if (!SpellCategoryUtil.is(e, GMTagGen.MELEE_SPELL)) {
+				return false;
+			}
 		}
 		if (!data.golem.getMode().isMovable()) {
 			if (SpellCategoryUtil.is(e, GMTagGen.MOVEMENT)) {

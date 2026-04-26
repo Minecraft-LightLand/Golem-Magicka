@@ -76,7 +76,12 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 
 	@Override
 	public boolean shouldUseForMelee(ItemStack other) {
-		return canUse(false) && !SpellCategoryUtil.isBetterWeapon(mob, other, mob.getMainHandItem());
+		// has spell: always switch in
+		if (canUse(false)) return true;
+		// no spell, don't switch in
+		if (mob.getMainHandItem() == other) return false;
+		// switching out
+		return !SpellCategoryUtil.isBetterSpellWeapon(mob, other, mob.getMainHandItem());
 	}
 
 	@Override
@@ -169,7 +174,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			switchTo(e -> e == entry.stack());
 		} else if (SpellCategoryUtil.is(entry.spell(), GMTagGen.MELEE_ATTACK_SPELL)) {//TODO switch to attribute spell
 			ItemStack stack = mob.getMainHandItem();
-			switchTo(e -> SpellCategoryUtil.isBetterWeapon(mob, e, stack));
+			switchTo(e -> SpellCategoryUtil.isBetterSpellWeapon(mob, e, stack));
 		} else {
 			switchTo(e -> e.getItem() instanceof StaffItem);
 		}

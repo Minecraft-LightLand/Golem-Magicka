@@ -48,5 +48,14 @@ public class WeaponUtil {
 		return (base + add) * multBase * multTotal;
 	}
 
+	public static boolean isBetterWeapon(LivingEntity le, ItemStack stack, ItemStack prev) {
+		var attr = le.getAttribute(Attributes.ATTACK_DAMAGE);
+		if (attr == null) return false;
+		var current = attr.getValue();
+		var next = WeaponUtil.getWeaponAttack(attr, stack, le, prev);
+		return next > current;
+	}
+
+
 
 }

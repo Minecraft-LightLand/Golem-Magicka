@@ -51,7 +51,7 @@ public class GMTagGen {
 				SpellRegistry.SACRIFICE_SPELL.get(), // 献祭
 				SpellRegistry.SUMMON_HORSE_SPELL.get() // 召唤骏马
 		);
-		pvd.addTag(MELEE_SPELL).addTags(DEFENSE, MOVEMENT, ENHANCE, CONTROL, SUPPORT).add( // 近战可释放法术
+		pvd.addTag(MELEE_SPELL).addTags(MELEE_ATTACK_SPELL, DEFENSE, MOVEMENT, ENHANCE, CONTROL, SUPPORT).add( // 近战可释放法术
 				SpellRegistry.THUNDERSTORM_SPELL.get(), // 雷暴
 				SpellRegistry.GUST_SPELL.get() // 呼啸之风
 		);

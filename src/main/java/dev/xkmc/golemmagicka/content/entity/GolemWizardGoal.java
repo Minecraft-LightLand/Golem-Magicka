@@ -46,9 +46,6 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	public boolean canUse(boolean simulate) {
-		ItemStack stack = data.golem.getMainHandItem();
-		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
-			return false;
 		LivingEntity le = mob.getTarget();
 		if (data.isCasting()) {
 			if (le != null && le.isAlive() && mob.canAttack(le)) {
@@ -104,6 +101,9 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 
 	@Override
 	public boolean canContinueToUse() {
+		ItemStack stack = data.golem.getMainHandItem();
+		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
+			return false;
 		if (super.canContinueToUse()) {
 			mob.setAggressive(data.isCasting() || target != null && target.isAlive());
 			return true;

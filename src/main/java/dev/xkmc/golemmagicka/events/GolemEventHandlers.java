@@ -1,7 +1,9 @@
 package dev.xkmc.golemmagicka.events;
 
+import dev.xkmc.golemmagicka.content.debug.DebugPacket;
 import dev.xkmc.golemmagicka.content.entity.GolemSpellManager;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
+import dev.xkmc.modulargolems.content.entity.common.SweepGolemEntity;
 import dev.xkmc.modulargolems.content.entity.metalgolem.MetalGolemEntity;
 import dev.xkmc.modulargolems.events.event.GolemEquipItemEvent;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
@@ -9,6 +11,9 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
+
+import java.util.ArrayList;
 
 @EventBusSubscriber(modid = GolemMagicka.MODID)
 public class GolemEventHandlers {
@@ -36,6 +41,15 @@ public class GolemEventHandlers {
 			if (event.getGolem().getAbsorptionAmount() > 0) {
 				event.setCanceled(true);
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void golemDebug(EntityTickEvent.Post event) {
+		if (event.getEntity() instanceof SweepGolemEntity<?, ?> golem && !golem.level().isClientSide()) {
+			ArrayList<String> list = new ArrayList<>();
+			DebugPacket.fill(golem, list);
+			GolemMagicka.HANDLER.toTrackingPlayers(new DebugPacket(golem.getId(), list), golem);
 		}
 	}
 

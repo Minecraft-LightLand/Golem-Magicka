@@ -1,5 +1,6 @@
 package dev.xkmc.golemmagicka.events;
 
+import dev.xkmc.golemmagicka.content.debug.ClientDebugInfo;
 import dev.xkmc.golemmagicka.content.entity.GolemSpellManager;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.data.GMLang;
@@ -17,6 +18,7 @@ import io.redspace.ironsspellbooks.render.SpellRenderingHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLivingEvent;
@@ -49,6 +51,12 @@ public class ClientGolemEventHandlers {
 				event.addLine(GMLang.INVALID_SPELL.get(Component.translatable(spell.getComponentId())));
 			}
 		}
+	}
+
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public static void onGolemDebugInfo(GolemInfoEvent event){
+		ClientDebugInfo.append(event);
 	}
 
 	@SubscribeEvent

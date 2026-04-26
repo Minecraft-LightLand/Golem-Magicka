@@ -77,7 +77,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	@Override
 	public boolean canContinueToUse() {
 		if (super.canContinueToUse()) {
-			mob.setAggressive(target != null && target.isAlive());
+			mob.setAggressive(data.isCasting() || target != null && target.isAlive());
 			return true;
 		}
 		return false;
@@ -130,7 +130,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			spellAttackDelay = 10;
 			return;
 		}
-		if (!spell.shouldAIStopCasting(entry.level(), mob, target)) {
+		if (target == null || !spell.shouldAIStopCasting(entry.level(), mob, target)) {
 			data.setCastingData(new CastingSpellData(spell, entry.level(), entry.source(), cost, cd));
 			spellCastingMob.initiateCastSpell(spell, entry.level());
 			fleeCooldown = 7 + spell.getCastTime(entry.level());
@@ -162,7 +162,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				continue;
 			if (data.getMagicData().getPlayerCooldowns().isOnCooldown(e))
 				continue;
-			if (isUnavailable(e, target))
+			if (!isAvailable(e, target))
 				continue;
 			if (NeoForge.EVENT_BUS.post(new GolemCheckSpellEvent(data.golem, target, data, ent)).isCanceled())
 				continue;
@@ -174,7 +174,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		return builder.build();
 	}
 
-	private boolean isUnavailable(AbstractSpell e, @Nullable LivingEntity target) {
+	private boolean isAvailable(AbstractSpell e, @Nullable LivingEntity target) {
 		if (target == null) {
 			if (SpellCategoryUtil.is(e, GMTagGen.NO_TARGET))
 				return true;
@@ -188,10 +188,10 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		}
 		if (!data.golem.getMode().isMovable()) {
 			if (SpellCategoryUtil.is(e, GMTagGen.MOVEMENT)) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 }

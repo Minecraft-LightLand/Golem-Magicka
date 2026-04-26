@@ -15,5 +15,5 @@
   "golemmagicka.info.mana": "Mana: %s/%s",
   "golemmagicka.title": "Golem Magicka",
   "modifier.golemmagicka.mana_mending": "Mana Mending",
-  "modifier.modulargolems.mana_mending.desc": "Use mana regen to repair itself when health percentage is lower than mana percentage"
+  "modifier.golemmagicka.mana_mending.desc": "Use mana regen to repair itself when health percentage is lower than mana percentage"
 }

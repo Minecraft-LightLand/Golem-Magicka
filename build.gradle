@@ -187,16 +187,6 @@ dependencies {
     runtimeOnly "curse.maven:jade-324717:7545219"
     runtimeOnly "curse.maven:powerful-dummy-1276893:7638166"
 
-    runtimeOnly "curse.maven:l2-complements-758349:7923864"
-    runtimeOnly "curse.maven:l2hostility-909207:7815611"
-    runtimeOnly "curse.maven:jupiter-1072905:7592856"
-    runtimeOnly "curse.maven:uranus-1010827:6979353"
-    runtimeOnly "curse.maven:iceandfire-ce-1040076:7524985"
-    runtimeOnly "curse.maven:the-twilight-forest-227639:5699076"
-    runtimeOnly "curse.maven:lionfish-api-1001614:6168249"
-    runtimeOnly "curse.maven:lendercataclysm-551586:7578941"
-
-
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {

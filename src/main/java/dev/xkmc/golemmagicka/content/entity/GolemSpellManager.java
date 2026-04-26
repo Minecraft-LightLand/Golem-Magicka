@@ -76,21 +76,19 @@ public class GolemSpellManager {
 			}
 		}
 		float mana = data.getMana();
-		if (mana != (float) maxMana) {
-			int lv = e.getModifiers().get(GMModifiers.MANA_MENDING.get());
-			if (lv > 0) {
-				float hp = e.getHealth();
-				float mhp = e.getMaxHealth();
-				if (hp / mhp < mana / maxMana) {
-					float f = GMConfig.COMMON.manaMendingRate.get().floatValue();
-					e.heal(increment / f);
-					float nhp = e.getHealth();
-					increment -= (nhp - hp) * f;
-					if (increment < 0) return;
-				}
+		int lv = e.getModifiers().getOrDefault(GMModifiers.MANA_MENDING.get(), 0);
+		if (lv > 0) {
+			float hp = e.getHealth();
+			float mhp = e.getMaxHealth();
+			if (hp / mhp < mana / maxMana) {
+				float f = GMConfig.COMMON.manaMendingRate.get().floatValue();
+				e.heal(increment / f);
+				float nhp = e.getHealth();
+				increment -= (nhp - hp) * f;
+				if (increment < 0) return;
 			}
-			data.setMana(Mth.clamp(data.getMana() + increment, 0, maxMana));
 		}
+		data.setMana(Mth.clamp(data.getMana() + increment, 0, maxMana));
 		GolemSpellInfoToClient.send(e, data.getMana());
 	}
 

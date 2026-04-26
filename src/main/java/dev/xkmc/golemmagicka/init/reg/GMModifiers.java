@@ -26,7 +26,7 @@ public class GMModifiers {
 		}
 
 		if (def != null) {
-			ans.getOwner().addRawLang("modifier.modulargolems." + id + ".desc", def);
+			ans.getOwner().addRawLang("modifier." + GolemMagicka.MODID + "." + id + ".desc", def);
 		}
 
 		RegistryEntry<GolemModifier, T> result = ans.register();

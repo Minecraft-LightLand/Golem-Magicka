@@ -1,6 +1,5 @@
 package dev.xkmc.golemmagicka.util;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -9,6 +8,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.LinkedHashMap;
+import java.util.UUID;
 
 public class WeaponUtil {
 
@@ -18,31 +18,27 @@ public class WeaponUtil {
 	public static double getWeaponAttack(AttributeInstance attr, ItemStack stack, LivingEntity le, ItemStack remove) {
 		double base = attr.getBaseValue();
 		double add = 0, multBase = 1, multTotal = 1;
-		LinkedHashMap<ResourceLocation, AttributeModifier> old = new LinkedHashMap<>();
-		remove.getAttributeModifiers().forEach(EquipmentSlot.MAINHAND, (holder, mod) -> {
-			if (holder.value() == Attributes.ATTACK_DAMAGE.value()) {
-				old.put(mod.id(), mod);
-			}
-		});
+		LinkedHashMap<UUID, AttributeModifier> old = new LinkedHashMap<>();
+		for (var mod : remove.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE)) {
+			old.put(mod.getId(), mod);
+		}
 		for (var e : attr.getModifiers()) {
-			if (old.containsKey(e.id())) continue;
-			switch (e.operation()) {
-				case ADD_VALUE -> add += e.amount();
-				case ADD_MULTIPLIED_BASE -> multBase += e.amount();
-				case ADD_MULTIPLIED_TOTAL -> multTotal *= 1 + e.amount();
+			if (old.containsKey(e.getId())) continue;
+			switch (e.getOperation()) {
+				case ADDITION -> add += e.getAmount();
+				case MULTIPLY_BASE -> multBase += e.getAmount();
+				case MULTIPLY_TOTAL -> multTotal *= 1 + e.getAmount();
 			}
 		}
-		LinkedHashMap<ResourceLocation, AttributeModifier> item = new LinkedHashMap<>();
-		stack.getAttributeModifiers().forEach(EquipmentSlot.MAINHAND, (holder, mod) -> {
-			if (holder.value() == Attributes.ATTACK_DAMAGE.value()) {
-				item.put(mod.id(), mod);
-			}
-		});
+		LinkedHashMap<UUID, AttributeModifier> item = new LinkedHashMap<>();
+		for (var mod : remove.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE)) {
+			item.put(mod.getId(), mod);
+		}
 		for (var e : item.values()) {
-			switch (e.operation()) {
-				case ADD_VALUE -> add += e.amount();
-				case ADD_MULTIPLIED_BASE -> multBase += e.amount();
-				case ADD_MULTIPLIED_TOTAL -> multTotal *= 1 + e.amount();
+			switch (e.getOperation()) {
+				case ADDITION -> add += e.getAmount();
+				case MULTIPLY_BASE -> multBase += e.getAmount();
+				case MULTIPLY_TOTAL -> multTotal *= 1 + e.getAmount();
 			}
 		}
 		return (base + add) * multBase * multTotal;
@@ -55,7 +51,6 @@ public class WeaponUtil {
 		var next = WeaponUtil.getWeaponAttack(attr, stack, le, prev);
 		return next > current;
 	}
-
 
 
 }

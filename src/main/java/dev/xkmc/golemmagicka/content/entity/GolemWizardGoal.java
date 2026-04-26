@@ -173,7 +173,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	private void switchTo(SpellEntry entry) {
 		if (entry.source() == CastSource.SWORD) {
 			switchTo(e -> e == entry.stack());
-		} else if (SpellCategoryUtil.is(entry.spell(), GMTagGen.MELEE_ATTACK_SPELL)) {//TODO switch to attribute spell
+		} else if (SpellCategoryUtil.is(entry.spell(), GMTagGen.MELEE_WEAPON_SPELL)) {
 			ItemStack stack = mob.getMainHandItem();
 			switchTo(e -> SpellCategoryUtil.isBetterSpellWeapon(mob, e, stack));
 		} else {

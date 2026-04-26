@@ -22,6 +22,7 @@ public class GMTagGen {
 	public static final TagKey<AbstractSpell> BLACKLIST = loc("blacklist");
 	public static final TagKey<AbstractSpell> MELEE_SPELL = loc("melee_spell");
 	public static final TagKey<AbstractSpell> MELEE_ATTACK_SPELL = loc("melee_attack_spell");
+	public static final TagKey<AbstractSpell> MELEE_WEAPON_SPELL = loc("melee_weapon_spell");
 	public static final TagKey<AbstractSpell> DEFENSE = loc("defense");
 	public static final TagKey<AbstractSpell> MOVEMENT = loc("movement");
 	public static final TagKey<AbstractSpell> ENHANCE = loc("enhance");
@@ -67,6 +68,13 @@ public class GMTagGen {
 				SpellRegistry.STOMP_SPELL.get(), // 践踏
 				SpellRegistry.FANG_WARD_SPELL.get(), // 尖牙之环
 				SpellRegistry.SHOCKWAVE_SPELL.get() // 震荡波
+		);
+		pvd.addTag(MELEE_WEAPON_SPELL).add( // 使用武器的法术
+				SpellRegistry.THROW_SPELL.get(), // 投掷
+				SpellRegistry.RAISE_HELL_SPELL.get(), // 地狱浮现
+				SpellRegistry.FLAMING_STRIKE_SPELL.get(), // 炽焰斩击
+				SpellRegistry.DIVINE_SMITE_SPELL.get(), // 神圣打击
+				SpellRegistry.SHADOW_SLASH.get() // 暗影斩击
 		);
 		pvd.addTag(DEFENSE).add( // 防御法术
 				SpellRegistry.SHIELD_SPELL.get(), // 护盾术

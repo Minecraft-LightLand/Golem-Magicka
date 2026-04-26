@@ -204,9 +204,11 @@ dependencies {
     implementation fg.deobf("dev.xkmc.l2tabs:l2tabs:0.3.3")
     implementation fg.deobf("dev.xkmc.l2itemselector:l2itemselector:0.1.9")
     implementation fg.deobf("dev.xkmc.l2damagetracker:l2damagetracker:0.3.7")
-    implementation fg.deobf("dev.xkmc.mob_weapon_api:mob_weapon_api:0.2.15")
     implementation fg.deobf("dev.xkmc.modulargolems:modulargolems:${modulargolems_version}-slim")
     implementation fg.deobf("dev.xkmc.l2modularblock:l2modularblock:1.1.0")
+
+    implementation fg.deobf(jarJar(group: 'dev.xkmc', name: 'mob_weapon_api', version: "[${mob_weapon_api_ver},)"))
+
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     implementation fg.deobf("mezz.jei:jei-${jei_minecraft_version}:${jei_version}")

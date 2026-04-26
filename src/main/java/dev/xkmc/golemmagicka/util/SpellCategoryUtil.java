@@ -18,6 +18,7 @@ import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class SpellCategoryUtil {
@@ -52,36 +53,48 @@ public class SpellCategoryUtil {
 		return list;
 	}
 
+	public static List<ItemStack> getGolemImbuedItems(LivingEntity e) {
+		List<ItemStack> list = new ArrayList<>();
+		for (var s : EquipmentSlot.values()) {
+			list.add(e.getItemBySlot(s));
+		}
+		if (e instanceof SweepGolemEntity<?, ?> s) {
+			list.add(s.getBackupHand().getItem());
+		}
+		return list;
+	}
+
 	public static List<SpellEntry> getSpells(LivingEntity e) {
-		var list = getGolemSpellItems(e);
-		List<SpellEntry> ans = new ArrayList<>();
-		for (var stack : list) {
-			if (!(stack.getItem() instanceof MagicSwordItem)) {
+		LinkedHashMap<AbstractSpell, SpellEntry> ans = new LinkedHashMap<>();
+		for (var stack : getGolemSpellItems(e)) {
+			if (stack.getItem() instanceof SpellBook) {
 				ISpellContainer cont = ISpellContainer.get(stack);
 				if (cont == null) continue;
 				for (var spell : cont.getActiveSpells()) {
 					if (isBanned(spell.getSpell())) continue;
-					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SPELLBOOK));
+					ans.put(spell.getSpell(), new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SPELLBOOK, stack));
 				}
 			}
 		}
-		ItemStack mainhand = e.getMainHandItem();
-		if (mainhand.getItem() instanceof MagicSwordItem sword) {
-			ISpellContainer cont = ISpellContainer.get(mainhand);
-			if (cont == null) {
+		for (var stack : getGolemImbuedItems(e)) {
+			if (stack.getItem() instanceof SpellBook) continue;
+			ISpellContainer cont = ISpellContainer.get(stack);
+			if (cont != null) {
+				for (var spell : cont.getActiveSpells()) {
+					if (isBanned(spell.getSpell())) continue;
+					ans.put(spell.getSpell(), new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD, stack));
+				}
+				continue;
+			}
+			if (stack.getItem() instanceof MagicSwordItem sword) {
 				for (var spell : sword.getSpells()) {
 					if (spell == null) continue;
 					if (isBanned(spell.getSpell())) continue;
-					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD));
-				}
-			} else {
-				for (var spell : cont.getActiveSpells()) {
-					if (isBanned(spell.getSpell())) continue;
-					ans.add(new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD));
+					ans.put(spell.getSpell(), new SpellEntry(spell.getSpell(), spell.getLevel(), CastSource.SWORD, stack));
 				}
 			}
 		}
-		return ans;
+		return new ArrayList<>(ans.values());
 	}
 
 	public static List<AbstractSpell> getBannedSpells(LivingEntity e) {
@@ -107,5 +120,16 @@ public class SpellCategoryUtil {
 		return ans;
 	}
 
+	public static boolean isImbuedWeapon(ItemStack stack) {
+		if (stack.getItem() instanceof MagicSwordItem) return true;
+		if (ISpellContainer.get(stack) == null) return false;
+		if (stack.getItem() instanceof SpellBook) return false;
+		return true;
+	}
+
+	public static boolean isBetterSpellWeapon(LivingEntity le, ItemStack stack, ItemStack prev) {
+		if (!isImbuedWeapon(stack)) return false;
+		return WeaponUtil.isBetterWeapon(le, stack, prev);
+	}
 
 }

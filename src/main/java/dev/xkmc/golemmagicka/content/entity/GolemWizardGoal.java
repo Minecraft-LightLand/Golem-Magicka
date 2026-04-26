@@ -4,14 +4,19 @@ import dev.xkmc.golemmagicka.events.GolemCheckSpellEvent;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.golemmagicka.init.data.GMTagGen;
 import dev.xkmc.golemmagicka.util.SpellCategoryUtil;
+import dev.xkmc.golemmagicka.util.WeaponUtil;
+import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
+import dev.xkmc.modulargolems.content.entity.common.SweepGolemEntity;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
-import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
 import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
+import io.redspace.ironsspellbooks.item.weapons.StaffItem;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,45 +25,90 @@ import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
+import java.util.function.Predicate;
 
 /// Goal for golem to cast spell
 public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends WizardAttackGoal implements IWeaponGoal<E> {
 
 	private final GolemMagicData data;
+	private final IMeleeGoal melee;
 
 	private LinkedHashMap<AbstractSpell, SpellEntry> spellCache = null;
 
-	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, double pSpeedModifier, int pAttackInterval) {
+	public GolemWizardGoal(GolemMagicData data, IMagicEntity entity, IMeleeGoal melee, double pSpeedModifier, int pAttackInterval) {
 		super(entity, pSpeedModifier, pAttackInterval);
 		this.data = data;
+		this.melee = melee;
 	}
 
 	public boolean canUse() {
-		ItemStack stack = data.golem.getMainHandItem();
-		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
-			return false;
-		LivingEntity livingentity = this.mob.getTarget();
-		if (livingentity != null && livingentity.isAlive()) {
-			if (target != livingentity) {
+		return canUse(false);
+	}
+
+	public boolean canUse(boolean simulate) {
+		LivingEntity le = mob.getTarget();
+		if (data.isCasting()) {
+			if (le != null && le.isAlive() && mob.canAttack(le)) {
+				target = le;
 				data.setNewTarget(target);
 			}
-			this.target = livingentity;
-			return this.mob.canAttack(this.target) && mayActivate(stack);
-		} else {
-			return false;
+			return true;
 		}
+		if (le == null || !le.isAlive()) {
+			target = null;
+			return !updateAvailableSpells(simulate).isEmpty();
+		}
+		if (!mob.canAttack(le))
+			return false;
+		if (target != le)
+			data.setNewTarget(target);
+		target = le;
+		return !updateAvailableSpells(simulate).isEmpty();
 	}
 
 	@Override
 	protected AbstractSpell getNextSpellType() {
-		var opt = updateAvailableSpells().getRandomValue(mob.getRandom());
+		var opt = updateAvailableSpells(false).getRandomValue(mob.getRandom());
 		return opt.map(SpellEntry::spell).orElseGet(SpellRegistry::none);
 	}
 
 	@Override
+	public boolean shouldUseForMelee(ItemStack other) {
+		// has spell: always switch in
+		if (canUse(false)) return true;
+		// no spell, don't switch in
+		if (mob.getMainHandItem() == other) return false;
+		// switching out
+		return !WeaponUtil.isBetterWeapon(mob, other, mob.getMainHandItem());
+	}
+
+	@Override
 	public boolean mayActivate(ItemStack stack) {
-		if (data.isCasting()) return true;
-		return !updateAvailableSpells().isEmpty();
+		return canUse(false);
+	}
+
+	@Override
+	public boolean isAvailable(ItemStack stack) {
+		return canUse(true);
+	}
+
+	@Override
+	public void start() {
+		if (target != null && target.isAlive()) {
+			mob.setAggressive(true);
+		}
+	}
+
+	@Override
+	public boolean canContinueToUse() {
+		ItemStack stack = data.golem.getMainHandItem();
+		if (GolemSpellManager.predicate(data.golem, stack, InteractionHand.MAIN_HAND).isEmpty())
+			return false;
+		if (super.canContinueToUse()) {
+			mob.setAggressive(data.isCasting() || target != null && target.isAlive());
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -67,16 +117,33 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	@Override
+	public void tick() {
+		if (target != null) {
+			super.tick();
+		} else {
+			spellAttackDelay--;
+			if (spellAttackDelay == 0) {
+				if (!spellCastingMob.isCasting()) {
+					doSpellAction();
+				}
+			}
+			if (spellAttackDelay <= 0) {
+				resetSpellAttackTimer(0);
+			}
+		}
+	}
+
+	@Override
 	protected void doSpellAction() {
-		AbstractSpell spell = this.getNextSpellType();
+		AbstractSpell spell = getNextSpellType();
 		if (spell == SpellRegistry.none()) {
-			this.spellAttackDelay = 5;
+			spellAttackDelay = 5;
 			return;
 		}
 		var entry = spellCache.get(spell);
 		if (entry == null) {
 			spellCache = null;
-			this.spellAttackDelay = 2;
+			spellAttackDelay = 2;
 			return;
 		}
 		int recast = Math.max(1, spell.getRecastCount(entry.level(), mob));
@@ -88,21 +155,51 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 			totalCost *= factor;
 		}
 		if (data.getMagicData().getMana() < totalCost) {
-			this.spellAttackDelay = 10;
+			spellAttackDelay = 10;
 			return;
 		}
-		if (!spell.shouldAIStopCasting(entry.level(), this.mob, this.target)) {
+		if (target == null || !spell.shouldAIStopCasting(entry.level(), mob, target)) {
+			switchTo(entry);
 			data.setCastingData(new CastingSpellData(spell, entry.level(), entry.source(), cost, cd));
-			this.spellCastingMob.initiateCastSpell(spell, entry.level());
-			this.fleeCooldown = 7 + spell.getCastTime(entry.level());
+			spellCastingMob.initiateCastSpell(spell, entry.level());
+			fleeCooldown = 7 + spell.getCastTime(entry.level());
 			spellcastingRangeSqr = GolemMagicka.SPELL.getMerged().get(spell).getPreferredDistSqr();
 		} else {
-			this.spellAttackDelay = 5;
+			spellAttackDelay = 5;
 		}
 		spellCache = null;
 	}
 
-	public SimpleWeightedRandomList<SpellEntry> updateAvailableSpells() {
+	private void switchTo(SpellEntry entry) {
+		if (entry.source() == CastSource.SWORD) {
+			switchTo(e -> e == entry.stack());
+		} else if (SpellCategoryUtil.is(entry.spell(), GMTagGen.MELEE_ATTACK_SPELL)) {//TODO switch to attribute spell
+			ItemStack stack = mob.getMainHandItem();
+			switchTo(e -> SpellCategoryUtil.isBetterSpellWeapon(mob, e, stack));
+		} else {
+			switchTo(e -> e.getItem() instanceof StaffItem);
+		}
+	}
+
+	private void switchTo(Predicate<ItemStack> pred) {
+		ItemStack stack = mob.getMainHandItem();
+		if (pred.test(stack)) return;
+		if (pred.test(mob.getOffhandItem())) {
+			mob.setItemInHand(InteractionHand.MAIN_HAND, mob.getOffhandItem());
+			mob.setItemInHand(InteractionHand.OFF_HAND, stack);
+			return;
+		}
+		if (data.golem instanceof SweepGolemEntity<?, ?> sweep) {
+			var backup = sweep.getBackupHand();
+			if (pred.test(backup.getItem())) {
+				mob.setItemInHand(InteractionHand.MAIN_HAND, backup.getItem());
+				backup.setItem(stack);
+			}
+		}
+	}
+
+	public SimpleWeightedRandomList<SpellEntry> updateAvailableSpells(boolean simulate) {
+		@Nullable var target = this.target;
 		if (spellCache == null || spellCache.isEmpty()) {
 			var spells = SpellCategoryUtil.getSpells(data.golem);
 			spellCache = new LinkedHashMap<>();
@@ -122,7 +219,7 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 				continue;
 			if (data.getMagicData().getPlayerCooldowns().isOnCooldown(e))
 				continue;
-			if (isUnavailable(e, target))
+			if (!isAvailable(e, target, simulate))
 				continue;
 			if (MinecraftForge.EVENT_BUS.post(new GolemCheckSpellEvent(data.golem, target, data, ent)))
 				continue;
@@ -134,13 +231,29 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 		return builder.build();
 	}
 
-	private boolean isUnavailable(AbstractSpell e, @Nullable LivingEntity target) {
-		if (!data.golem.getMode().isMovable()) {
-			if (SpellCategoryUtil.is(e, GMTagGen.MOVEMENT)) {
+	private boolean isAvailable(AbstractSpell e, @Nullable LivingEntity target, boolean simulate) {
+		if (target == null) {
+			if (SpellCategoryUtil.is(e, GMTagGen.NO_TARGET))
 				return true;
+			if (SpellCategoryUtil.is(e, GMTagGen.ENHANCE) || SpellCategoryUtil.is(e, GMTagGen.SUPPORT)) {
+				var max = data.golem.getAttributeValue(AttributeRegistry.MAX_MANA.get());
+				var mana = data.getMagicData().getMana();
+				if (mana > max - 1)
+					return true;
+			}
+			return false;
+		}
+		if (!simulate && melee.canReachTarget(target)) {
+			if (!SpellCategoryUtil.is(e, GMTagGen.MELEE_SPELL)) {
+				return false;
 			}
 		}
-		return false;
+		if (!data.golem.getMode().isMovable()) {
+			if (SpellCategoryUtil.is(e, GMTagGen.MOVEMENT)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

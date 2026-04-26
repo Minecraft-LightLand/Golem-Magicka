@@ -10,6 +10,7 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.item.SpellBook;
+import io.redspace.ironsspellbooks.item.weapons.StaffItem;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -121,4 +122,10 @@ public class SpellCategoryUtil {
 	}
 
 
+	public static boolean isImbuedWeapon(ItemStack stack) {
+		if (stack.getItem() instanceof MagicSwordItem) return true;
+		if (ISpellContainer.get(stack) == null) return false;
+		if (stack.getItem() instanceof SpellBook) return false;
+		return true;
+	}
 }

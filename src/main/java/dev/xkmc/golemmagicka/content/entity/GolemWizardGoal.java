@@ -159,9 +159,10 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	}
 
 	private void switchTo(SpellEntry entry) {
-
 		if (entry.source() == CastSource.SWORD) {
 			switchTo(e -> e == entry.stack());
+		} else if (SpellCategoryUtil.is(entry.spell(), GMTagGen.MELEE_ATTACK_SPELL)) {
+			switchTo(SpellCategoryUtil::isImbuedWeapon);
 		} else {
 			switchTo(e -> e.getItem() instanceof StaffItem);
 		}

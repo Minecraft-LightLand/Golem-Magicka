@@ -10,10 +10,13 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.item.SpellBook;
-import io.redspace.ironsspellbooks.item.weapons.StaffItem;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -121,11 +124,20 @@ public class SpellCategoryUtil {
 		return ans;
 	}
 
-
 	public static boolean isImbuedWeapon(ItemStack stack) {
 		if (stack.getItem() instanceof MagicSwordItem) return true;
 		if (ISpellContainer.get(stack) == null) return false;
 		if (stack.getItem() instanceof SpellBook) return false;
 		return true;
 	}
+
+	public static boolean isBetterWeapon(LivingEntity le, ItemStack stack, ItemStack prev) {
+		if (!isImbuedWeapon(stack)) return false;
+		var attr = le.getAttribute(Attributes.ATTACK_DAMAGE);
+		if (attr == null) return false;
+		var current = attr.getValue();
+		var next = WeaponUtil.getWeaponAttack(attr, stack, le, prev);
+		return next > current;
+	}
+
 }

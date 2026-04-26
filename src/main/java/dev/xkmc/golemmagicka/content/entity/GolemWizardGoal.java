@@ -9,11 +9,13 @@ import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import dev.xkmc.modulargolems.content.entity.common.SweepGolemEntity;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
+import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
+import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.entity.mobs.goals.WizardAttackGoal;
 import io.redspace.ironsspellbooks.item.weapons.StaffItem;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -161,8 +163,9 @@ public class GolemWizardGoal<E extends AbstractGolemEntity<?, ?>> extends Wizard
 	private void switchTo(SpellEntry entry) {
 		if (entry.source() == CastSource.SWORD) {
 			switchTo(e -> e == entry.stack());
-		} else if (SpellCategoryUtil.is(entry.spell(), GMTagGen.MELEE_ATTACK_SPELL)) {
-			switchTo(SpellCategoryUtil::isImbuedWeapon);
+		} else if (SpellCategoryUtil.is(entry.spell(), GMTagGen.MELEE_ATTACK_SPELL)) {//TODO switch to attribute spell
+			ItemStack stack = mob.getMainHandItem();
+			switchTo(e -> SpellCategoryUtil.isBetterWeapon(mob, e, stack));
 		} else {
 			switchTo(e -> e.getItem() instanceof StaffItem);
 		}

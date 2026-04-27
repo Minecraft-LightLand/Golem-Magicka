@@ -5,6 +5,8 @@ import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import dev.xkmc.golemmagicka.content.modifier.ManaMendingModifier;
+import dev.xkmc.golemmagicka.content.modifier.PyriumAttackModifier;
+import dev.xkmc.golemmagicka.content.modifier.PyriumJumpModifier;
 import dev.xkmc.golemmagicka.init.GolemMagicka;
 import dev.xkmc.l2library.base.L2Registrate;
 import dev.xkmc.modulargolems.content.item.upgrade.SimpleUpgradeItem;
@@ -26,6 +28,8 @@ public class GMModifiers {
 	public static final RegistryEntry<GolemModifier> MANA_REGEN;
 	public static final RegistryEntry<GolemModifier> CD_REDUCTION;
 	public static final RegistryEntry<GolemModifier> MANA_MENDING;
+	public static final RegistryEntry<GolemModifier> PYRIUM_ATTACK;
+	public static final RegistryEntry<GolemModifier> PYRIUM_JUMP;
 
 	static {
 		MANA_REGEN = reg("mana_regen", () -> new AttributeGolemModifier(4,
@@ -36,7 +40,8 @@ public class GMModifiers {
 		), null);
 		MANA_MENDING = reg("mana_mending", ManaMendingModifier::new,
 				"Use mana regen to repair itself when health percentage is lower than mana percentage");
-
+		PYRIUM_ATTACK = reg("pyrium_attack", PyriumAttackModifier::new, "Pyrium Attack");
+		PYRIUM_JUMP = reg("pyrium_jump", PyriumJumpModifier::new, "Pyrium Jump");
 	}
 
 	public static <T extends GolemModifier> RegistryEntry<T> reg(String id, NonNullSupplier<T> sup, @Nullable String def) {

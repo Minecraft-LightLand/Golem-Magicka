@@ -15,5 +15,9 @@
   "golemmagicka.info.mana": "Mana: %s/%s",
   "golemmagicka.title": "Golem Magicka",
   "modifier.golemmagicka.mana_mending": "Mana Mending",
-  "modifier.golemmagicka.mana_mending.desc": "Use mana regen to repair itself when health percentage is lower than mana percentage"
+  "modifier.golemmagicka.mana_mending.desc": "Use mana regen to repair itself when health percentage is lower than mana percentage",
+  "modifier.golemmagicka.pyrium_attack": "Pyrium Attack",
+  "modifier.golemmagicka.pyrium_attack.desc": "Pyrium Attack",
+  "modifier.golemmagicka.pyrium_jump": "Pyrium Jump",
+  "modifier.golemmagicka.pyrium_jump.desc": "Pyrium Jump"
 }

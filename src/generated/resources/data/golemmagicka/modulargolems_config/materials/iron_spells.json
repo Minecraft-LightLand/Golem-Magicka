@@ -13,6 +13,8 @@
     },
     "golemmagicka:pyrium": {
       "golemmagicka:mana_mending": 1,
+      "golemmagicka:pyrium_attack": 1,
+      "golemmagicka:pyrium_jump": 1,
       "modulargolems:damage_cap": 1,
       "modulargolems:fire_immune": 1
     }

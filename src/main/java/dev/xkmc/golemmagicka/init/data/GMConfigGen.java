@@ -105,6 +105,8 @@ public class GMConfigGen extends ConfigDataProvider {
 				.addModifier(GolemModifiers.DAMAGE_CAP.get(), 1)
 				.addModifier(GolemModifiers.FIRE_IMMUNE.get(), 1)
 				.addModifier(GMModifiers.MANA_MENDING.get(), 1)
+				.addModifier(GMModifiers.PYRIUM_JUMP.get(), 1)
+				.addModifier(GMModifiers.PYRIUM_ATTACK.get(), 1)
 				.end()
 		);
 

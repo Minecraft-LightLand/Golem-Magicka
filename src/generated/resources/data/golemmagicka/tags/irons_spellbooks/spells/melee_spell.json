@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#golemmagicka:melee_attack_spell",
+    "#golemmagicka:defense",
+    "#golemmagicka:movement",
+    "#golemmagicka:enhance",
+    "#golemmagicka:control",
+    "#golemmagicka:support",
+    "irons_spellbooks:thunderstorm",
+    "irons_spellbooks:gust"
+  ]
+}

@@ -60,14 +60,15 @@ public class ClientGolemEventHandlers {
 
 	@SubscribeEvent
 	public static void tooltipInject(ItemTooltipEvent event) {
-		if (event.getItemStack().getItem() instanceof GolemHolder) {
+		var pl = event.getEntity();
+		if (pl != null && event.getItemStack().getItem() instanceof GolemHolder) {
 			var list = event.getToolTip();
 			for (int i = 0; i < list.size(); i++) {
 				var line = list.get(i);
 				if (line.getContents() instanceof TranslatableContents tc) {
 					if (tc.getKey().equals(MGLangData.HEALTH.key())) {
 						var info = GolemManaInfo.get(event.getItemStack());
-						long time = event.getEntity().level().getGameTime();
+						long time = pl.level().getGameTime();
 						list.add(i + 1, GMLang.MANA.get(info.getMana(time), info.getMaxMana()));
 						return;
 					}

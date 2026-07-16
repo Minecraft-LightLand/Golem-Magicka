@@ -1,3 +1,6 @@
+1.1.2
+- fix Jade compat item entity description
+
 1.1.1
 - Golem can use enhance and heal spells even when there are no attack target
 - Golem switch to imbued weapon when using spell from the weapon

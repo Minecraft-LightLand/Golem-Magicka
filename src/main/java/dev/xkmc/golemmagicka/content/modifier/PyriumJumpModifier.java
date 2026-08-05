@@ -41,8 +41,9 @@ public class PyriumJumpModifier extends GolemModifier implements EarthquakeHelpe
 		if (targets.isEmpty()) return;
 
 		float atk = (float) golem.getAttributeValue(Attributes.ATTACK_DAMAGE);
-		float spellPower = (float) golem.getAttributeValue(AttributeRegistry.SPELL_POWER.get()) + (float) golem.getAttributeValue(AttributeRegistry.FIRE_SPELL_POWER.get());
-		float damage = atk * 0.75f * (1 + spellPower);
+		float spellPower = (float) golem.getAttributeValue(AttributeRegistry.SPELL_POWER.get()) ;
+		float fsp = (float) golem.getAttributeValue(AttributeRegistry.FIRE_SPELL_POWER.get());
+		float damage = atk * 0.75f * (1 + spellPower)* (1 + fsp);
 
 		golem.playSound(SoundRegistry.FIERY_DAGGER_THROW.get(), 2.0F, 1.0F);
 

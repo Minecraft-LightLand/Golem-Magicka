@@ -46,8 +46,9 @@ public class PyriumAttackModifier extends GolemModifier {
 		float yAngle = (float) (-Mth.atan2(target.getZ() - golem.getZ(), target.getX() - golem.getX()) + Mth.HALF_PI);
 		float scale = golem.getScale();
 		float atk = (float) golem.getAttributeValue(Attributes.ATTACK_DAMAGE);
-		float spellPower = (float) golem.getAttributeValue(AttributeRegistry.SPELL_POWER.get()) + (float) golem.getAttributeValue(AttributeRegistry.FIRE_SPELL_POWER.get());
-		float damage = atk * 0.75f * (1 + spellPower);
+		float spellPower = (float) golem.getAttributeValue(AttributeRegistry.SPELL_POWER.get());
+		float fsp = (float) golem.getAttributeValue(AttributeRegistry.FIRE_SPELL_POWER.get());
+		float damage = atk * 0.75f * (1 + spellPower) * (1 + fsp);
 		for (int i = 0; i < count; i++) {
 			Vec3 offset = new Vec3(1.5 * scale, 0, 0)
 					.zRot(Mth.lerp((float) i / (count - 1), 0, -Mth.PI))
